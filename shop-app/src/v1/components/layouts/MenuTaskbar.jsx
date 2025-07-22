@@ -12,7 +12,7 @@ const MenuTaskbar = () => {
               to={item?.url || "/"}
               className="hover:text-orange-500 z-40 cursor-pointer  flex items-center h-full transition-colors duration-300 hover:bg-white w-full"
             >
-              <span className="text-md font-semibold w-full">
+              <span className="text-sm font-semibold w-full">
                 {item?.title}
               </span>
             </Link>

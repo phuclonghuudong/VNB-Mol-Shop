@@ -5,12 +5,12 @@ import MenuTaskbar from "../../components/layouts/MenuTaskbar";
 
 const MainLayout = () => {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <div className="w-full h-full">
         <Header />
         <MenuTaskbar />
       </div>
-      <main className="bg-white">
+      <main className="w-full flex-1">
         <Outlet />
       </main>
       <Footer />

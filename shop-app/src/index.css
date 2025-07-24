@@ -1,17 +1,16 @@
 @import "tailwindcss";
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 :root {
   font-size: 14px;
   letter-spacing: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
   color: #333;
   background-color: #fff;
 }
@@ -21,4 +20,14 @@ html {
 }
 .bgMain {
   background-color: #e95221;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-gray-800 bg-transparent duration-200;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  @apply text-3xl;
 }

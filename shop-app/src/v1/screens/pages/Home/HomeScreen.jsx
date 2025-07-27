@@ -1,6 +1,8 @@
 import BannerScrollbar from "../../../components/ui/BannerScrollbar";
 import LogoBanner from "../../../components/ui/LogoBanner";
-import TitleHeader from "../../../components/ui/TitleHeader";
+import TitleCategoryList from "../../../components/ui/TitleCategoryList";
+import ListCategory from "./ListCategory";
+import ListNews from "./ListNews";
 import ListProduct from "./ListProduct";
 import ListSaleOff from "./ListSaleOff";
 
@@ -11,16 +13,20 @@ const HomeScreen = () => {
       <LogoBanner />
 
       {/* List Product */}
-      <TitleHeader title="Sản phẩm mới" />
+      <TitleCategoryList title="Sản phẩm mới" />
       <ListProduct />
 
       {/* List Sale off */}
-      <TitleHeader title="Sale off" />
+      <TitleCategoryList title="Sale off" />
       <ListSaleOff />
 
       {/* List Category */}
-      <TitleHeader title="Sản phẩm cầu lông" />
-      <TitleHeader title="Tin tức" />
+      <TitleCategoryList title="Sản phẩm cầu lông" />
+      <ListCategory />
+
+      {/* List News */}
+      <TitleCategoryList title="Tin tức" />
+      <ListNews />
     </div>
   );
 };

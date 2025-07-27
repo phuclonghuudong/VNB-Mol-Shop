@@ -1,5 +1,6 @@
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import CardProduct from "../../../components/ui/CardProduct";
 import RenderProductCardNone from "../../../components/ui/RenderProductCardNone";
 import { swiperBreakpoints } from "../../../utils/swiperBreakpoints";
 
@@ -25,24 +26,7 @@ const ProductCarousel = ({
               {isLoading ? (
                 <RenderProductCardNone index={index} />
               ) : (
-                <div
-                  key={index}
-                  className="w-full p-3 bg-white h-96 flex flex-col"
-                >
-                  <div className="w-full h-full flex flex-col">
-                    <div className="h-[70%] bg-blue-100 flex items-center justify-center text-white">
-                      Hình ảnh
-                    </div>
-
-                    <div className="mt-2 text-md text-gray-800 my-auto">
-                      Áo cầu lông Victor Nam Xanh Biển - Mã 7367 {index + 1}
-                    </div>
-
-                    <div className="text-red-500 font-medium ">
-                      Giá: 100.000₫
-                    </div>
-                  </div>
-                </div>
+                <CardProduct index={index} />
               )}
             </div>
           </SwiperSlide>

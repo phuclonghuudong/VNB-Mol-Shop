@@ -1,4 +1,4 @@
-const TitleHeader = ({ title }) => {
+const TitleCategoryList = ({ title }) => {
   return (
     <div className="font-bold text-orange-500 text-center grid items-center justify-center gap-2 text-3xl p-4 ">
       <h2>{title}</h2>
@@ -9,4 +9,4 @@ const TitleHeader = ({ title }) => {
   );
 };
 
-export default TitleHeader;
+export default TitleCategoryList;

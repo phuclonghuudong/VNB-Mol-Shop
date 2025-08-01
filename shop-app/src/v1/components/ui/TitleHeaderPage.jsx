@@ -10,7 +10,7 @@ const TitleHeaderPage = ({ title }) => {
 
       <MdNavigateNext size={20} />
 
-      <Link to={"/san-pham"} className="hover:text-orange-700">
+      <Link to={"/san-pham"} className="hover:text-orange-700 text-orange-600">
         {title}
       </Link>
     </div>

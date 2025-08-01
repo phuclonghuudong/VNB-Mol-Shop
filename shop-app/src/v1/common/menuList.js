@@ -13,7 +13,7 @@ const menuList = [
   },
   {
     title: "Tin tức",
-    url: "/",
+    url: "/tin-tuc",
   },
   {
     title: "Hướng dẫn",

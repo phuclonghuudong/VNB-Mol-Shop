@@ -6,9 +6,9 @@ import TitleHeaderPage from "../../../components/ui/TitleHeaderPage";
 const ContactScreen = () => {
   return (
     <section className="mx-auto">
-      <TitleHeaderPage title="Liên hệ" />{" "}
+      <TitleHeaderPage title="Liên hệ" />
       <div className="lg:w-1/2 w-full  p-4">
-        <Text title={"Nơi giải đáp mọi thắc mắc của bạn?"} isUppercase />
+        <Text title={"Nơi giải đáp mọi thắc mắc của bạn?"} isUppercase isBold />
 
         <div className="flex justify-start items-center py-2">
           <p className="font-semibold">
@@ -28,7 +28,7 @@ const ContactScreen = () => {
           </p>
         </div>
 
-        <Text title={"Liên hệ với chúng tôi"} isUppercase />
+        <Text title={"Liên hệ với chúng tôi"} isUppercase isBold />
 
         <div className=" grid gap-4">
           <div className="flex   justify-between items-center gap-4">

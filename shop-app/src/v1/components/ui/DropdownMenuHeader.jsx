@@ -43,7 +43,11 @@ const TitleIcon = ({
       {isHovered && (
         <div
           className={`absolute top-full mt-0 ${
-            code === "GH" ? "-left-20 w-70" : "left-1/2 w-50"
+            code === "GH"
+              ? "-left-22 lg:-left-15 md:-left-15 w-60"
+              : code === "TK"
+              ? "md:left-1/2 -left-10 w-50"
+              : "left-1/2 w-50"
           } transform duration-300 -translate-x-1/2  bg-white shadow-lg  z-50 `}
         >
           {dropdownOption}

@@ -4,15 +4,15 @@ import FormInput from "../../components/ui/FormInput";
 import Text from "../../components/ui/Text";
 import TitleCategoryList from "../../components/ui/TitleCategoryList";
 
-const LoginScreen = () => {
+const ChangePassword = () => {
   return (
     <section>
-      <TitleCategoryList title={"Đăng nhập  "} isUppercase />
+      <TitleCategoryList title={"Đổi mật khẩu  "} isUppercase />
 
       <div className="flex flex-col gap-4">
-        <FormInput placeholder={"Email/ Số ĐT/ Tên đăng nhập"} isAutoFocus />
-        <FormInput placeholder={"Mật khẩu"} />
-        <ButtonComponent title={"Đăng nhập"} color="orange" isUppercase />
+        <FormInput placeholder={"Mật khẩu"} isAutoFocus />
+        <FormInput placeholder={"Nhập lại mật khẩu"} />
+        <ButtonComponent title={"Đổi mật khẩu"} color="orange" isUppercase />
       </div>
 
       <div className=" flex justify-between ">
@@ -27,4 +27,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default ChangePassword;

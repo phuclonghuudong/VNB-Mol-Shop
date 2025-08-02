@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
+import CheckOrderScreen from "../screens/pages/CheckOrder/CheckOrderScreen";
+import CheckWarrantyScreen from "../screens/pages/CheckWarranty/CheckWarrantyScreen";
 import ContactScreen from "../screens/pages/Contact/ContactScreen";
 import HomeScreen from "../screens/pages/Home/HomeScreen";
 import MainLayout from "../screens/pages/MainLayout";
@@ -16,6 +18,8 @@ const MainRouter = () => {
         <Route path="/thanh-ly" element={<SaleOffScreen />} />
         <Route path="/lien-he" element={<ContactScreen />} />
         <Route path="/tin-tuc" element={<NewsScreen />} />
+        <Route path="/kiem-tra-don-hang" element={<CheckOrderScreen />} />
+        <Route path="/kiem-tra-bao-hanh" element={<CheckWarrantyScreen />} />
       </Route>
     </Routes>
   );

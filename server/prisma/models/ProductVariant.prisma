@@ -1,0 +1,18 @@
+model ProductVariant {
+    variant_id      Int         @id @default (autoincrement())
+    sku             String      @db.VarChar(100)    
+    description     String      @db.VarChar(255)
+    avg_cost        Double      @db.Decimal(10,2)
+    price_sell      Double      @db.Decimal(10,2)                   // Gia ban mac dinh
+    price_original  Double      @db.Decimal(10,2)                   // Gia goc khong giam
+    is_default      Boolean     db(false)
+    status          Int         @db.TinyInt                                
+    createdAt       DateTime    @default(now())                            
+    updatedAt       DateTime    @updatedAt  
+
+
+    product_id      Int
+    product   Product @relation(fields: [product_id], references: [product_id])
+    
+    @@index([product_id])
+}

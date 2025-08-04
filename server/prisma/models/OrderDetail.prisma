@@ -1,0 +1,19 @@
+model OrderDetail {
+    order_detail_id          Int         @id @default (autoincrement())
+    quantity        Int         
+    price_sell      Decimal     @db.Decimal(10,2)
+    discount        Decimal     @db.Decimal(10,2)                           
+    final_price     Decimal     @db.Decimal(10,2)                           
+    cost_price      Decimal     @db.Decimal(10,2)                           
+    status          Int         @db.TinyInt                                
+    createdAt       DateTime    @default(now())                            
+    updatedAt       DateTime    @updatedAt  
+
+    order_id    Int
+    order   Order @relation(fields: [order_id], references: [order_id])
+    variant_id    Int
+    variant   Variant @relation(fields: [variant_id], references: [variant_id])
+  
+    @@index([order_id])
+    @@index([variant_id])
+}

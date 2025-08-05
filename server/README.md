@@ -1,9 +1,11 @@
 src/
-├── models/ // Định nghĩa các model
-├── repositories/ // Lớp truy cập database
-├── services/ // Business logic
-├── controllers/ // Xử lý HTTP request
-└── routes/ // Định tuyến API
+├── routes/ # Định tuyến API
+├── controllers/ # Xử lý HTTP, gọi BUS, trả dữ liệu
+├── services/ # (BUS) Xử lý nghiệp vụ
+├── repositories/ # (DAO) Làm việc với Prisma, DB
+├── dtos/ # DTO - Định dạng dữ liệu
+├── middlewares/ # Xử lý middleware (auth, error...)
+├── utils/ # Hàm tiện ích chung
 
 - Lớp Model (Domain Layer): Định nghĩa các entity/domain object của ứng dụng.
 
@@ -14,6 +16,10 @@ src/
 - Lớp Controller: Xử lý HTTP request và response.
 
 - Lớp Route: Kết nối route với controller.
+
+DAO --- Data Access Object: Tầng truy xuất dữ liệu (tương tác CSDL, API, ORM)
+DTO --- Data Transfer Object: Đối tượng truyền dữ liệu giữa các lớp
+BUS --- Business Logic Layer: Lớp xử lý nghiệp vụ – nơi các quy tắc, điều kiện, logic chính diễn ra
 
 Khởi tạo dự án Nodejs:
 B1: mkdir server -> cd server -> npm init -y

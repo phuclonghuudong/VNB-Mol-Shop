@@ -16,6 +16,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
+const errorHandler = require("./v1/middlewares/errorHandler");
 
 // ===== CẤU HÌNH MÔI TRƯỜNG =====
 dotenv.config();
@@ -47,6 +48,11 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("Server Shop MOLXIPI.");
 });
+const mainRouter = require("./v1/routes");
+app.use("/", mainRouter);
+
+// ===== Middleware xử lý lỗi cuối cùng =====
+app.use(errorHandler);
 
 // ===== START SERVER =====
 app.listen(port, () => {

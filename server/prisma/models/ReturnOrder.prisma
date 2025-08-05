@@ -17,4 +17,6 @@ model ReturnOrder {
     @@index([order_id])
     @@index([customer_id])
     @@index([warehouse_id])
+
+    returnOrderDetail   ReturnOrderDetail[]
 }

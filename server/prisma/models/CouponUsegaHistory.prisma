@@ -1,7 +1,7 @@
 model CouponUsageHistory {
-  history_id        Int         @id @default(autoincrement())           
-  used_at           Int
-  discount_value    Decimal         @db.Decimal(10,2)                
+  history_id        Int           @id @default(autoincrement())           
+  used_at           Int           @default(0)         // Số lần sử dụng
+  discount_value    Decimal       @db.Decimal(10,2)   // Giá trị giảm giá đã dùng             
   status            Int           @db.TinyInt                                
   createdAt         DateTime      @default(now())                            
   updatedAt         DateTime      @updatedAt                                 

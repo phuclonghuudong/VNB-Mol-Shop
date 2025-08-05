@@ -1,6 +1,6 @@
 model PromotionRule {
   rule_id        Int         @id @default(autoincrement())           
-  rule_type      String      @db.VarChar(255)                 
+  rule_type      String      @db.VarChar(255)    @unique                
   condition_value      String      @db.VarChar(255)                                                
   status          Int           @db.TinyInt                                
   createdAt       DateTime      @default(now())                            
@@ -9,5 +9,6 @@ model PromotionRule {
   promotion_id      Int
   promotion   Promotion @relation(fields: [promotion_id], references: [promotion_id])
     
-  @@index([product_id])
+  @@index([promotion_id])
+
 }

@@ -9,4 +9,5 @@ model Category {
   updatedAt         DateTime  @updatedAt                                 
   
   product Product[]
+  attribute Attribute[]
 }

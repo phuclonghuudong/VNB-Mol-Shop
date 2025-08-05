@@ -1,7 +1,7 @@
-model imgProductDetail {
+model ImgProductDetail {
     img_id Int      @id         @default (autoincrement())
     image_url       String      @db.VarChar(255)
-    is_main         Boolean     default(false)
+    is_main         Boolean?     @default(false)
     status          Int         @db.TinyInt                                
     createdAt       DateTime    @default(now())                            
     updatedAt       DateTime    @updatedAt  
@@ -10,6 +10,5 @@ model imgProductDetail {
     variant_id      Int
     productVariant   ProductVariant @relation(fields: [variant_id], references: [variant_id])
   
-
     @@index([variant_id])
 }

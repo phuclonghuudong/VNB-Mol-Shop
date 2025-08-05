@@ -11,4 +11,6 @@ model PurchaseOrder {
     personnel   Personnel @relation(fields: [personnel_id], references: [personnel_id])
   
     @@index([personnel_id])
+
+    purchaseOrderDetail PurchaseOrderDetail[]
 }

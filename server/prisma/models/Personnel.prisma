@@ -14,4 +14,10 @@ model Personnel {
     account   Account @relation(fields: [account_id], references: [account_id])
   
     @@index([account_id])
+
+    productComment   ProductComment[]
+    purchaseOrder   PurchaseOrder[]
+    news            News[]
+    contacts         Contact[]
+    orderConfirmation   OrderConfirmation[]
 }

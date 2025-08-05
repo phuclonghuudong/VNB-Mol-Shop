@@ -1,9 +1,9 @@
 model FavoriteProduct {
     favorite_id         Int         @id @default (autoincrement())
     favorite_date       DateTime
-    status          Int         @db.TinyInt                                
-    createdAt       DateTime    @default(now())                            
-    updatedAt       DateTime    @updatedAt  
+    status              Int         @db.TinyInt                                
+    createdAt           DateTime    @default(now())                            
+    updatedAt           DateTime    @updatedAt  
 
 
     product_id      Int

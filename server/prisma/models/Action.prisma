@@ -6,4 +6,5 @@ model Action {
   createdAt         DateTime  @default(now())                            
   updatedAt         DateTime  @updatedAt                                 
   
+  rolePermissionAction  RolePermissionAction[]  
 }

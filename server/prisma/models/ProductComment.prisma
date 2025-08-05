@@ -12,7 +12,7 @@ model ProductComment {
     customer_id     Int
     customer   Customer @relation(fields: [customer_id], references: [customer_id])
     personnel_id    Int
-    personnel   Customer @relation(fields: [personnel_id], references: [personnel_id])
+    personnel   Personnel @relation(fields: [personnel_id], references: [personnel_id])
   
 
     @@index([product_id])

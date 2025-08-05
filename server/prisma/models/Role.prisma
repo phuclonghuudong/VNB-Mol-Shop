@@ -9,4 +9,5 @@ model Role {
   updatedAt         DateTime  @updatedAt                                 
   
   account Account[]
+  rolePermissionAction  RolePermissionAction[]
 }

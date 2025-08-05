@@ -9,7 +9,10 @@ model PurchaseOrderDetail {
     updatedAt       DateTime    @updatedAt  
 
     po_id    Int
-    purchaseOrder   PurchaseOrder @relation(fields: [po_id], references: [purchase_id])
+    purchaseOrder   PurchaseOrder @relation(fields: [po_id], references: [po_id])
+    variant_id    Int
+    productVariant   ProductVariant @relation(fields: [variant_id], references: [variant_id])
   
     @@index([po_id])
+    @@index([variant_id])
 }

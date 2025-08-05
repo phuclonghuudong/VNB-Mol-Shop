@@ -1,11 +1,11 @@
 model ProductVariant {
     variant_id      Int         @id @default (autoincrement())
-    sku             String      @db.VarChar(100)    
+    sku             String      @db.VarChar(100)     @unique  
     description     String      @db.VarChar(255)
-    avg_cost        Double      @db.Decimal(10,2)
-    price_sell      Double      @db.Decimal(10,2)                   // Gia ban mac dinh
-    price_original  Double      @db.Decimal(10,2)                   // Gia goc khong giam
-    is_default      Boolean     db(false)
+    avg_cost        Decimal      @db.Decimal(10,2)
+    price_sell      Decimal      @db.Decimal(10,2)                   // Gia ban mac dinh
+    price_original  Decimal      @db.Decimal(10,2)                   // Gia goc khong giam
+    is_default      Boolean     @default(false)
     status          Int         @db.TinyInt                                
     createdAt       DateTime    @default(now())                            
     updatedAt       DateTime    @updatedAt  
@@ -15,4 +15,12 @@ model ProductVariant {
     product   Product @relation(fields: [product_id], references: [product_id])
     
     @@index([product_id])
+
+    promotionDetail     PromotionDetail[]
+    inventory           Inventory[]
+    purchaseOrderDetail PurchaseOrderDetail[]
+    orderDetail         OrderDetail[]
+    returnOrderDetail   ReturnOrderDetail[]
+    cartItem            CartItem[]
+    imgProductDetail    ImgProductDetail[]
 }

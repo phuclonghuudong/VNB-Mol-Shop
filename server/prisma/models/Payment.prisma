@@ -1,20 +1,17 @@
 model Payment {
   payment_id        Int       @id @default(autoincrement())           
-  payment_method    String      @db.VarChar(50)                         
-  payment_code      String      @db.VarChar(50)
-  amount            Decimal     @db.Decimal(10,2)
-  payment_status    Int         @db.TinyInt
-  payment_date      DateTime
-  payment_detail    String      @db.Text
+  payment_method    String      @db.VarChar(50)    @unique                        
+  payment_code      String      @db.VarChar(50)    @unique
+  amount            Decimal     @db.Decimal(10,2) // Số tiền thanh toán
+  payment_status    Int         @db.TinyInt       // Trạng thái thanh toán
+  payment_date      DateTime                      // Thời gian
+  payment_detail    String      @db.Text          // Chi tiết phản hồi
   back_code         String      @db.VarChar(50)
   card_type         String      @db.VarChar(50)
   note              String      @db.Text                         
   status            Int       @db.TinyInt                                
   createdAt         DateTime  @default(now())                            
-  updatedAt         DateTime  @updatedAt                                 
-  
-    order_id    Int
-    order   Order @relation(fields: [order_id], references: [order_id])
-  
-    @@index([order_id])
+  updatedAt         DateTime  @updatedAt   
+
+  order           Order[]                              
 }

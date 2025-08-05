@@ -7,8 +7,9 @@ model PromotionDetail {
   promotion_id      Int
   promotion   Promotion @relation(fields: [promotion_id], references: [promotion_id])
   variant_id      Int
-  variant   Variant @relation(fields: [variant_id], references: [variant_id])
+  variant   ProductVariant @relation(fields: [variant_id], references: [variant_id])
     
   @@index([promotion_id])
   @@index([variant_id])
+
 }

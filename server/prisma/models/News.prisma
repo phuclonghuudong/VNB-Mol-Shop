@@ -5,7 +5,7 @@ model News {
   news_slug     String    @db.VarChar(100) @unique               
   content       String?   @db.Text                                  
   image_url         String?   @db.Text 
-  view_count        Int
+  view_count        Int       @default(0)
   publish_date      DateTime
   is_featured       Boolean                           
   status            Int       @db.TinyInt                                

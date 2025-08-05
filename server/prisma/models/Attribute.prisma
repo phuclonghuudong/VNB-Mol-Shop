@@ -1,9 +1,9 @@
 model Attribute {
     attribute_id        Int         @id @default (autoincrement())
-    attribute_name      String      @db.VarChar(100)
-    attribute_slug      String      @db.VarChar(100)
+    attribute_name      String      @db.VarChar(100)     @unique
+    attribute_slug      String      @db.VarChar(100)     @unique
     attribute_type      String      @db.VarChar(100)
-    is_custom           Boolean     default(false)
+    is_custom           Boolean     @default(false)
     status              Int         @db.TinyInt                                
     createdAt           DateTime    @default(now())                            
     updatedAt           DateTime    @updatedAt  
@@ -14,4 +14,7 @@ model Attribute {
   
 
     @@index([category_id])
+
+    attributeValue  AttributeValue[]
+    variantAttributeValue  VariantAttributeValue[]
 }

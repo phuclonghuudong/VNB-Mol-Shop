@@ -1,4 +1,4 @@
-const { ApiError } = require("../utils/errors");
+const { ApiError, NotFoundError } = require("../utils/errors");
 const responseHandler = require("../utils/responseHandler");
 
 const errorHandler = (err, req, res, next) => {

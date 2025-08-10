@@ -3,7 +3,7 @@ src/
 ├── controllers/ # Xử lý HTTP, gọi BUS, trả dữ liệu
 ├── services/ # (BUS) Xử lý nghiệp vụ
 ├── repositories/ # (DAO) Làm việc với Prisma, DB
-├── dtos/ # DTO - Định dạng dữ liệu
+├── models/ # DTO - Định dạng dữ liệu
 ├── middlewares/ # Xử lý middleware (auth, error...)
 ├── utils/ # Hàm tiện ích chung
 

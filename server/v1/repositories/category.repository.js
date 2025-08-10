@@ -15,6 +15,13 @@ class CategoryDAO {
     return category ? new CategoryDTO(category) : null;
   }
 
+  async findByName(id) {
+    const category = await prisma.category.findUnique({
+      where: { category_name: id },
+    });
+    return category ? new CategoryDTO(category) : null;
+  }
+
   async findBySlug(slug) {
     const category = await prisma.category.findUnique({
       where: { category_slug: slug },
@@ -28,7 +35,7 @@ class CategoryDAO {
         category_name: data.name,
         category_slug: data.slug,
         description: data.description,
-        image_url: data.image_url,
+        image_url: data.imageUrl,
         status: data.status || 1,
       },
     });
@@ -42,7 +49,7 @@ class CategoryDAO {
         category_name: data.name,
         category_slug: data.slug,
         description: data.description,
-        image_url: data.image_url,
+        image_url: data.imageUrl,
         status: data.status,
       },
     });

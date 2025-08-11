@@ -1,9 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { signUpCustomer } = require("../controllers/auth.controller");
+const {
+  signUpCustomer,
+  verifyEmailForgotPasswordCustomer,
+  signInCustomer,
+} = require("../controllers/auth.controller");
 
 // const PATH = "/auth";
 
-router.get(`/customer/sign-up`, signUpCustomer);
+router.post(`/customer/sign-up`, signUpCustomer);
+router.post(`/customer/sign-in`, signInCustomer);
+router.post(
+  `/customer/verify-email-forgot-password`,
+  verifyEmailForgotPasswordCustomer
+);
 
 module.exports = router;

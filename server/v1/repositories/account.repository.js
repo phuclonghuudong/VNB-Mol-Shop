@@ -36,6 +36,15 @@ class AccountDAO {
     return result ? new AccountDTO(result) : result;
   }
 
+  async findByIdentifier(value) {
+    const result = await prisma.account.findFirst({
+      where: {
+        OR: [{ username: value }, { email: value }, { phone: value }],
+      },
+    });
+    return result ? new AccountDTO(result) : result;
+  }
+
   async create(data) {
     const result = await prisma.account.create({
       data: {
@@ -50,6 +59,17 @@ class AccountDAO {
         expired_otp: data?.expiredOtp || null,
         refresh_token: data?.refreshToken || null,
         status: Number(data?.status) || 1,
+      },
+    });
+    return new AccountDTO(result);
+  }
+
+  async updateVerifyEmailForgotPassword(id, value) {
+    const result = await prisma.account.update({
+      where: { account_id: id },
+      data: {
+        verify_otp: value?.verifyOtp,
+        expired_otp: value?.expiredOtp,
       },
     });
     return new AccountDTO(result);

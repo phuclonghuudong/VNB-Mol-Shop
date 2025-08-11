@@ -5,6 +5,7 @@ const {
   BadRequestError,
   ConflictError,
 } = require("../utils/errors");
+const generateOtp = require("../utils/generateOtp");
 const {
   validEmailInput,
   validPhoneInput,
@@ -42,6 +43,12 @@ class AccountBUS {
   async getAccountByPhone(value) {
     const result = await AccountDAO.findByPhone(value);
     if (!result) throw new NotFoundError("SỐ ĐIỆN THOẠI KHÔNG TỒN TẠI");
+    return result.toJSON?.() ?? result;
+  }
+
+  async getAccountByIdentifier(value) {
+    const result = await AccountDAO.findByIdentifier(value);
+    if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
     return result.toJSON?.() ?? result;
   }
 
@@ -138,6 +145,20 @@ class AccountBUS {
     const result = await AccountDAO.update(Number(id), {
       ...data,
       password: isValidPassword,
+    });
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateVerifyEmailForgotPassword(email) {
+    const newOtp = await generateOtp();
+    const expireTime = new Date(Date.now() + 3 * 60 * 1000);
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount.id;
+    const result = await AccountDAO.updateVerifyEmailForgotPassword(accountId, {
+      verifyOtp: newOtp,
+      expiredOtp: expireTime,
     });
 
     return result.toJSON?.() ?? result;

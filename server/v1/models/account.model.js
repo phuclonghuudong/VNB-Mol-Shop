@@ -43,6 +43,7 @@ class AccountDTO {
       email: this.email,
       verifyEmail: this.verify_email,
       verifyOtp: this.verify_otp,
+      expiredOtp: this.expired_otp,
       refreshToken: this.refresh_token,
       status: this.status,
       createdAt: this.createdAt,

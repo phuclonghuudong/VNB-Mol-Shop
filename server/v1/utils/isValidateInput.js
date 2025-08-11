@@ -22,6 +22,11 @@ const validPasswordInput = async (password) => {
   return reg.test(password);
 };
 
+const isValidCCCDInput = async (cccd) => {
+  const regex = /^\d{12}$/;
+  return regex.test(cccd);
+};
+
 const hashPassword = async (password) => {
   const hashPass = await bcrypt.hash(password, saltRounds);
   return hashPass;
@@ -37,6 +42,7 @@ module.exports = {
   validEmailInput,
   validPhoneInput,
   validPasswordInput,
+  isValidCCCDInput,
   hashPassword,
   comparePassword,
 };

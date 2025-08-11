@@ -1,6 +1,7 @@
-class PersonnelDTO {
+class CustomerDTO {
   constructor({
-    personnel_id,
+    customer_id,
+    account_id,
     fullname,
     gender,
     birthday,
@@ -11,7 +12,8 @@ class PersonnelDTO {
     createdAt,
     updatedAt,
   }) {
-    this.personnel_id = personnel_id;
+    this.customer_id = customer_id;
+    this.account_id = account_id;
     this.fullname = fullname;
     this.gender = gender;
     this.birthday = birthday;
@@ -26,6 +28,7 @@ class PersonnelDTO {
   toJSON() {
     return {
       id: this.customer_id,
+      accountId: this.account_id,
       fullname: this.fullname,
       gender: this.gender,
       birthday: this.birthday,
@@ -39,4 +42,4 @@ class PersonnelDTO {
   }
 }
 
-module.exports = PersonnelDTO;
+module.exports = CustomerDTO;

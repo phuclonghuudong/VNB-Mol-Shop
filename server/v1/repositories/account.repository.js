@@ -38,34 +38,37 @@ class AccountDAO {
 
   async create(data) {
     const result = await prisma.account.create({
-      role_id: data.roleId,
-      username: data.username,
-      password: data.password,
-      phone: data.phone,
-      email: data.email,
-      verify_email: data.verifyEmail || "",
-      verify_otp: data.verifyOtp || "",
-      expired_otp: data.expiredOtp || "",
-      refresh_token: data.refreshToken || "",
-      status: data.status,
+      data: {
+        // role: { connect: { role_id: Number(data.roleId) } },\
+        role_id: Number(data.roleId),
+        username: data?.username,
+        password: data?.password,
+        phone: data?.phone,
+        email: data?.email,
+        verify_email: data?.verifyEmail || null,
+        verify_otp: data?.verifyOtp || null,
+        expired_otp: data?.expiredOtp || null,
+        refresh_token: data?.refreshToken || null,
+        status: Number(data?.status) || 1,
+      },
     });
     return new AccountDTO(result);
   }
 
   async update(id, data) {
-    const result = await prisma.account.create({
+    const result = await prisma.account.update({
       where: { account_id: id },
       data: {
-        role_id: data.roleId,
-        username: data.username,
-        password: data.password,
-        phone: data.phone,
-        email: data.email,
-        verify_email: data.verifyEmail || "",
-        verify_otp: data.verifyOtp || "",
-        expired_otp: data.expiredOtp || "",
-        refresh_token: data.refreshToken || "",
-        status: data.status,
+        role_id: Number(data.roleId),
+        username: data?.username,
+        password: data?.password,
+        phone: data?.phone,
+        email: data?.email,
+        verify_email: data?.verifyEmail || null,
+        verify_otp: data?.verifyOtp || null,
+        expired_otp: data?.expiredOtp || null,
+        refresh_token: data?.refreshToken || null,
+        status: Number(data?.status) || 1,
       },
     });
     return new AccountDTO(result);

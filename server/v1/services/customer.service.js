@@ -1,4 +1,6 @@
 const CustomerDAO = require("../repositories/customer.repository");
+const AccountBUS = require("../services/account.service");
+const CustomerGroupBUS = require("../services/customerGroup.service");
 const { NotFoundError, ConflictError } = require("../utils/errors");
 
 class CustomerBUS {
@@ -7,7 +9,7 @@ class CustomerBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((x) => x.toJSON?.() ?? x);
   }
 
   async getCustomerById(id) {
@@ -15,31 +17,59 @@ class CustomerBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return result;
+    return result.toJSON?.() ?? result;
+  }
+
+  async getCustomerByAccountId(value) {
+    const result = await CustomerDAO.findByAccountId(Number(value));
+    if (!result || result.length === 0)
+      throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+
+    return result.toJSON?.() ?? result;
   }
 
   async createCustomer(data) {
-    return await CustomerDAO.create(data);
+    const { accountId, groupId, status } = data;
+
+    await AccountBUS.getAccountById(accountId);
+    await CustomerGroupBUS.getCustomerGroupById(groupId);
+
+    const existingAccountId = await CustomerDAO.findByAccountId(
+      Number(accountId)
+    );
+    if (existingAccountId) throw new ConflictError("TÀI KHOẢN ĐÃ ĐƯỢC SỬ DỤNG");
+
+    const result = await CustomerDAO.create({
+      ...data,
+      account_id: Number(accountId),
+      group_id: Number(groupId),
+      status: Number(status),
+    });
+
+    return result.toJSON?.() ?? result;
   }
 
   async updateCustomer(id, data) {
-    const oldCustomer = await this.getCustomerById(id);
+    const oldData = await this.getCustomerById(id);
 
-    const isUnchanged =
-      oldCustomer.fullname === data.fullname &&
-      oldCustomer.gender === data.gender &&
-      oldCustomer.birthday === data.birthday &&
-      oldCustomer.address === data.address &&
-      oldCustomer.avatar === data.avatar &&
-      Number(oldCustomer.customer_id) === Number(data.id);
-    // const isUnchanged = Object.keys(data).every(
-    //   (key) => oldCustomer[key] === data[key]
-    // );
+    const isChanged =
+      oldData.fullname === data.fullname &&
+      oldData.address === data.address &&
+      oldData.avatar === data.avatar &&
+      oldData.birthday === data.birthday &&
+      oldData.gender === data.gender &&
+      Number(oldData.group_id) === Number(data.groupId) &&
+      Number(oldData.status) === Number(data.status);
+    if (!isChanged) throw new ConflictError("DỮ LIỆU KHÔNG CÓ GÌ THAY ĐỔI");
 
-    if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
+    const result = await CustomerDAO.update(Number(id), {
+      ...data,
+      status: Number(data.status),
+    });
 
-    return await CustomerDAO.update(Number(id), data);
+    return result.toJSON?.() ?? result;
   }
+
   async deleteCustomer(id) {
     await this.getCustomerById(id);
     await CustomerDAO.delete(Number(id));

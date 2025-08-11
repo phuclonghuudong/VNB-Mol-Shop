@@ -7,7 +7,7 @@ class CustomerBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((x) => x.toJSON?.() ?? x);
   }
 
   async getPersonnelById(id) {
@@ -15,11 +15,12 @@ class CustomerBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async createPersonnel(data) {
-    return await PersonnelDAO.create(data);
+    const result = await PersonnelDAO.create(data);
+    return result.toJSON?.() ?? result;
   }
 
   async updatePersonnel(id, data) {
@@ -36,7 +37,8 @@ class CustomerBUS {
 
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
-    return await PersonnelDAO.update(Number(id), data);
+    const result = await PersonnelDAO.update(Number(id), data);
+    return result.toJSON?.() ?? result;
   }
   async deletePersonnel(id) {
     await this.getPersonnelById(id);

@@ -6,9 +6,7 @@ const getAllRole = async (req, res, next) => {
   try {
     const result = await RoleBUS.getAllRoles();
 
-    const mappedResult = result.map((x) => x.toJSON?.() ?? x);
-
-    responseHandler(res, 200, "DANH SÁCH", mappedResult);
+    responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
@@ -21,9 +19,7 @@ const getRoleById = async (req, res, next) => {
   try {
     const result = await RoleBUS.getRoleById(id);
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN VAI TRÒ", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN VAI TRÒ", result);
   } catch (error) {
     next(error);
   }
@@ -31,16 +27,12 @@ const getRoleById = async (req, res, next) => {
 
 const getRoleBySlug = async (req, res, next) => {
   const slug = req.params.slug;
-  if (!slug) {
-    throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
-  }
+  if (!slug) throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
 
   try {
     const result = await RoleBUS.getRoleBySlug(slug);
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN VAI TRÒ", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN VAI TRÒ", result);
   } catch (error) {
     next(error);
   }

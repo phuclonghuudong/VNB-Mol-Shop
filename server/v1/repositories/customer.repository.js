@@ -15,15 +15,26 @@ class CustomerDAO {
     return result ? new CustomerDTO(result) : null;
   }
 
+  async findByAccountId(value) {
+    const result = await prisma.customer.findUnique({
+      where: { account_id: value },
+    });
+    return result ? new CustomerDTO(result) : null;
+  }
+
   async create(data) {
     const result = await prisma.customer.create({
-      fullname: data.fullname,
-      gender: data.gender || "",
-      birthday: data.birthday || "",
-      points: 0,
-      address: data.address || "",
-      avatar: data.address || "",
-      status: data.status || 1,
+      data: {
+        account_id: data.account_id,
+        group_id: data.group_id,
+        fullname: data.fullname,
+        gender: data.gender || null,
+        birthday: data.birthday || null,
+        points: 0,
+        address: data.address || null,
+        avatar: data.address || null,
+        status: data.status || 1,
+      },
     });
     return new CustomerDTO(result);
   }
@@ -33,11 +44,11 @@ class CustomerDAO {
       where: { customer_id: id },
       data: {
         fullname: data.fullname,
-        gender: data.gender || "",
-        birthday: data.birthday || "",
+        gender: data.gender || null,
+        birthday: data.birthday || null,
         points: 0,
-        address: data.address || "",
-        avatar: data.address || "",
+        address: data.address || null,
+        avatar: data.address || null,
         status: data.status || 1,
       },
     });

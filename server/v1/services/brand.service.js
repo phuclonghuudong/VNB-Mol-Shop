@@ -4,32 +4,31 @@ const { ConflictError, NotFoundError } = require("../utils/errors");
 class BrandBUS {
   async getAllBrand() {
     const result = await BrandDAO.findAll();
-
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((c) => c.toJSON?.() ?? c);
   }
 
   async getBrandById(id) {
     const result = await BrandDAO.findById(Number(id));
     if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async getBrandBySlug(value) {
     const result = await BrandDAO.findBySlug(value);
     if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async getBrandByName(value) {
     const result = await BrandDAO.findByName(Number(value));
     if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async validateForCreate(slug, name) {
@@ -50,15 +49,15 @@ class BrandBUS {
 
     if (existingBySlug && Number(existingBySlug.brand_id) !== Number(excludeId))
       throw new ConflictError("TÊN ĐỊNH DANH ĐÃ TỒN TẠI Ở DANH MỤC KHÁC");
-
     if (existingByName && Number(existingByName.brand_id) !== Number(excludeId))
       throw new ConflictError("TÊN THƯƠNG HIỆU ĐÃ TỒN TẠI Ở DANH MỤC KHÁC");
   }
 
   async createBrand(data) {
     await this.validateForCreate(data.slug, data.name);
+    const result = await BrandDAO.create(data);
 
-    return await BrandDAO.create(data);
+    return result.toJSON?.() ?? result;
   }
 
   async updateBrand(id, data) {
@@ -75,7 +74,9 @@ class BrandBUS {
 
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
-    return await BrandDAO.update(Number(id), data);
+    const result = await BrandDAO.update(Number(id), data);
+
+    return result.toJSON?.() ?? result;
   }
 
   async deleteBrand(id) {

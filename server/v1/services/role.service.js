@@ -7,19 +7,21 @@ class RoleBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((x) => x.toJSON?.() ?? x);
   }
 
   async getRoleById(id) {
     const result = await RoleDAO.findById(Number(id));
     if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
-    return result;
+
+    return result.toJSON?.() ?? result;
   }
 
   async getRoleBySlug(slug) {
     const result = await RoleDAO.findBySlug(slug);
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
-    return result;
+    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI NHÓM VAI TRÒ");
+
+    return result.toJSON?.() ?? result;
   }
 
   async validateForCreate(slug, name) {
@@ -45,7 +47,8 @@ class RoleBUS {
 
   async createRole(data) {
     await this.validateForCreate(data.slug, data.name);
-    return await RoleDAO.create(data);
+    const result = await RoleDAO.create(data);
+    return result.toJSON?.() ?? result;
   }
 
   async updateRole(id, data) {
@@ -61,7 +64,8 @@ class RoleBUS {
       Number(oldRole.status) === Number(data.status);
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
-    return await RoleDAO.update(Number(id), data);
+    const result = await RoleDAO.update(Number(id), data);
+    return result.toJSON?.() ?? result;
   }
 
   async deleteRole(id) {

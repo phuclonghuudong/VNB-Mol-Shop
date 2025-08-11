@@ -6,9 +6,7 @@ const getAllCustomerGroup = async (req, res, next) => {
   try {
     const result = await CustomerGroupBUS.getAllGroups();
 
-    const mappedData = result.map((x) => x.toJSON?.() ?? x);
-
-    responseHandler(res, 200, "DANH SÁCH", mappedData);
+    responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
@@ -21,9 +19,7 @@ const getCustomerGroupById = async (req, res, next) => {
   try {
     const result = await CustomerGroupBUS.getCustomerGroupById(id);
 
-    const mappedData = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN", mappedData);
+    responseHandler(res, 200, "THÔNG TIN", result);
   } catch (error) {
     next(error);
   }

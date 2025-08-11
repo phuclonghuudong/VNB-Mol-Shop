@@ -6,9 +6,7 @@ const getAllCategory = async (req, res, next) => {
   try {
     const result = await CategoryBUS.getAllCategories();
 
-    const mappedResult = result.map((c) => c.toJSON?.() ?? c);
-
-    responseHandler(res, 200, "DANH SÁCH LOẠI SẢN PHẨM", mappedResult);
+    responseHandler(res, 200, "DANH SÁCH LOẠI SẢN PHẨM", result);
   } catch (error) {
     next(error);
   }
@@ -21,9 +19,7 @@ const getCategoryById = async (req, res, next) => {
   try {
     const result = await CategoryBUS.getCategoryById(id);
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN LOẠI SẢN PHẨM", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN LOẠI SẢN PHẨM", result);
   } catch (error) {
     next(error);
   }
@@ -32,14 +28,13 @@ const getCategoryById = async (req, res, next) => {
 const getCategoryBySlug = async (req, res, next) => {
   const { slug } = req.params;
   if (!slug) throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN!");
+
   try {
     const result = await CategoryBUS.getCategoryBySlug(slug);
     if (!result || result.length === 0)
       throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN LOẠI SẢN PHẨM", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN LOẠI SẢN PHẨM", result);
   } catch (error) {
     next(error);
   }

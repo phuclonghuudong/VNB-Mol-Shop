@@ -7,11 +7,19 @@ class CustomerGroupBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((x) => x.toJSON?.() ?? x);
   }
 
   async getCustomerGroupById(id) {
     const result = await CustomerGroupDAO.findById(Number(id));
+    if (!result || result.length === 0)
+      throw new NotFoundError("NHÓM KHÔNG TỒN TẠI DỮ LIỆU");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async getCustomerGroupByName(value) {
+    const result = await CustomerGroupDAO.findByName(value);
     if (!result || result.length === 0)
       throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
@@ -20,13 +28,11 @@ class CustomerGroupBUS {
 
   async validateForCreate(value) {
     const existingName = await CustomerGroupDAO.findByName(value);
-
     if (existingName) throw new ConflictError("TÊN NHÓM ĐÃ TỒN TẠI");
   }
 
   async validateForUpdate(value, id) {
     const existingName = await CustomerGroupDAO.findByName(value);
-
     if (existingName && Number(existingName.group_id) !== Number(id))
       throw new ConflictError("TÊN NHÓM ĐÃ TỒN TẠI Ở DANH MỤC KHÁC");
   }
@@ -34,7 +40,8 @@ class CustomerGroupBUS {
   async createCustomerGroup(data) {
     await this.validateForCreate(data.name);
 
-    return await CustomerGroupDAO.create(data);
+    const result = await CustomerGroupDAO.create(data);
+    return result.toJSON?.() ?? result;
   }
 
   async updateCustomerGroup(id, data) {
@@ -49,7 +56,8 @@ class CustomerGroupBUS {
 
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
-    return await CustomerGroupDAO.update(Number(id), data);
+    const result = await CustomerGroupDAO.update(Number(id), data);
+    return result.toJSON?.() ?? result;
   }
 
   async deleteCustomerGroup(id) {

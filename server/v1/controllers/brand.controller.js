@@ -8,9 +8,7 @@ const getAllBrand = async (req, res, next) => {
     if (!result || result.length === 0)
       throw new NotFoundError("KHÔNG TÌM THẤY DỮ LIỆU");
 
-    const mappedResult = result.map((c) => c.toJSON?.() ?? c);
-
-    responseHandler(res, 200, "DANH SÁCH ", mappedResult);
+    responseHandler(res, 200, "DANH SÁCH ", result);
   } catch (error) {
     next(error);
   }
@@ -23,9 +21,7 @@ const getBrandById = async (req, res, next) => {
   try {
     const result = await BrandBUS.getBrandById(id);
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN THƯƠNG HIỆU", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN THƯƠNG HIỆU", result);
   } catch (error) {
     next(error);
   }
@@ -38,9 +34,7 @@ const getBrandBySlug = async (req, res, next) => {
   try {
     const result = await BrandBUS.getBrandBySlug(slug);
 
-    const mappedResult = result.toJSON?.() ?? result;
-
-    responseHandler(res, 200, "THÔNG TIN THƯƠNG HIỆU", mappedResult);
+    responseHandler(res, 200, "THÔNG TIN THƯƠNG HIỆU", result);
   } catch (error) {
     next(error);
   }
@@ -75,6 +69,7 @@ const updateBrand = async (req, res, next) => {
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN!");
   }
   if (!id) throw new NotFoundError("KHÔNG TÌM THẤY DỮ LIỆU");
+
   try {
     const result = await BrandBUS.updateBrand(id, {
       name,

@@ -8,21 +8,21 @@ class CategoryBUS {
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result;
+    return result.map((c) => c.toJSON?.() ?? c);
   }
 
   async getCategoryById(id) {
-    const category = await CategoryDAO.findById(Number(id));
-    if (!category) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+    const result = await CategoryDAO.findById(Number(id));
+    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return category;
+    return result.toJSON?.() ?? result;
   }
 
   async getCategoryBySlug(slug) {
-    const category = await CategoryDAO.findBySlug(slug);
-    if (!category) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+    const result = await CategoryDAO.findBySlug(slug);
+    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
 
-    return category;
+    return result.toJSON?.() ?? result;
   }
 
   async validateForCreate(slug, name) {
@@ -59,7 +59,9 @@ class CategoryBUS {
   async createCategory(data) {
     await this.validateForCreate(data.slug, data.name);
 
-    return await CategoryDAO.create(data);
+    const result = await CategoryDAO.create(data);
+
+    return result.toJSON?.() ?? result;
   }
 
   async updateCategory(id, data) {
@@ -76,7 +78,9 @@ class CategoryBUS {
 
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI!");
 
-    return await CategoryDAO.update(Number(id), data);
+    const result = await CategoryDAO.update(Number(id), data);
+
+    return result.toJSON?.() ?? result;
   }
 
   async deleteCategory(id) {

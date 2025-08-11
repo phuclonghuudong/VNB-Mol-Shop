@@ -17,13 +17,15 @@ class PersonnelDAO {
 
   async create(data) {
     const result = await prisma.personnel.create({
-      fullname: data.fullname,
-      gender: data.gender || "",
-      birthday: data.birthday || "",
-      cccd: data.cccd || 0,
-      address: data.address || "",
-      avatar: data.address || "",
-      status: data.status || 1,
+      data: {
+        fullname: data.fullname,
+        gender: data.gender || "",
+        birthday: data.birthday || "",
+        cccd: data.cccd || 0,
+        address: data.address || "",
+        avatar: data.address || "",
+        status: data.status || 1,
+      },
     });
     return new PersonnelDTO(result);
   }

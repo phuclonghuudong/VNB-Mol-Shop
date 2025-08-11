@@ -4,6 +4,7 @@ const {
   getAllAccounts,
   getAccountById,
   createAccount,
+  updateAccount,
 } = require("../controllers/account.controller");
 
 // const PATH = "/account";
@@ -11,5 +12,6 @@ const {
 router.get(`/`, getAllAccounts);
 router.get(`/:id`, getAccountById);
 router.post(`/`, createAccount);
+router.put(`/:id`, updateAccount);
 
 module.exports = router;

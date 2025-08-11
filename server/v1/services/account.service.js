@@ -1,8 +1,16 @@
 const AccountDAO = require("../repositories/account.repository");
-const { NotFoundError, BadRequestError } = require("../utils/errors");
+const RoleBUS = require("../services/role.service");
+const {
+  NotFoundError,
+  BadRequestError,
+  ConflictError,
+} = require("../utils/errors");
 const {
   validEmailInput,
   validPhoneInput,
+  hashPassword,
+  validPasswordInput,
+  validUsernameInput,
 } = require("../utils/isValidateInput");
 
 class AccountBUS {
@@ -10,57 +18,75 @@ class AccountBUS {
     const result = await AccountDAO.findAll();
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
-
-    return result;
+    return result.map((x) => x.toJSON?.() ?? x);
   }
 
   async getAccountById(id) {
-    const result = await AccountDAO.findById(id);
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
-    return result;
+    const result = await AccountDAO.findById(Number(id));
+    if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI DỮ LIỆU");
+    return result.toJSON?.() ?? result;
   }
 
   async getAccountByUsername(value) {
     const result = await AccountDAO.findByUsername(value);
     if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async getAccountByEmail(value) {
     const result = await AccountDAO.findByEmail(value);
     if (!result) throw new NotFoundError("EMAIL KHÔNG TỒN TẠI");
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async getAccountByPhone(value) {
     const result = await AccountDAO.findByPhone(value);
     if (!result) throw new NotFoundError("SỐ ĐIỆN THOẠI KHÔNG TỒN TẠI");
-    return result;
+    return result.toJSON?.() ?? result;
   }
 
   async validateForCreate(data) {
-    const { username, phone, email } = data;
+    const { username, phone, email, password } = data;
 
-    const isValidEmail = validEmailInput(email);
-    const isValidPhone = validPhoneInput(phone);
+    const isValidUsername = await validUsernameInput(username);
+    const isValidPhone = await validPhoneInput(phone);
+    const isValidEmail = await validEmailInput(email);
+    const isValidPassword = await validPasswordInput(password);
 
-    if (!isValidEmail) throw new BadRequestError("EMAIL KHÔNG ĐÚNG ĐỊNH DẠNG");
+    if (!isValidUsername)
+      throw new BadRequestError("TÊN ĐĂNG NHẬP ÍT NHẤT 6 KÍ TỰ");
     if (!isValidPhone)
       throw new BadRequestError("SỐ ĐIỆN THOẠI KHÔNG ĐÚNG ĐỊNH DẠNG");
+    if (!isValidEmail) throw new BadRequestError("EMAIL KHÔNG ĐÚNG ĐỊNH DẠNG");
+    if (!isValidPassword)
+      throw new BadRequestError(
+        "MẬT KHẨU ÍT NHẤT 8 KÍ TỰ, BAO GỒM CHỮ HOA_THƯỜNG & SỐ & KÍ TỰ ĐẶC BIỆT"
+      );
 
     const [existingUsername, existingPhone, existingEmail] = await Promise.all([
       AccountDAO.findByUsername(username),
       AccountDAO.findByPhone(phone),
       AccountDAO.findByEmail(email),
     ]);
-
-    if (existingUsername) throw new ConflictError("TÀI KHOẢN ĐÃ TỒN TẠI");
-    if (existingPhone) throw new ConflictError("SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI");
-    if (existingEmail) throw new ConflictError("EMAIL ĐÃ TỒN TẠI");
+    if (existingUsername) throw new ConflictError("TÀI KHOẢN ĐÃ ĐƯỢC SỬ DỤNG");
+    if (existingPhone) throw new ConflictError("SỐ ĐIỆN THOẠI ĐÃ ĐƯỢC SỬ DỤNG");
+    if (existingEmail) throw new ConflictError("EMAIL ĐÃ ĐƯỢC SỬ DỤNG");
   }
 
   async validateForUpdate(id, data) {
-    const { username, phone, email } = data;
+    const { username, phone, email, password } = data;
+
+    const isValidEmail = await validEmailInput(email);
+    const isValidPhone = await validPhoneInput(phone);
+    const isValidPassword = await validPassword(password);
+
+    if (!isValidEmail) throw new BadRequestError("EMAIL KHÔNG ĐÚNG ĐỊNH DẠNG");
+    if (!isValidPhone)
+      throw new BadRequestError("SỐ ĐIỆN THOẠI KHÔNG ĐÚNG ĐỊNH DẠNG");
+    if (!isValidPassword)
+      throw new BadRequestError(
+        "MẬT KHẨU PHẢI ÍT NHẤT 8 KÍ TỰ BAO GỒM CHỮ (HOA & THƯỜNG) & SỐ & KÍ TỰ ĐẶC BIỆT"
+      );
 
     const [existingUsername, existingPhone, existingEmail] = await Promise.all([
       AccountDAO.findByUsername(username),
@@ -77,24 +103,44 @@ class AccountBUS {
   }
 
   async createAccount(data) {
+    const { role } = data;
+    const checkRole = await RoleBUS.getRoleBySlug(role);
+
     await this.validateForCreate(data);
 
-    return await AccountDAO.create(data);
+    const isValidPassword = await hashPassword(data.password);
+
+    const result = await AccountDAO.create({
+      ...data,
+      roleId: checkRole.id,
+      password: isValidPassword,
+    });
+
+    return result.toJSON?.() ?? result;
   }
 
   async updateAccount(id, data) {
-    const oldData = await this.getAccountById(id);
+    const isValidPassword = await hashPassword(data.password);
 
-    const isChanged = Object.keys(data).some((key) => {
-      if (!(key in oldData)) return false;
+    const oldData = await this.getAccountById(Number(id));
 
-      return data[key] !== oldData[key];
-    });
+    const isChanged =
+      oldData.username === data.username &&
+      oldData.phone === data.phone &&
+      oldData.password === data.password &&
+      oldData.email === data.email &&
+      Number(oldData.status) === Number(data.status);
+
     if (!isChanged) throw new ConflictError("DỮ LIỆU KHÔNG CÓ GÌ THAY ĐỔI");
 
     await this.validateForUpdate(id, data);
 
-    return await AccountDAO.update(id, data);
+    const result = await AccountDAO.update(Number(id), {
+      ...data,
+      password: isValidPassword,
+    });
+
+    return result.toJSON?.() ?? result;
   }
 
   async deleteAccount(id) {

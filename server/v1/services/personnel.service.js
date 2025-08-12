@@ -13,13 +13,17 @@ class CustomerBUS {
   async getPersonnelById(id) {
     const result = await PersonnelDAO.findById(Number(id));
     if (!result || result.length === 0)
-      throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+      throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }
 
   async createPersonnel(data) {
     const result = await PersonnelDAO.create(data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -38,6 +42,10 @@ class CustomerBUS {
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
     const result = await PersonnelDAO.update(Number(id), data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
   async deletePersonnel(id) {

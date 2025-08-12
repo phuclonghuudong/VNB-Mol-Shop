@@ -24,31 +24,36 @@ class AccountBUS {
 
   async getAccountById(id) {
     const result = await AccountDAO.findById(Number(id));
-    if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result || result.length == 0)
+      throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI DỮ LIỆU");
     return result.toJSON?.() ?? result;
   }
 
   async getAccountByUsername(value) {
     const result = await AccountDAO.findByUsername(value);
-    if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
+    if (!result || result.length === 0)
+      throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
     return result.toJSON?.() ?? result;
   }
 
   async getAccountByEmail(value) {
     const result = await AccountDAO.findByEmail(value);
-    if (!result) throw new NotFoundError("EMAIL KHÔNG TỒN TẠI");
+    if (!result || result.length === 0)
+      throw new NotFoundError("EMAIL KHÔNG TỒN TẠI");
     return result.toJSON?.() ?? result;
   }
 
   async getAccountByPhone(value) {
     const result = await AccountDAO.findByPhone(value);
-    if (!result) throw new NotFoundError("SỐ ĐIỆN THOẠI KHÔNG TỒN TẠI");
+    if (!result || result.length == 0)
+      throw new NotFoundError("SỐ ĐIỆN THOẠI KHÔNG TỒN TẠI");
     return result.toJSON?.() ?? result;
   }
 
   async getAccountByIdentifier(value) {
     const result = await AccountDAO.findByIdentifier(value);
-    if (!result) throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
+    if (!result || result.length === 0)
+      throw new NotFoundError("TÀI KHOẢN KHÔNG TỒN TẠI");
     return result.toJSON?.() ?? result;
   }
 
@@ -123,6 +128,9 @@ class AccountBUS {
       password: isValidPassword,
     });
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -147,6 +155,9 @@ class AccountBUS {
       password: isValidPassword,
     });
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -160,6 +171,69 @@ class AccountBUS {
       verifyOtp: newOtp,
       expiredOtp: expireTime,
     });
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateVerifyOtpByEmail(data) {
+    const { email, otp } = data;
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount?.id;
+    const currentTime = new Date();
+    const otpVerify = checkAccount?.verifyOtp;
+    const otpExpiry = checkAccount?.expiredOtp;
+
+    if (!otpVerify || Number(otpVerify) !== Number(otp))
+      throw new BadRequestError("MÃ XÁC THỰC KHÔNG ĐÚNG HOẶC ĐÃ HẾT HẠN");
+
+    if (!otpExpiry || currentTime > otpExpiry)
+      throw new BadRequestError("MÃ XÁC THỰC ĐÃ HẾT HẠN");
+
+    const result = await AccountDAO.updateVerifyOtpByEmail(accountId);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateResetPassword(data) {
+    const { email, password } = data;
+    const checkValidPassword = await validPasswordInput(password);
+    if (!checkValidPassword)
+      throw new BadRequestError(
+        "MẬT KHẨU ÍT NHẤT 8 KÍ TỰ, BAO GỒM CHỮ HOA_THƯỜNG & SỐ & KÍ TỰ ĐẶC BIỆT"
+      );
+
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount?.id;
+
+    const isValidPassword = await hashPassword(password);
+
+    const result = await AccountDAO.updateResetPassword(
+      accountId,
+      isValidPassword
+    );
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateRefreshToken(data) {
+    const { id, token } = data;
+    await this.getAccountById(id);
+
+    const result = await AccountDAO.updateRefreshToken(id, token);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
 
     return result.toJSON?.() ?? result;
   }

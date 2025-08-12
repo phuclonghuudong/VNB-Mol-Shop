@@ -13,14 +13,14 @@ class CategoryBUS {
 
   async getCategoryById(id) {
     const result = await CategoryDAO.findById(Number(id));
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result) throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }
 
   async getCategoryBySlug(slug) {
     const result = await CategoryDAO.findBySlug(slug);
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result) throw new NotFoundError("ĐỊNH DANH KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }
@@ -61,6 +61,9 @@ class CategoryBUS {
 
     const result = await CategoryDAO.create(data);
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -80,12 +83,14 @@ class CategoryBUS {
 
     const result = await CategoryDAO.update(Number(id), data);
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
   async deleteCategory(id) {
     await this.getCategoryById(id);
-
     await CategoryDAO.delete(Number(id));
   }
 }

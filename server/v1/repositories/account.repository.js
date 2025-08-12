@@ -75,6 +75,35 @@ class AccountDAO {
     return new AccountDTO(result);
   }
 
+  async updateVerifyOtpByEmail(id) {
+    const result = await prisma.account.update({
+      where: { account_id: id },
+      data: {
+        verify_otp: null,
+        expired_otp: null,
+      },
+    });
+    return new AccountDTO(result);
+  }
+
+  async updateResetPassword(id, value) {
+    const result = await prisma.account.update({
+      where: { account_id: id },
+      data: {
+        password: value,
+      },
+    });
+    return new AccountDTO(result);
+  }
+
+  async updateRefreshToken(id, value) {
+    const result = await prisma.account.update({
+      where: { account_id: id },
+      data: { refresh_token: value },
+    });
+    return new AccountDTO(result);
+  }
+
   async update(id, data) {
     const result = await prisma.account.update({
       where: { account_id: id },

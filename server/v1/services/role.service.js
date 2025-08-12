@@ -12,14 +12,15 @@ class RoleBUS {
 
   async getRoleById(id) {
     const result = await RoleDAO.findById(Number(id));
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result) throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }
 
   async getRoleBySlug(slug) {
     const result = await RoleDAO.findBySlug(slug);
-    if (!result) throw new NotFoundError("KHÔNG TỒN TẠI NHÓM VAI TRÒ");
+    if (!result)
+      throw new NotFoundError("ĐỊNH DANH KHÔNG TỒN TẠI NHÓM VAI TRÒ");
 
     return result.toJSON?.() ?? result;
   }
@@ -48,6 +49,10 @@ class RoleBUS {
   async createRole(data) {
     await this.validateForCreate(data.slug, data.name);
     const result = await RoleDAO.create(data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -65,6 +70,10 @@ class RoleBUS {
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
     const result = await RoleDAO.update(Number(id), data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 

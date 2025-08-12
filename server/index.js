@@ -18,7 +18,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const errorHandler = require("./v1/middlewares/errorHandler");
 
-const { PORT, SERVER_URL, FRONTEND_URL } = require("./v1/configs/config");
+const { PORT, SERVER_URL, FRONTEND_URL } = require("./v1/configs/configENV");
 
 // ===== KHỞI TẠO APP =====
 const app = express();

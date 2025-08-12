@@ -57,6 +57,9 @@ class BrandBUS {
     await this.validateForCreate(data.slug, data.name);
     const result = await BrandDAO.create(data);
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -76,12 +79,14 @@ class BrandBUS {
 
     const result = await BrandDAO.update(Number(id), data);
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
   async deleteBrand(id) {
     await this.getBrandById(id);
-
     await BrandDAO.delete(Number(id));
   }
 }

@@ -24,8 +24,8 @@ const verifyEmailTemplate = ({ name, otp }) => {
 
     <table align="center" cellpadding="0" cellspacing="0" style="max-width: 600px; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
       <tr>
-        <td style="background: #ffffff; text-align: center; padding: 20px;">
-          <img src="https://cdn.shopvnb.com/themes/images/logo.svg" alt="MOLXIPI Logo" style="max-width: 150px; height: auto;" />
+        <td style="background: #ffffff; text-align: center; ">
+          <img src="https://res.cloudinary.com/dqywxoayz/image/upload/v1754992997/PHPMol/pxasjpgoyiwofx7k9bij.jpg" alt="MOLXIPI Logo" style="max-width: 500px; height: auto;" />
         </td>
       </tr>
       <tr>

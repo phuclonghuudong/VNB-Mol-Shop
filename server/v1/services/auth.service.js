@@ -12,15 +12,36 @@ const verifyEmailTemplate = require("../utils/verifyEmailTemplate");
 class AuthBUS {
   async customerAccountInformation(account, customer) {
     return {
-      customerId: customer.id,
-      accountId: account.id,
-      roleId: account.roleId,
-      username: account.username,
-      phone: account.phone,
-      email: account.email,
-      fullname: customer.fullname,
-      status: account.status,
+      customerId: customer?.id,
+      accountId: account?.id,
+      roleId: account?.roleId,
+      username: account?.username,
+      phone: account?.phone,
+      email: account?.email,
+      fullname: customer?.fullname,
+      gender: customer?.gender,
+      birthday: customer?.birthday,
+      points: customer?.points,
+      address: customer?.address,
+      avatar: customer?.avatar,
+      status: account?.status,
     };
+  }
+
+  async checkAccountAndCustomer(accountId) {
+    const checkAccount = await AccountBUS.getAccountById(accountId);
+
+    const checkCustomer = await CustomerBUS.getCustomerByAccountId(accountId);
+
+    const result = await this.customerAccountInformation(
+      checkAccount,
+      checkCustomer
+    );
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result;
   }
 
   async signUpCustomer(data) {
@@ -39,6 +60,9 @@ class AuthBUS {
       createAccount,
       createCustomer
     );
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
 
     return result;
   }
@@ -62,6 +86,9 @@ class AuthBUS {
       findCustomer
     );
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result;
   }
 
@@ -79,6 +106,33 @@ class AuthBUS {
         otp: result?.verifyOtp,
       }),
     });
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result;
+  }
+
+  async verifyOtpByEmail(data) {
+    const checkAccount = await AccountBUS.updateVerifyOtpByEmail(data);
+
+    return checkAccount;
+  }
+
+  async resetPassword(data) {
+    const result = await AccountBUS.updateResetPassword(data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result;
+  }
+
+  async refreshToken(data) {
+    const result = await AccountBUS.updateRefreshToken(data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
 
     return result;
   }

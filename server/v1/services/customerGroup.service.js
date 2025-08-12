@@ -41,6 +41,10 @@ class CustomerGroupBUS {
     await this.validateForCreate(data.name);
 
     const result = await CustomerGroupDAO.create(data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -57,12 +61,15 @@ class CustomerGroupBUS {
     if (isUnchanged) throw new ConflictError("KHÔNG CÓ GÌ THAY ĐỔI");
 
     const result = await CustomerGroupDAO.update(Number(id), data);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
   async deleteCustomerGroup(id) {
     await this.getCustomerGroupById(id);
-
     await CustomerGroupDAO.delete(Number(id));
   }
 }

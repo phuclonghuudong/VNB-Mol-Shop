@@ -15,7 +15,7 @@ class CustomerBUS {
   async getCustomerById(id) {
     const result = await CustomerDAO.findById(Number(id));
     if (!result || result.length === 0)
-      throw new NotFoundError("KHÔNG TỒN TẠI DỮ LIỆU");
+      throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }
@@ -46,6 +46,9 @@ class CustomerBUS {
       status: Number(status),
     });
 
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
     return result.toJSON?.() ?? result;
   }
 
@@ -66,6 +69,9 @@ class CustomerBUS {
       ...data,
       status: Number(data.status),
     });
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
 
     return result.toJSON?.() ?? result;
   }

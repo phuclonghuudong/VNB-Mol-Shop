@@ -9,7 +9,7 @@ const uploadImageAvatar = async (req, res, next) => {
   try {
     const result = await UploadBUS.uploadAvatar(file);
 
-    responseHandler(res, 200, "THAO TÁC THÀNH CÔNG", result);
+    responseHandler(res, 200, "THAO TÁC THÀNH CÔNG", { url: result });
   } catch (error) {
     next(error);
   }

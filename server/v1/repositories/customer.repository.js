@@ -30,7 +30,7 @@ class CustomerDAO {
         fullname: data.fullname,
         gender: data.gender || null,
         birthday: data.birthday || null,
-        points: 0,
+        points: data.point || 0,
         address: data.address || null,
         avatar: data.address || null,
         status: data.status || 1,
@@ -42,15 +42,7 @@ class CustomerDAO {
   async update(id, data) {
     const result = await prisma.customer.update({
       where: { customer_id: id },
-      data: {
-        fullname: data.fullname,
-        gender: data.gender || null,
-        birthday: data.birthday || null,
-        points: 0,
-        address: data.address || null,
-        avatar: data.address || null,
-        status: data.status || 1,
-      },
+      data,
     });
     return new CustomerDTO(result);
   }

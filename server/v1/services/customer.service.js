@@ -15,7 +15,7 @@ class CustomerBUS {
   async getCustomerById(id) {
     const result = await CustomerDAO.findById(Number(id));
     if (!result || result.length === 0)
-      throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
+      throw new NotFoundError("ID KHÁCH HÀNG KHÔNG TỒN TẠI DỮ LIỆU");
 
     return result.toJSON?.() ?? result;
   }

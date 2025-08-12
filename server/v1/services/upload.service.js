@@ -8,7 +8,7 @@ class UploadBUS {
     if (!result || result.length === 0)
       throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG< VUI LÒNG THỬ LẠI");
 
-    return result?.secure_url;
+    return result?.url;
   }
 }
 

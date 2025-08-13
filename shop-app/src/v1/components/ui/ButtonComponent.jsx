@@ -4,6 +4,7 @@ const ButtonComponent = ({
   onClick,
   isUppercase,
   isBold,
+  isDisabled,
 }) => {
   const colorClasses = {
     white: "text-black hover:text-gray-900 hover:bg-gray-200",
@@ -16,10 +17,12 @@ const ButtonComponent = ({
   const btnColor = colorClasses[color];
   return (
     <button
-      className={`w-full text-md p-3 cursor-pointer  text-white rounded-xs duration-300
+      className={`w-full text-md p-3   text-white rounded-xs duration-300 select-none
         ${btnColor} 
         ${isUppercase ? "uppercase" : ""} 
-        ${isBold ? "font-bold" : ""} `}
+        ${isBold ? "font-bold" : ""}  
+        ${isDisabled ? "cursor-not-allowed " : "cursor-pointer"} `}
+      disabled={isDisabled}
       onClick={onClick}
     >
       {title}

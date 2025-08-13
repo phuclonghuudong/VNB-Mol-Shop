@@ -106,7 +106,7 @@ const verifyEmailForgotPasswordCustomer = async (req, res, next) => {
 
 const verifyOtpByEmail = async (req, res, next) => {
   const { email, otp } = req.body;
-  if (!email.trim() || !otp.trim())
+  if (!email?.trim() || !otp?.trim())
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
 
   if (otp.length !== 6)

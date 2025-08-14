@@ -10,6 +10,7 @@ const FormInput = ({
   isAutoFocus,
   onChange,
   isPassword,
+  isValidNull = true,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -28,10 +29,16 @@ const FormInput = ({
           placeholder={placeholder || ""}
           value={value}
           onChange={onChange}
-          className="p-3 border-1 border-gray-300 rounded-xs w-full outline-none"
+          className={`p-3 border-1  rounded-xs w-full outline-none ${
+            !isValidNull ? "border-red-500" : "border-gray-300 "
+          }`}
         />
       ) : (
-        <div className="flex justify-between items-center border-1 border-gray-300 rounded-xs w-full">
+        <div
+          className={`flex justify-between items-center border-1 rounded-xs w-full ${
+            !isValidNull ? "border-red-500" : "border-gray-300 "
+          }`}
+        >
           <input
             type={showPassword ? "text" : "password"}
             autoFocus={isAutoFocus ? true : false}

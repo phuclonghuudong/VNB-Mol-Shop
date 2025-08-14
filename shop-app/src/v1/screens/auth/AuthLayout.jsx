@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import TitleCategoryList from "../../components/ui/TitleCategoryList";
+import ROUTES from "../../configs/configRoutes";
 
 const AuthLayout = () => {
   return (
@@ -8,7 +9,7 @@ const AuthLayout = () => {
         <Outlet />
       </div>
       <div className="w-full max-w-lg p-6 bg-white rounded shadow ">
-        <Link to={"/"}>
+        <Link to={ROUTES?.HOME}>
           <TitleCategoryList title={"Molxipi shop  "} isUppercase />
         </Link>
       </div>

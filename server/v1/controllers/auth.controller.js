@@ -130,14 +130,7 @@ const verifyOtpByEmail = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   const { password, confirmPassword, email } = req.body;
 
-  if (
-    !password ||
-    !confirmPassword ||
-    !email ||
-    !email.trim() ||
-    !password.trim() ||
-    !confirmPassword.trim()
-  )
+  if (!email?.trim() || !password?.trim() || !confirmPassword?.trim())
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
   if (password !== confirmPassword)
     throw new BadRequestError("MẬT KHẨU NHẬP LẠI KHÔNG ĐÚNG");

@@ -6,13 +6,17 @@ import ButtonComponent from "../../components/ui/ButtonComponent";
 import FormInput from "../../components/ui/FormInput";
 import Text from "../../components/ui/Text";
 import TitleCategoryList from "../../components/ui/TitleCategoryList";
+import ROUTES from "../../configs/configRoutes";
 import AxiosToastError from "../../utils/AxiosToastError";
+import { isAllFieldsFilledAuth } from "../../utils/isAllFieldsFilledAuth";
 
 const ForgotPassword = () => {
   const [validInput, setValidInput] = useState({
     email: "",
   });
+  const [checkValid, setCheckValid] = useState(true);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleOnchange = (event) => {
     const { name, value } = event.target;
@@ -27,20 +31,31 @@ const ForgotPassword = () => {
 
   const fetchVerifyEmailForgotPassword = async () => {
     try {
+      setLoading(true);
+
       const result = await accountAPI.verifyEmailForgotPassword_Customer(
         validInput
       );
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        navigate("/thanh-vien/xac-nhan-otp", { state: validInput });
+        navigate(ROUTES?.VERIFY_OTP, { state: validInput });
       }
     } catch (error) {
       AxiosToastError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const isValid = isAllFieldsFilledAuth(validInput);
+    if (!isValid) {
+      setCheckValid(isValid);
+      return;
+    }
+
     fetchVerifyEmailForgotPassword();
   };
   return (
@@ -53,17 +68,19 @@ const ForgotPassword = () => {
           value={validInput.email}
           onChange={handleOnchange}
           placeholder={"Email"}
+          isValidNull={checkValid}
           isAutoFocus
         />
         <ButtonComponent
           title={"Lấy lại mật khẩu"}
           color="orange"
           isUppercase
+          isLoading={loading}
         />
       </form>
 
       <div className="text-right ">
-        <Link to={"/thanh-vien/dang-nhap"}>
+        <Link to={ROUTES?.LOGIN}>
           <Text title="Đăng nhập tại đây" isSize={"text-md"} isHover />
         </Link>
       </div>

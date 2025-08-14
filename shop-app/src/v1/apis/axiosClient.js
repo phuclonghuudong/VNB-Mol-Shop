@@ -1,8 +1,10 @@
 import axios from "axios";
 import configENV from "../configs/configENV";
 
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const axiosClient = axios.create({
-  baseURL: configENV.BASE_URl,
+  baseURL: configENV.BASE_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -16,33 +18,38 @@ axiosClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // config.metadata = { startTime: Date.now() };
     return config;
   },
   (error) => Promise.reject(error)
 );
 
 axiosClient.interceptors.response.use(
-  (response) => response.data, // Trả về data trực tiếp
+  async (response) => {
+    // const MIN_WAIT = 20000;
+    // const startTime = response.config.metadata?.startTime || Date.now();
+    // const elapsed = Date.now() - startTime;
+
+    // if (elapsed < MIN_WAIT) {
+    //   await delay(MIN_WAIT - elapsed);
+    // }
+
+    return response.data;
+  },
   (error) => {
     let message = "Đã xảy ra lỗi";
 
     if (error.response) {
-      // Backend trả lỗi
       message = error.response.data?.message || error.response.statusText;
       if (error.response.status === 401) {
         console.error("Unauthorized! Token có thể đã hết hạn.");
-        // Có thể logout hoặc refresh token ở đây
       }
     } else if (error.request) {
-      // Request gửi đi nhưng không nhận được phản hồi
       message = "Không thể kết nối đến server";
     } else {
-      // Lỗi khác khi setup request
-
       message = error.message;
     }
 
-    // Hiển thị toast
     // toast.error(message);
 
     return Promise.reject({ ...error, message });

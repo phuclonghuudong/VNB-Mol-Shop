@@ -1,3 +1,5 @@
+import Loading from "./Loading";
+
 const ButtonComponent = ({
   title,
   color = "black",
@@ -5,6 +7,7 @@ const ButtonComponent = ({
   isUppercase,
   isBold,
   isDisabled,
+  isLoading = false,
 }) => {
   const colorClasses = {
     white: "text-black hover:text-gray-900 hover:bg-gray-200",
@@ -25,7 +28,7 @@ const ButtonComponent = ({
       disabled={isDisabled}
       onClick={onClick}
     >
-      {title}
+      {isLoading ? <Loading /> : title}
     </button>
   );
 };

@@ -6,6 +6,7 @@ import ButtonComponent from "../../components/ui/ButtonComponent";
 import OTPInput from "../../components/ui/OTPInput";
 import Text from "../../components/ui/Text";
 import TitleCategoryList from "../../components/ui/TitleCategoryList";
+import ROUTES from "../../configs/configRoutes";
 import AxiosToastError from "../../utils/AxiosToastError";
 
 const ConFirmOTP = () => {
@@ -15,18 +16,20 @@ const ConFirmOTP = () => {
   const inputRef = useRef([]);
 
   const [loading, setLoading] = useState(false);
-  const validateValue = Object.values(data).every((el) => el);
 
   const isEmail = location?.state?.email;
 
   useEffect(() => {
     if (!isEmail) {
-      navigate("/thanh-vien/quen-mat-khau");
+      t;
+      toast.error("KHÔNG THỂ THỰC HIỆN THAO TÁC");
+      navigate(ROUTES?.FORGOT_PASSWORD);
     }
   }, []);
 
   const fetchVerifyOtp = async () => {
     try {
+      setLoading(true);
       const isData = data.join("");
       const result = await accountAPI.verifyOtpForgotPassword_Customer({
         email: isEmail,
@@ -35,15 +38,18 @@ const ConFirmOTP = () => {
 
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        navigate("/thanh-vien/doi-mat-khau");
+        navigate(ROUTES?.RESET_PASSWORD, { state: { email: isEmail } });
       }
     } catch (error) {
       AxiosToastError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     fetchVerifyOtp();
   };
   return (
@@ -57,6 +63,7 @@ const ConFirmOTP = () => {
           title={"Xác nhận OTP"}
           color="orange"
           isUppercase
+          isLoading={loading}
           onClick={handleSubmit}
         />
       </form>

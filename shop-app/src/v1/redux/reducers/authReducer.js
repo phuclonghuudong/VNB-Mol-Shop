@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { localDataNames } from "../../configs/appInfo";
 
-const initialState = {
+const savedData = localStorage.getItem(localDataNames.authData);
+
+const initialData = {
   token: "",
   account: "",
   customer: "",
@@ -9,9 +11,13 @@ const initialState = {
   fullname: "",
 };
 
+const initialState = {
+  data: savedData ? JSON.parse(savedData) : initialData,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: { data: initialState },
+  initialState,
 
   reducers: {
     addAuth: (state, action) => {
@@ -20,11 +26,11 @@ const authSlice = createSlice({
       state.data = {
         account: USER.accountId,
         customer: USER.customerId,
-        role: USER.roleId,
+        role: USER.role,
         fullname: USER.fullname,
         token: TOKEN,
       };
-      syncLocal(action.payload);
+      syncLocal(state.data);
     },
     clearAuth: (state, action) => {
       state.data = initialState;
@@ -32,6 +38,7 @@ const authSlice = createSlice({
     },
     refreshToken: (state, action) => {
       state.data.token = action.payload.TOKEN;
+      syncLocal(state.data);
     },
   },
 });

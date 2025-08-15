@@ -16,7 +16,7 @@ const FormInput = ({
   return (
     <div className={`${title ? "flex flex-col gap-3" : "w-full"}`}>
       {title && (
-        <label htmlFor={id} className="">
+        <label htmlFor={id} className="text-lg">
           {title}
         </label>
       )}

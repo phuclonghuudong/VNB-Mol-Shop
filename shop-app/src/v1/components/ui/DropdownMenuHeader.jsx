@@ -32,11 +32,11 @@ const DropdownMenuHeader = () => {
           <>
             <DropdownChildren
               title={"Kiểm tra đơn hàng"}
-              path={"/kiem-tra-don-hang"}
+              path={ROUTES?.CHECK_ORDER}
             />
             <DropdownChildren
               title={"Kiểm tra bảo hành"}
-              path={"/kiem-tra-bao-hanh"}
+              path={ROUTES?.CHECK_WARRANTY}
             />
           </>
         }
@@ -50,6 +50,10 @@ const DropdownMenuHeader = () => {
           <>
             {auth?.account?.length !== 0 ? (
               <>
+                <DropdownChildren
+                  title={"Trang cá nhân"}
+                  path={ROUTES?.ACCOUNT}
+                />
                 <DropdownChildren title={"Đăng xuất"} onClick={handleLogOut} />
               </>
             ) : (

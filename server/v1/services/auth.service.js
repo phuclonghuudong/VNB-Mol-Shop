@@ -1,17 +1,19 @@
 const sendEmail = require("../configs/sendMail");
 const AccountBUS = require("../services/account.service");
 const CustomerBUS = require("../services/customer.service");
+const RoleBUS = require("../services/role.service");
 const { BadRequestError } = require("../utils/errors");
-const generateOtp = require("../utils/generateOtp");
 const {
   comparePassword,
   validEmailInput,
 } = require("../utils/isValidateInput");
+const { validateAccountStatus } = require("../utils/validateStatus");
 const verifyEmailTemplate = require("../utils/verifyEmailTemplate");
 
 class AuthBUS {
-  async customerAccountInformation(account, customer) {
+  async customerAccountInformation(account, customer, role) {
     return {
+      role: role?.slug,
       customerId: customer?.id,
       accountId: account?.id,
       roleId: account?.roleId,
@@ -33,9 +35,12 @@ class AuthBUS {
 
     const checkCustomer = await CustomerBUS.getCustomerByAccountId(accountId);
 
+    const checkRole = await RoleBUS.getRoleById(checkAccount?.roleId);
+
     const result = await this.customerAccountInformation(
       checkAccount,
-      checkCustomer
+      checkCustomer,
+      checkRole
     );
 
     if (!result || result.length === 0)
@@ -50,15 +55,21 @@ class AuthBUS {
       role: "KHACHHANG",
     });
 
+    const accountId = createAccount?.id;
+
     const createCustomer = await CustomerBUS.createCustomer({
       ...data,
-      accountId: createAccount?.id,
+      accountId: accountId,
       groupId: 1,
     });
 
+    const roleId = createAccount?.roleId;
+    const findRole = await RoleBUS.getRoleById(roleId);
+
     const result = await this.customerAccountInformation(
       createAccount,
-      createCustomer
+      createCustomer,
+      findRole
     );
 
     if (!result || result.length === 0)
@@ -79,12 +90,18 @@ class AuthBUS {
       throw new BadRequestError("TÀI KHOẢN HOẶC MẬT KHẨU KHÔNG CHÍNH XÁC");
 
     const accountId = checkAccount?.id;
+    const roleId = checkAccount?.roleId;
+
+    const findRole = await RoleBUS.getRoleById(roleId);
     const findCustomer = await CustomerBUS.getCustomerByAccountId(accountId);
 
     const result = await this.customerAccountInformation(
       checkAccount,
-      findCustomer
+      findCustomer,
+      findRole
     );
+
+    await validateAccountStatus(result?.status);
 
     if (!result || result.length === 0)
       throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");

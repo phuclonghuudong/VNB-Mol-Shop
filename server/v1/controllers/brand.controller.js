@@ -29,7 +29,8 @@ const getBrandById = async (req, res, next) => {
 
 const getBrandBySlug = async (req, res, next) => {
   const { slug } = req.params;
-  if (!slug) throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
+  if (!slug?.trim())
+    throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
 
   try {
     const result = await BrandBUS.getBrandBySlug(slug);

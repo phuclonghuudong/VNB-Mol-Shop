@@ -9,6 +9,7 @@ process.on("unhandledRejection", (err) => {
 });
 
 // ===== CÁC IMPORT =====
+const serverless = require("serverless-http");
 const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
@@ -64,3 +65,5 @@ app.listen(port, () => {
 app.use((req, res) => {
   responseHandler(res, 400, "FAIL");
 });
+
+module.exports.handler = serverless(app);

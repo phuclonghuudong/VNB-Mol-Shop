@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import accountAPI from "../../apis/accountApi";
 import ButtonComponent from "../../components/ui/ButtonComponent";
@@ -7,8 +8,10 @@ import FormInput from "../../components/ui/FormInput";
 import Text from "../../components/ui/Text";
 import TitleCategoryList from "../../components/ui/TitleCategoryList";
 import ROUTES from "../../configs/configRoutes";
+import { addAuth } from "../../redux/reducers/authReducer";
 import AxiosToastError from "../../utils/AxiosToastError";
 import { isAllFieldsFilledAuth } from "../../utils/isAllFieldsFilledAuth";
+import { roleRedirectLogin } from "../../utils/roleRedirect";
 
 const RegisterScreen = () => {
   const [validInput, setValidInput] = useState({
@@ -20,6 +23,7 @@ const RegisterScreen = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [checkValid, setCheckValid] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +45,8 @@ const RegisterScreen = () => {
 
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        navigate(ROUTES?.HOME);
+        result?.DATA && dispatch(addAuth(result?.DATA));
+        roleRedirectLogin(result?.DATA?.USER?.role, navigate);
       }
     } catch (error) {
       AxiosToastError(error);

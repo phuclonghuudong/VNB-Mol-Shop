@@ -11,6 +11,7 @@ import ROUTES from "../../configs/configRoutes";
 import { addAuth } from "../../redux/reducers/authReducer";
 import AxiosToastError from "../../utils/AxiosToastError";
 import { isAllFieldsFilledAuth } from "../../utils/isAllFieldsFilledAuth";
+import { roleRedirectLogin } from "../../utils/roleRedirect";
 
 const LoginScreen = () => {
   const [validInput, setValidInput] = useState({
@@ -41,7 +42,7 @@ const LoginScreen = () => {
       if (result?.SUCCESS) {
         result?.DATA && dispatch(addAuth(result.DATA));
         toast.success(result?.MESSAGE);
-        navigate(ROUTES?.HOME);
+        roleRedirectLogin(result?.DATA?.USER?.role, navigate);
       }
     } catch (error) {
       AxiosToastError(error);

@@ -1,31 +1,33 @@
+import ROUTES from "../configs/configRoutes";
+
 const menuList = [
   {
     title: "Trang chủ",
-    url: "/",
+    url: ROUTES?.HOME,
   },
   {
     title: "Sản phẩm",
-    url: "/san-pham",
+    url: ROUTES?.PRODUCT,
   },
   {
     title: "Sale off",
-    url: "/thanh-ly",
+    url: ROUTES?.SALE_OFF,
   },
   {
     title: "Tin tức",
-    url: "/tin-tuc",
+    url: ROUTES?.NEWS,
   },
   {
     title: "Hướng dẫn",
-    url: "/",
+    url: ROUTES?.HOME,
   },
   {
     title: "Giới thiệu",
-    url: "/",
+    url: ROUTES?.HOME,
   },
   {
     title: "LIÊN HỆ",
-    url: "/lien-he",
+    url: ROUTES?.CONTACT,
   },
 ];
 export default menuList;

@@ -35,7 +35,6 @@ const Header = () => {
         <div className="block lg:hidden w-1/12">
           <div className="flex items-center h-full w-full">
             <IoMenuOutline size={30} className="hover:text-orange-900" />
-            {/* Có thể bật lại search button ở đây nếu cần */}
           </div>
         </div>
 

@@ -6,7 +6,7 @@ const savedData = localStorage.getItem(localDataNames.authData);
 const initialData = {
   token: "",
   account: "",
-  customer: "",
+  user: "",
   role: "",
   fullname: "",
 };
@@ -25,7 +25,7 @@ const authSlice = createSlice({
 
       state.data = {
         account: USER.accountId,
-        customer: USER.customerId,
+        user: USER.userId,
         role: USER.role,
         fullname: USER.fullname,
         token: TOKEN,

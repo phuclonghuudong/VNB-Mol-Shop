@@ -10,6 +10,7 @@ import { authSelector } from "../../../redux/reducers/authReducer";
 
 const Profile = () => {
   const authAccount = useSelector(authSelector);
+  console.log(authAccount);
   const navigate = useNavigate();
 
   const handleClickUpdate = () => {
@@ -36,18 +37,18 @@ const Profile = () => {
       <div>
         <TitleInfo
           icon={FaUser}
-          title="Họ và tên"
-          text={authAccount?.USER?.fullname ?? ""}
+          title="Họ và tên:"
+          text={authAccount?.fullname ?? ""}
         />
         <TitleInfo
           icon={FaPhoneVolume}
           title="Số ĐT:"
-          text={authAccount?.USER?.phone ?? ""}
+          text={authAccount?.phone ?? ""}
         />
         <TitleInfo
           icon={FaLocationDot}
           title="Địa chỉ:"
-          text={authAccount?.USER?.address ?? ""}
+          text={authAccount?.address ?? ""}
         />
 
         <ButtonComponent

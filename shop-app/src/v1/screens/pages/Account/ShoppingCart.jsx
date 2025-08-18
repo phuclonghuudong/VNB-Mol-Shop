@@ -1,5 +1,5 @@
+import Text from "@/v1/components/shop/ui/Text";
 import { createColumnHelper } from "@tanstack/react-table";
-import Text from "../../../components/ui/Text";
 import TableOrder from "./TableOrder";
 
 const ShoppingCart = () => {

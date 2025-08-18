@@ -1,13 +1,13 @@
+import accountAPI from "@/v1/apis/accountApi";
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import OTPInput from "@/v1/components/shop/ui/OTPInput";
+import Text from "@/v1/components/shop/ui/Text";
+import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
+import ROUTES from "@/v1/configs/configRoutes";
+import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import accountAPI from "../../apis/accountApi";
-import ButtonComponent from "../../components/ui/ButtonComponent";
-import OTPInput from "../../components/ui/OTPInput";
-import Text from "../../components/ui/Text";
-import TitleCategoryList from "../../components/ui/TitleCategoryList";
-import ROUTES from "../../configs/configRoutes";
-import AxiosToastError from "../../utils/AxiosToastError";
 
 const ConFirmOTP = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const ConFirmOTP = () => {
 
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        navigate(ROUTES?.RESET_PASSWORD, { state: { email: isEmail } });
+        return navigate(ROUTES?.RESET_PASSWORD, { state: { email: isEmail } });
       }
     } catch (error) {
       AxiosToastError(error);
@@ -68,8 +68,11 @@ const ConFirmOTP = () => {
         />
       </form>
 
-      <div className="text-right ">
-        <Link to={"/thanh-vien/dang-nhap"}>
+      <div className="text-right flex justify-between items-center">
+        <Link to={ROUTES?.FORGOT_PASSWORD}>
+          <Text title="Quay lại" isSize={"text-md"} isHover />
+        </Link>
+        <Link to={ROUTES?.LOGIN}>
           <Text title="Đăng nhập tại đây" isSize={"text-md"} isHover />
         </Link>
       </div>

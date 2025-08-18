@@ -89,7 +89,7 @@ const DashBoard = () => {
   };
 
   return (
-    <section className=" h-screen overflow-y-auto  md:flex-row flex flex-col  gap-4 w-full">
+    <section className=" h-full overflow-y-auto  md:flex-row flex flex-col  gap-4 w-full  ">
       <div className="bg-white  rounded-xl shadow-md md:w-2/4 w-full h-100 items-center flex justify-center p-4">
         <Bar data={data} options={options} />
       </div>

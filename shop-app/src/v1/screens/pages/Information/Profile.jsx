@@ -1,6 +1,6 @@
-import ButtonComponent from "../../../components/ui/ButtonComponent";
-import FormInput from "../../../components/ui/FormInput";
-import Text from "../../../components/ui/Text";
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import FormInput from "@/v1/components/shop/ui/FormInput";
+import Text from "@/v1/components/shop/ui/Text";
 
 const Profile = () => {
   return (

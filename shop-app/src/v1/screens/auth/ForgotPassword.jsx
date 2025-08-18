@@ -1,14 +1,14 @@
+import accountAPI from "@/v1/apis/accountApi";
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import FormInput from "@/v1/components/shop/ui/FormInput";
+import Text from "@/v1/components/shop/ui/Text";
+import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
+import ROUTES from "@/v1/configs/configRoutes";
+import AxiosToastError from "@/v1/utils/AxiosToastError";
+import { isAllFieldsFilledAuth } from "@/v1/utils/isAllFieldsFilledAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import accountAPI from "../../apis/accountApi";
-import ButtonComponent from "../../components/ui/ButtonComponent";
-import FormInput from "../../components/ui/FormInput";
-import Text from "../../components/ui/Text";
-import TitleCategoryList from "../../components/ui/TitleCategoryList";
-import ROUTES from "../../configs/configRoutes";
-import AxiosToastError from "../../utils/AxiosToastError";
-import { isAllFieldsFilledAuth } from "../../utils/isAllFieldsFilledAuth";
 
 const ForgotPassword = () => {
   const [validInput, setValidInput] = useState({

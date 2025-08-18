@@ -1,10 +1,10 @@
+import IMAGE from "@/v1/assets/news/image.png";
+import CardNews from "@/v1/components/shop/ui/CardNews";
+import ProductCatalog from "@/v1/components/shop/ui/ProductCatalog";
+import RenderNewsCardNone from "@/v1/components/shop/ui/RenderNewsCardNone";
+import SearchBar from "@/v1/components/shop/ui/SearchBar";
+import TitlePage from "@/v1/components/shop/ui/TittlePage";
 import { useState } from "react";
-import IMAGE from "../../../assets/news/image.png";
-import CardNews from "../../../components/ui/CardNews";
-import ProductCatalog from "../../../components/ui/ProductCatalog";
-import RenderNewsCardNone from "../../../components/ui/RenderNewsCardNone";
-import SearchBar from "../../../components/ui/SearchBar";
-import TitlePage from "../../../components/ui/TittlePage";
 
 const NewsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);

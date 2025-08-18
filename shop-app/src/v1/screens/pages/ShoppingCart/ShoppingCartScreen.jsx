@@ -1,7 +1,7 @@
+import IMG_NONE_CART from "@/v1/assets/empty-cart.webp";
+import TitleHeaderPage from "@/v1/components/shop/ui/TitleHeaderPage";
+import TitlePage from "@/v1/components/shop/ui/TittlePage";
 import { useState } from "react";
-import IMG_NONE_CART from "../../../assets/empty-cart.webp";
-import TitleHeaderPage from "../../../components/ui/TitleHeaderPage";
-import TitlePage from "../../../components/ui/TittlePage";
 
 const ShoppingCartScreen = () => {
   const [isCart, setIsCart] = useState([]);

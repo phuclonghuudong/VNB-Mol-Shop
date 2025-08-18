@@ -1,6 +1,6 @@
+import { swiperBreakpoints } from "@/v1/utils/swiperBreakpoints";
 import { useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { swiperBreakpoints } from "../../../utils/swiperBreakpoints";
 import ProductCarousel from "./ProductCarousel";
 
 const ListProduct = () => {

@@ -1,8 +1,8 @@
+import CardProduct from "@/v1/components/shop/ui/CardProduct";
+import RenderProductCardNone from "@/v1/components/shop/ui/RenderProductCardNone";
+import { swiperBreakpoints } from "@/v1/utils/swiperBreakpoints";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CardProduct from "../../../components/ui/CardProduct";
-import RenderProductCardNone from "../../../components/ui/RenderProductCardNone";
-import { swiperBreakpoints } from "../../../utils/swiperBreakpoints";
 
 const ProductCarousel = ({
   isLoading = false,

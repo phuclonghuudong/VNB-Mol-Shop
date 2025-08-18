@@ -1,6 +1,6 @@
+import IMAGE from "@/v1/assets/categories/image.png";
+import Loading from "@/v1/components/shop/ui/Loading";
 import { useState } from "react";
-import IMAGE from "../../../assets/categories/image.png";
-import Loading from "../../../components/ui/Loading";
 
 const ListCategory = () => {
   const [isLoading, setisLoading] = useState(false);

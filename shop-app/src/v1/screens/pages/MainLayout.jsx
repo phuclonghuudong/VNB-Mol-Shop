@@ -1,9 +1,9 @@
+import Footer from "@/v1/components/shop/layouts/Footer";
+import Header from "@/v1/components/shop/layouts/Header";
+import MenuTaskbar from "@/v1/components/shop/layouts/MenuTaskbar";
 import { Outlet } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
-import Footer from "../../components/layouts/Footer";
-import Header from "../../components/layouts/Header";
-import MenuTaskbar from "../../components/layouts/MenuTaskbar";
 
 const MainLayout = () => {
   return (

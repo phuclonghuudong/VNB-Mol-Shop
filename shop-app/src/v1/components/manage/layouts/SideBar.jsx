@@ -3,10 +3,10 @@ import TitleIconSideBar from "../ui/TitleIconSideBar";
 
 const SideBar = ({ onShow, onClose }) => {
   return (
-    <div className="h-screen ">
+    <div className="h-full flex flex-col">
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full overflow-y-auto transition-all duration-300 z-40 lg:hidden
+        className={`fixed top-0 left-0 h-full overflow-y-auto bg-white transition-all duration-300 z-40 lg:hidden
                     ${onShow ? "w-full p-2" : "w-0"}`}
       >
         {onShow && (
@@ -25,7 +25,7 @@ const SideBar = ({ onShow, onClose }) => {
 
       {/* Desktop Sidebar */}
       <div
-        className={` bg-white  h-full border-gray-300 
+        className={` bg-white  h-screen border-gray-300 
                     transition-all duration-300 hidden lg:block overflow-y-auto
                     ${onShow ? "w-72 p-4" : "w-20 p-2"}`}
       >

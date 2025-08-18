@@ -1,7 +1,7 @@
-import FilterOptions from "../../../components/layouts/FilterOptions";
-import CardProduct from "../../../components/ui/CardProduct";
-import TitleHeaderPage from "../../../components/ui/TitleHeaderPage";
-import TitlePage from "../../../components/ui/TittlePage";
+import FilterOptions from "@/v1/components/shop/layouts/FilterOptions";
+import CardProduct from "@/v1/components/shop/ui/CardProduct";
+import TitleHeaderPage from "@/v1/components/shop/ui/TitleHeaderPage";
+import TitlePage from "@/v1/components/shop/ui/TittlePage";
 
 const ProductScreen = () => {
   return (

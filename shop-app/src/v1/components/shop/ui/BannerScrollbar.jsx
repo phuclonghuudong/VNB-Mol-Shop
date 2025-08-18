@@ -2,13 +2,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
-import Banner01 from "../../assets/banner/banner01.png";
-import Banner02 from "../../assets/banner/banner02.png";
-import Banner03 from "../../assets/banner/banner03.png";
-import Banner04 from "../../assets/banner/banner04.png";
-import Banner05 from "../../assets/banner/banner05.png";
-import Banner06 from "../../assets/banner/banner06.png";
-import Banner07 from "../../assets/banner/banner07.png";
+import Banner01 from "@/v1/assets/banner/banner01.png";
+import Banner02 from "@/v1/assets/banner/banner02.png";
+import Banner03 from "@/v1/assets/banner/banner03.png";
+import Banner04 from "@/v1/assets/banner/banner04.png";
+import Banner05 from "@/v1/assets/banner/banner05.png";
+import Banner06 from "@/v1/assets/banner/banner06.png";
+import Banner07 from "@/v1/assets/banner/banner07.png";
 
 const BannerScrollbar = () => {
   const listBanner = [

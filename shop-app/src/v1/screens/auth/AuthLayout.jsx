@@ -1,6 +1,6 @@
+import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
+import ROUTES from "@/v1/configs/configRoutes";
 import { Link, Outlet } from "react-router-dom";
-import TitleCategoryList from "../../components/ui/TitleCategoryList";
-import ROUTES from "../../configs/configRoutes";
 
 const AuthLayout = () => {
   return (

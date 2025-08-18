@@ -1,12 +1,14 @@
+import IMG_NONE_CART from "@/v1/assets/empty-cart.webp";
+import { localDataNames } from "@/v1/configs/appInfo";
+import ROUTES from "@/v1/configs/configRoutes";
+import { authSelector, clearAuth } from "@/v1/redux/reducers/authReducer";
+import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { BiSolidBinoculars } from "react-icons/bi";
 import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import IMG_NONE_CART from "../../assets/empty-cart.webp";
-import { localDataNames } from "../../configs/appInfo";
-import ROUTES from "../../configs/configRoutes";
-import { authSelector, clearAuth } from "../../redux/reducers/authReducer";
 import DropdownChildren from "./DropdownChildren";
 import TitleIconMenuNavbar from "./TitleIconMenuNavbar";
 
@@ -17,9 +19,21 @@ const DropdownMenuHeader = () => {
   const auth = useSelector(authSelector);
 
   const handleLogOut = async () => {
-    dispatch(clearAuth());
-    localStorage.removeItem(localDataNames.authData);
-    navigate(ROUTES?.LOGIN);
+    setLoading(true);
+
+    try {
+      dispatch(clearAuth());
+
+      localStorage.removeItem(localDataNames.authData);
+
+      toast.success("ĐĂNG XUẤT THÀNH CÔNG");
+
+      navigate(ROUTES?.LOGIN);
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,7 +62,7 @@ const DropdownMenuHeader = () => {
         title="TÀI KHOẢN"
         dropdownOption={
           <>
-            {auth?.account?.length !== 0 ? (
+            {auth?.account && auth?.account?.length !== 0 ? (
               <>
                 <DropdownChildren
                   title={"Trang cá nhân"}

@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaMapLocationDot, FaUserAstronaut } from "react-icons/fa6";
 import { IoClose, IoMenuOutline } from "react-icons/io5";
 
-import LOGO from "../../assets/logo.svg";
+import LOGO from "@/v1/assets/logo.svg";
 import DropdownMenuHeader from "../ui/DropdownMenuHeader";
 
 const InputSearch = ({ onClose }) => (

@@ -1,8 +1,8 @@
+import IMAGE1 from "@/v1/assets/events/event1.png";
+import IMAGE2 from "@/v1/assets/events/event2.png";
+import IMAGE3 from "@/v1/assets/events/event3.png";
+import Loading from "@/v1/components/shop/ui/Loading";
 import { useState } from "react";
-import IMAGE1 from "../../../assets/events/event1.png";
-import IMAGE2 from "../../../assets/events/event2.png";
-import IMAGE3 from "../../../assets/events/event3.png";
-import Loading from "../../../components/ui/Loading";
 
 const ListSaleOff = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,7 +1,7 @@
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import Text from "@/v1/components/shop/ui/Text";
+import ROUTES from "@/v1/configs/configRoutes";
 import { useNavigate } from "react-router-dom";
-import ButtonComponent from "../../../components/ui/ButtonComponent";
-import Text from "../../../components/ui/Text";
-import ROUTES from "../../../configs/configRoutes";
 import Profile from "./Profile";
 import ResetPassword from "./ResetPassword";
 

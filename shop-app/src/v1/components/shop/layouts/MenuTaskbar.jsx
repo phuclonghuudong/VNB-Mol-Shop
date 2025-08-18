@@ -1,5 +1,5 @@
+import menuList from "@/v1/common/menuList";
 import { Link } from "react-router-dom";
-import menuList from "../../common/menuList";
 
 const MenuTaskbar = () => {
   return (

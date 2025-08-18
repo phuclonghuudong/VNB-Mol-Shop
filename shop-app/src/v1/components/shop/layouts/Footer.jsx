@@ -1,4 +1,4 @@
-import LOGO_FOOTER from "../../assets/footer.webp";
+import LOGO_FOOTER from "@/v1/assets/footer.webp";
 
 const Footer = () => {
   return (

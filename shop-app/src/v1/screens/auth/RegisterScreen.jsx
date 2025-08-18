@@ -1,17 +1,17 @@
+import accountAPI from "@/v1/apis/accountApi";
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import FormInput from "@/v1/components/shop/ui/FormInput";
+import Text from "@/v1/components/shop/ui/Text";
+import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
+import ROUTES from "@/v1/configs/configRoutes";
+import { addAuth } from "@/v1/redux/reducers/authReducer";
+import AxiosToastError from "@/v1/utils/AxiosToastError";
+import { isAllFieldsFilledAuth } from "@/v1/utils/isAllFieldsFilledAuth";
+import { roleRedirectLogin } from "@/v1/utils/roleRedirect";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import accountAPI from "../../apis/accountApi";
-import ButtonComponent from "../../components/ui/ButtonComponent";
-import FormInput from "../../components/ui/FormInput";
-import Text from "../../components/ui/Text";
-import TitleCategoryList from "../../components/ui/TitleCategoryList";
-import ROUTES from "../../configs/configRoutes";
-import { addAuth } from "../../redux/reducers/authReducer";
-import AxiosToastError from "../../utils/AxiosToastError";
-import { isAllFieldsFilledAuth } from "../../utils/isAllFieldsFilledAuth";
-import { roleRedirectLogin } from "../../utils/roleRedirect";
 
 const RegisterScreen = () => {
   const [validInput, setValidInput] = useState({

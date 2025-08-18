@@ -1,4 +1,4 @@
-import IMAGE from "../../assets/products/image.png";
+import IMAGE from "@/v1/assets/products/image.png";
 
 const CardProduct = ({ index, data }) => {
   return (

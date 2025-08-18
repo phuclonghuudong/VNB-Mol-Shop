@@ -1,6 +1,6 @@
+import Text from "@/v1/components/shop/ui/Text";
+import { authSelector } from "@/v1/redux/reducers/authReducer";
 import { useSelector } from "react-redux";
-import Text from "../../../components/ui/Text";
-import { authSelector } from "../../../redux/reducers/authReducer";
 import Profile from "./Profile";
 import ShoppingCart from "./ShoppingCart";
 

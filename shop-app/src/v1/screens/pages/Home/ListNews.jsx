@@ -1,7 +1,7 @@
+import IMAGE from "@/v1/assets/news/image.png";
+import CardNews from "@/v1/components/shop/ui/CardNews";
+import RenderNewsCardNone from "@/v1/components/shop/ui/RenderNewsCardNone";
 import { useState } from "react";
-import IMAGE from "../../../assets/news/image.png";
-import CardNews from "../../../components/ui/CardNews";
-import RenderNewsCardNone from "../../../components/ui/RenderNewsCardNone";
 
 const ListNews = () => {
   const [isLoading, setIsLoading] = useState(false);

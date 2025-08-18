@@ -1,12 +1,12 @@
+import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
+import Icon from "@/v1/components/shop/ui/Icon";
+import Text from "@/v1/components/shop/ui/Text";
+import ROUTES from "@/v1/configs/configRoutes";
+import { authSelector } from "@/v1/redux/reducers/authReducer";
 import { FaUser } from "react-icons/fa";
 import { FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ButtonComponent from "../../../components/ui/ButtonComponent";
-import Icon from "../../../components/ui/Icon";
-import Text from "../../../components/ui/Text";
-import ROUTES from "../../../configs/configRoutes";
-import { authSelector } from "../../../redux/reducers/authReducer";
 
 const Profile = () => {
   const authAccount = useSelector(authSelector);

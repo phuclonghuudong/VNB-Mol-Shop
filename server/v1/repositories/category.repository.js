@@ -29,6 +29,17 @@ class CategoryDAO {
     return category ? new CategoryDTO(category) : null;
   }
 
+  async findByStatus12() {
+    const categories = await prisma.category.findMany({
+      where: {
+        status: {
+          in: [1, 2],
+        },
+      },
+    });
+    return categories.map((c) => new CategoryDTO(c));
+  }
+
   async create(data) {
     const category = await prisma.category.create({
       data: {

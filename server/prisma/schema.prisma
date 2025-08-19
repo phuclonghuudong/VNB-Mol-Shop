@@ -142,6 +142,7 @@ model CartItem {
     variant_id    Int
     productVariant   ProductVariant @relation(fields: [variant_id], references: [variant_id])
   
+    @@index([cart_id])
     @@index([variant_id])
 }
 
@@ -155,8 +156,24 @@ model Category {
   createdAt         DateTime  @default(now())                            
   updatedAt         DateTime  @updatedAt                                 
   
-  product Product[]
+  categoryProduct CategoryProduct[]
   attribute Attribute[]
+}
+
+model CategoryProduct {
+  category_product_id       Int       @id @default(autoincrement())           
+  category_product_name     String    @db.VarChar(100) @unique                 
+  category_product_slug     String    @db.VarChar(100) @unique               
+  description       String?   @db.Text                                  
+  image_url         String?   @db.Text                                   
+  status            Int       @db.TinyInt                                
+  createdAt         DateTime  @default(now())                            
+  updatedAt         DateTime  @updatedAt  
+
+  category_id    Int
+  category   Category @relation(fields: [category_id], references: [category_id])                               
+  
+  product Product[]
 }
 
 model Contact {
@@ -237,7 +254,7 @@ model Customer {
     createdAt       DateTime    @default(now())                            
     updatedAt       DateTime    @updatedAt  
 
-    account_id    Int   @unique
+    account_id    Int    @unique
     account   Account @relation(fields: [account_id], references: [account_id])
     group_id    Int
     group   CustomerGroup @relation(fields: [group_id], references: [group_id])
@@ -512,13 +529,13 @@ model Product {
     updatedAt           DateTime    @updatedAt  
 
 
-    category_id         Int
-    category   Category @relation(fields: [category_id], references: [category_id])
+    category_product_id         Int
+    categoryProduct   CategoryProduct @relation(fields: [category_product_id], references: [category_product_id])
     brand_id            Int
     brand   Brand @relation(fields: [brand_id], references: [brand_id])
   
 
-    @@index([category_id])
+    @@index([category_product_id])
     @@index([brand_id])
 
     productVariant  ProductVariant[]
@@ -552,9 +569,6 @@ model ProductComment {
 
 model ProductReview {
     review_id       Int         @id @default (autoincrement())
-    product_name    String      @db.VarChar(100)     @unique
-    product_slug    String      @db.VarChar(100)     @unique
-    product_sku     String      @db.VarChar(50)      @unique
     rating          Int?        @default(0)
     content         String?     @db.Text
     status          Int         @db.TinyInt                                

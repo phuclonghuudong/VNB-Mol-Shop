@@ -1,39 +1,36 @@
-class RoleDTO {
+class RolePermissionActionDTO {
   constructor({
+    id,
     role_id,
-    role_name,
-    role_slug,
+    permission_id,
+    action_id,
     description,
-    is_system,
     status,
     createdAt,
     updatedAt,
-    account = [],
   }) {
+    this.id = id;
     this.role_id = role_id;
-    this.role_name = role_name;
-    this.role_slug = role_slug;
+    this.permission_id = permission_id;
+    this.action_id = action_id;
     this.description = description;
-    this.is_system = is_system;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.account = account;
   }
 
   toJSON() {
     return {
-      id: this.role_id,
-      name: this.role_name,
-      slug: this.role_slug,
+      id: this.id,
+      roleId: this.role_id,
+      permissionId: this.permission_id,
+      action: this.action_id,
       description,
-      isSystem: this.is_system,
       status,
       createdAt,
       updatedAt,
-      account,
     };
   }
 }
 
-module.exports = RoleDTO;
+module.exports = RolePermissionActionDTO;

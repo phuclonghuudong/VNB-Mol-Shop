@@ -1,33 +1,29 @@
-class CustomerGroupDTO {
+class PermissionDTO {
   constructor({
-    group_id,
-    group_name,
+    permission_id,
+    permission_name,
     description,
     status,
     createdAt,
     updatedAt,
-    customer = [],
   }) {
-    this.group_id = group_id;
-    this.group_name = group_name;
+    this.permission_id = permission_id;
+    this.permission_name = permission_name;
     this.description = description;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.customer = customer;
   }
 
   toJSON() {
     return {
-      id: this.group_id,
-      name: this.group_name,
-      description,
+      id: this.permission_id,
+      name: this.permission_name,
       status,
       createdAt,
       updatedAt,
-      customer,
     };
   }
 }
 
-module.exports = CustomerGroupDTO;
+module.exports = PermissionDTO;

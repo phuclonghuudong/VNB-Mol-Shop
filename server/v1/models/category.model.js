@@ -8,7 +8,6 @@ class CategoryDTO {
     status,
     createdAt,
     updatedAt,
-    products = [],
     attributes = [],
   }) {
     this.category_id = category_id;
@@ -19,7 +18,6 @@ class CategoryDTO {
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.products = products;
     this.attributes = attributes;
   }
 
@@ -28,13 +26,12 @@ class CategoryDTO {
       id: this.category_id,
       name: this.category_name,
       slug: this.category_slug,
-      description: this.description,
+      description,
       imageUrl: this.image_url,
-      status: this.status,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      products: this.products,
-      attributes: this.attributes,
+      status,
+      createdAt,
+      updatedAt,
+      attributes,
     };
   }
 }

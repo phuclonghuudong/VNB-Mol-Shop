@@ -28,13 +28,13 @@ class CartItemDTO {
       id: this.item_id,
       cartId: this.cart_id,
       variantId: this.variant_id,
-      quantity,
+      quantity: this.quantity,
       priceAtTime: this.price_at_time,
       promotionPrice: this.promotion_price,
       isActive: this.is_active,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

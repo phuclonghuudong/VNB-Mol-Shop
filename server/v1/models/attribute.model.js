@@ -25,9 +25,9 @@ class AttributeDTO {
       name: this.attribute_name,
       slug: this.attribute_slug,
       type: this.attribute_type,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

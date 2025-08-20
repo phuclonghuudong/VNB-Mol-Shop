@@ -23,9 +23,9 @@ class PromotionActionDTO {
       promotionId: this.promotion_id,
       type: this.action_type,
       value: this.action_value,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

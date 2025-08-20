@@ -23,9 +23,9 @@ class VariantAttributeValueDTO {
       attributeId: this.attribute_id,
       attributeValueId: this.value_id,
       customValue: this.custom_value,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

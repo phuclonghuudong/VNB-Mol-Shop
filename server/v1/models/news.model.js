@@ -34,16 +34,16 @@ class NewsDTO {
       id: this.news_id,
       personnelId: this.personnel_id,
       newsTitle: this.news_title,
-      summary,
+      summary: this.summary,
       newsSlug: this.news_slug,
       content: this.content,
       imageUrl: this.image_url,
       viewCount: this.view_count,
       publishDate: this.publish_date,
       isFeatured: this.is_featured,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

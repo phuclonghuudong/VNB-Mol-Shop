@@ -28,13 +28,13 @@ class ReturnOrderDetailDTO {
       id: this.return_detail_id,
       returnId: this.return_id,
       variantId: this.variant_id,
-      quantity,
-      unit,
+      quantity: this.quantity,
+      unit: this.unit,
       refundPrice: this.refund_price,
-      restock,
-      status,
-      createdAt,
-      updatedAt,
+      restock: this.restock,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

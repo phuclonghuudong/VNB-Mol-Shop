@@ -29,15 +29,15 @@ class ProductVariantDTO {
     return {
       id: this.variant_id,
       productId: this.product_id,
-      sku,
-      description,
+      sku: this.sku,
+      description: this.description,
       avgCost: this.avg_cost,
       priceSell: this.price_sell,
       priceOriginal: this.price_original,
       isDefault: this.is_default,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

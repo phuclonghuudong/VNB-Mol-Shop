@@ -31,10 +31,10 @@ class ReturnOrderDTO {
       warehouseId: this.warehouse_id,
       totalRefund: this.total_refund,
       returnReason: this.return_reason,
-      note,
-      status,
-      createdAt,
-      updatedAt,
+      note: this.note,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

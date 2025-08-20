@@ -33,11 +33,11 @@ class ProductDTO {
       name: this.product_name,
       slug: this.product_slug,
       sku: this.product_sku,
-      views,
-      description,
-      status,
-      createdAt,
-      updatedAt,
+      views: this.views,
+      description: this.description,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

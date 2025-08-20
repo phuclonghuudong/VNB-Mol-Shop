@@ -28,10 +28,10 @@ class ProductCommentDTO {
       customerId: this.customer_id,
       personnelId: this.personnel_id,
       parentId: this.parent_id,
-      content,
-      status,
-      createdAt,
-      updatedAt,
+      content: this.content,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

@@ -41,9 +41,9 @@ class ShippingMethodDTO {
       deliveryTime: this.delivery_time, // Thời gian giao hàng
       baseFee: this.base_fee, // Phí cơ bản
       freeThreshold: this.free_threshold, // Miễn phí từ giá trị này
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

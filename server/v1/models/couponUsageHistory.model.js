@@ -29,9 +29,9 @@ class CouponUsageHistoryDTO {
       orderId: this.order_id,
       usedAt: this.used_at,
       discountValue: this.discount_value,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

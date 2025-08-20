@@ -30,11 +30,11 @@ class OrderConfirmationDTO {
       personnelId: this.personnel_id,
       confirmedAt: this.confirmed_at, // Thời gian xác nhận
       confirmedStatus: this.confirmed_status, // Thời gian xác nhận
-      source, // Xác nhận
-      note,
-      status,
-      createdAt,
-      updatedAt,
+      source: this.source, // Xác nhận
+      note: this.note,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

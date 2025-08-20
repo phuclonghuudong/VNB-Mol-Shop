@@ -31,10 +31,10 @@ class CartDTO {
       totalCost: this.total_cost,
       totalDiscount: this.total_discount,
       couponCode: this.coupon_code,
-      note,
-      status,
-      createdAt,
-      updatedAt,
+      note: this.note,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

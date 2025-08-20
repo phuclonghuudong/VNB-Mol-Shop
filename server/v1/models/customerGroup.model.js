@@ -21,11 +21,11 @@ class CustomerGroupDTO {
     return {
       id: this.group_id,
       name: this.group_name,
-      description,
-      status,
-      createdAt,
-      updatedAt,
-      customer,
+      description: this.description,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
+      customer: this.customer,
     };
   }
 }

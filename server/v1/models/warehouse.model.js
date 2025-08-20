@@ -23,9 +23,9 @@ class WarehouseDTO {
       name: this.warehouse_name,
       address: this.address,
       description: this.description,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

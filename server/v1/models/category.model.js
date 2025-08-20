@@ -26,12 +26,12 @@ class CategoryDTO {
       id: this.category_id,
       name: this.category_name,
       slug: this.category_slug,
-      description,
+      description: this.description,
       imageUrl: this.image_url,
-      status,
-      createdAt,
-      updatedAt,
-      attributes,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
+      attributes: this.attributes,
     };
   }
 }

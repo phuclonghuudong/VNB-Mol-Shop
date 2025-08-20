@@ -25,10 +25,10 @@ class RolePermissionActionDTO {
       roleId: this.role_id,
       permissionId: this.permission_id,
       action: this.action_id,
-      description,
-      status,
-      createdAt,
-      updatedAt,
+      description: this.description,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

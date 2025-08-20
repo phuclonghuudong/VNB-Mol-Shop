@@ -28,13 +28,13 @@ class PurchaseOrderDetailDTO {
       id: this.pod_id,
       purchaseOrderId: this.po_id,
       variantId: this.variant_id,
-      quantity,
+      quantity: this.quantity,
       priceImport: this.price_import,
-      unit,
+      unit: this.unit,
       totalPrice: this.total_price,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

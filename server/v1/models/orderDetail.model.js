@@ -30,14 +30,14 @@ class OrderDetailDTO {
       id: this.order_detail_id,
       orderId: this.order_id,
       variant: this.variant_id,
-      quantity,
+      quantity: this.quantity,
       priceSell: this.price_sell, // Giá trước khuyến mãi
       discount: this.discount, // Tổng giảm giá
       finalPrice: this.final_price, // Tổng giảm giá x số lượng
       costPrice: this.cost_price, // Giá vốn tại thời điểm bán
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

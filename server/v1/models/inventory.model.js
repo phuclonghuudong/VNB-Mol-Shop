@@ -26,12 +26,12 @@ class InventoryDTO {
       id: this.inventory_id,
       warehouseId: this.warehouse_id,
       variantId: this.variant_id,
-      quantity,
+      quantity: this.quantity,
       avgCost: this.avg_cost,
       lastImportPrice: this.last_import_price, // Giá nhập mới nhất
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

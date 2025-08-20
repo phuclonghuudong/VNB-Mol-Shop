@@ -40,10 +40,10 @@ class PaymentDTO {
       paymentDetail: this.payment_detail, // Chi tiết phản hồi
       backCode: this.back_code,
       cardType: this.card_type,
-      note,
-      status,
-      createdAt,
-      updatedAt,
+      note: this.note,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

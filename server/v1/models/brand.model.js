@@ -26,11 +26,11 @@ class BrandDTO {
       id: this.brand_id,
       name: this.brand_name,
       slug: this.brand_slug,
-      description,
+      description: this.description,
       imageUrl: this.image_url,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
       products: this.products,
     };
   }

@@ -23,9 +23,9 @@ class FavoriteProductDTO {
       productId: this.product_id,
       customerId: this.customer_id,
       favoriteDate: this.favorite_date,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

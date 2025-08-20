@@ -20,9 +20,9 @@ class PromotionDetailDTO {
       id: this.detail_id,
       promotionId: this.promotion_id,
       variantId: this.variant_id,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

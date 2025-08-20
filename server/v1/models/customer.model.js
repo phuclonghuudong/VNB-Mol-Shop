@@ -29,15 +29,15 @@ class CustomerDTO {
     return {
       id: this.customer_id,
       accountId: this.account_id,
-      fullname,
-      gender,
-      birthday,
-      points,
-      address,
-      avatar,
-      status,
-      createdAt,
-      updatedAt,
+      fullname: this.fullname,
+      gender: this.gender,
+      birthday: this.birthday,
+      points: this.points,
+      address: this.address,
+      avatar: this.avatar,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

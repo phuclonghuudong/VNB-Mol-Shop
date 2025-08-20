@@ -29,12 +29,12 @@ class CategoryProductDTO {
       categoryId: this.category_id,
       name: this.category_product_name,
       slug: this.category_product_slug,
-      description,
+      description: this.description,
       imageUrl: this.image_url,
-      status,
-      createdAt,
-      updatedAt,
-      product,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
+      product: this.product,
     };
   }
 }

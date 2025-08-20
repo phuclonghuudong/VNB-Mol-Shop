@@ -38,9 +38,9 @@ class PromotionDTO {
       isActive: this.is_active,
       priority: this.priority,
       type: this.promotion_type,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

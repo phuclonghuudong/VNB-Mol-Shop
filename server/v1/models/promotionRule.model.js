@@ -23,9 +23,9 @@ class PromotionRuleDTO {
       promotionId: this.promotion_id,
       ruleType: this.rule_type,
       conditionValue: this.condition_value,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

@@ -33,7 +33,7 @@ class CouponDTO {
     return {
       id: this.coupon_id,
       promotionId: this.promotion_id,
-      code,
+      code: this.code,
       maxUses: this.max_uses,
       minOrderValue: this.min_order_value,
       usedCount: this.used_count,
@@ -41,9 +41,9 @@ class CouponDTO {
       expiryDate: this.expiry_date,
       usageLimitPerCustomer: this.usage_limit_per_customer,
       isPublic: this.is_public,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

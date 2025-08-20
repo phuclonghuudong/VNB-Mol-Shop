@@ -23,9 +23,9 @@ class ImgProductDetailDTO {
       variantId: this.variant_id,
       imageUrl: this.image_url,
       isMain: this.is_main,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

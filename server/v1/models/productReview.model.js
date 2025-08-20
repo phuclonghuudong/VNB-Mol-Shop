@@ -23,11 +23,11 @@ class ProductReviewDTO {
       id: this.review_id,
       productId: this.product_id,
       customerId: this.customer_id,
-      rating,
-      content,
-      status,
-      createdAt,
-      updatedAt,
+      rating: this.rating,
+      content: this.content,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

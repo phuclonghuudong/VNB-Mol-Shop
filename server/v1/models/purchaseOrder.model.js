@@ -24,11 +24,11 @@ class PurchaseOrderDTO {
       id: this.po_id,
       personnelId: this.personnel_id,
       supplierName: this.supplier_name,
-      note,
+      note: this.note,
       totalPrice: this.total_price,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }

@@ -25,13 +25,13 @@ class AddressDTO {
     return {
       id: this.address_id,
       customerId: this.customer_id,
-      fullname,
-      phone,
-      address,
+      fullname: this.fullname,
+      phone: this.phone,
+      address: this.address,
       isMain: this.is_main,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

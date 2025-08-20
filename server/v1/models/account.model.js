@@ -37,19 +37,19 @@ class AccountDTO {
     return {
       id: this.account_id,
       roleId: this.role_id,
-      username,
-      password,
-      phone,
-      email,
+      username: this.username,
+      password: this.password,
+      phone: this.phone,
+      email: this.email,
       verifyEmail: this.verify_email,
       verifyOtp: this.verify_otp,
       expiredOtp: this.expired_otp,
       refreshToken: this.refresh_token,
-      status,
-      createdAt,
-      updatedAt,
-      customer,
-      personnel,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
+      customer: this.customer,
+      personnel: this.personnel,
     };
   }
 }

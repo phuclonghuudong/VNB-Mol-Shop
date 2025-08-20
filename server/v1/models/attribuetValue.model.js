@@ -20,11 +20,11 @@ class AttributeValueDTO {
     return {
       id: this.value_id,
       attributeId: this.attribute_id,
-      value,
+      value: this.value,
       displayOrder: this.display_order,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

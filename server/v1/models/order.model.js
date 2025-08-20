@@ -56,9 +56,9 @@ class OrderDTO {
       recipientPhone: this.recipient_phone, // Số điện thoại người nhận
       shippingAddress: this.shipping_address, // Địa chỉ nhận hàng
       note: this.note,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

@@ -20,10 +20,10 @@ class ActionDTO {
     return {
       id: this.action_id,
       name: this.action_name,
-      description,
-      status,
-      updatedAt,
-      createdAt,
+      description: this.description,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

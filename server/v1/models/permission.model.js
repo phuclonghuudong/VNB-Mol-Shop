@@ -19,9 +19,9 @@ class PermissionDTO {
     return {
       id: this.permission_id,
       name: this.permission_name,
-      status,
-      createdAt,
-      updatedAt,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

@@ -38,15 +38,15 @@ class PaymentGatewayDTO {
       code: this.gateway_code,
       merchantId: this.merchant_id,
       merchantKey: this.merchant_key,
-      config,
+      config: this.config,
       isActive: this.is_active,
       feePercentage: this.fee_percentage,
       feeFixed: this.fee_fixed,
-      description,
-      note,
-      status,
-      createdAt,
-      updatedAt,
+      description: this.description,
+      note: this.note,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.createdAt,
     };
   }
 }

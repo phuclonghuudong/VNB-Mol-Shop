@@ -3,18 +3,43 @@ import Icon from "@/v1/components/shop/ui/Icon";
 import Text from "@/v1/components/shop/ui/Text";
 import ROUTES from "@/v1/configs/configRoutes";
 import { authSelector } from "@/v1/redux/reducers/authReducer";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import accountAPI from "../../../apis/accountApi";
+import AxiosToastError from "../../../utils/AxiosToastError";
 
 const Profile = () => {
   const authAccount = useSelector(authSelector);
-  console.log(authAccount);
+  const [info, setInfo] = useState();
+  const [loading, setLoading] = useState(false);
+  console.log("TOKEN: ", authAccount?.token);
   const navigate = useNavigate();
 
   const handleClickUpdate = () => {
     navigate(ROUTES?.INFORMATION);
+  };
+
+  useEffect(() => {
+    fetchInfoAccount();
+  }, [authAccount]);
+
+  const fetchInfoAccount = async () => {
+    setLoading(true);
+    try {
+      const token = authAccount?.token;
+      const res = await accountAPI.profile_Customer(token);
+
+      if (res?.SUCCESS) {
+        console.log("INFO: ", res);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const TitleInfo = ({ icon: ICON, title, text }) => {

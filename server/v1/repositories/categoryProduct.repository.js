@@ -8,6 +8,20 @@ class CategoryProductDAO {
     return categories.map((c) => new CategoryProductDTO(c));
   }
 
+  async findByStatus1() {
+    const categories = await prisma.categoryProduct.findMany({
+      where: { status: 1 },
+    });
+    return categories.map((c) => new CategoryProductDTO(c));
+  }
+
+  async findByStatusNotMinus1() {
+    const categories = await prisma.categoryProduct.findMany({
+      where: { status: { not: -1 } },
+    });
+    return categories.map((c) => new CategoryProductDTO(c));
+  }
+
   async findById(id) {
     const category = await prisma.categoryProduct.findUnique({
       where: { category_product_id: id },

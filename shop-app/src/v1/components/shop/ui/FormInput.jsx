@@ -48,6 +48,10 @@ const FormInput = ({
             value={value}
             onChange={onChange}
             className="p-3  outline-none"
+            onCopy={(e) => e.preventDefault()}
+            onCut={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
+            onContextMenu={(e) => e.preventDefault()}
           />
           {showPassword ? (
             <FaEyeSlash

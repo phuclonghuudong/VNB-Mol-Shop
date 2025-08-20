@@ -22,6 +22,13 @@ const validPasswordInput = async (password) => {
   return reg.test(password);
 };
 
+const isValidSlugInput = (slug) => {
+  // slug: chỉ cho phép chữ thường (a-z), số (0-9) và dấu gạch ngang (-)
+  // Không bắt đầu/kết thúc bằng "-", không có "--" liên tiếp
+  const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+  return slugRegex.test(slug);
+};
+
 const isValidCCCDInput = async (cccd) => {
   const regex = /^\d{12}$/;
   return regex.test(cccd);
@@ -42,6 +49,7 @@ module.exports = {
   validEmailInput,
   validPhoneInput,
   validPasswordInput,
+  isValidSlugInput,
   isValidCCCDInput,
   hashPassword,
   comparePassword,

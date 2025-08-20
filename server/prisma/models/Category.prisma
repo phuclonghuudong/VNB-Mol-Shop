@@ -9,5 +9,5 @@ model Category {
   updatedAt         DateTime  @updatedAt                                 
   
   categoryProduct CategoryProduct[]
-  attribute Attribute[]
+  categoryAttribute   CategoryAttribute[]
 }

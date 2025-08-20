@@ -13,7 +13,7 @@ const Administration = () => {
       <Route
         path="/"
         element={
-          <ProtectedRoute allowedRoles={["ADMIN", "NHANVIEN"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "PERSONNEL"]}>
             <AdministrationLayout />
           </ProtectedRoute>
         }

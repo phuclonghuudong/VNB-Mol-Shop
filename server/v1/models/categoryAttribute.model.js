@@ -1,32 +1,33 @@
-class AttributeValueDTO {
+class CategoryAttributeDTO {
   constructor({
-    value_id,
+    id,
+    category_id,
     attribute_id,
-    value,
-    display_order,
+    description,
     status,
     createdAt,
     updatedAt,
   }) {
-    this.value_id = value_id;
+    this.id = id;
+    this.category_id = category_id;
     this.attribute_id = attribute_id;
-    this.value = value;
-    this.display_order = display_order;
+    this.description = description;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
+
   toJSON() {
     return {
-      id: this.value_id,
+      id: this.id,
+      categoryId: this.category_id,
       attributeId: this.attribute_id,
-      value: this.value,
-      displayOrder: this.display_order,
+      description: this.description,
       status: this.status,
       createdAt: this.createdAt,
-      updatedAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }
 
-module.exports = AttributeValueDTO;
+module.exports = CategoryAttributeDTO;

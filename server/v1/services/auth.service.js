@@ -52,7 +52,7 @@ class AuthBUS {
   async signUpCustomer(data) {
     const createAccount = await AccountBUS.createAccount({
       ...data,
-      role: "KHACHHANG",
+      role: "CUSTOMER",
     });
 
     const accountId = createAccount?.id;

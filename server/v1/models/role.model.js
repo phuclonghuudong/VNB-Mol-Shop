@@ -26,7 +26,7 @@ class RoleDTO {
       id: this.role_id,
       name: this.role_name,
       slug: this.role_slug,
-      description,
+      description: this.description,
       isSystem: this.is_system,
       status: this.status,
       createdAt: this.createdAt,

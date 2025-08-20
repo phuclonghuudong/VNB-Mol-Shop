@@ -1,10 +1,10 @@
 class AttributeDTO {
   constructor({
     attribute_id,
-    attribute_name,
-    attribute_slug,
-    attribute_type,
-    is_custom,
+    attribute_name, // Tên thuộc tính
+    attribute_slug, // Tên định danh
+    attribute_type, // Kiểu dữ liệu
+    is_custom, // Dữ liệu nhập tay hay tạo sẵn
     status,
     createdAt,
     updatedAt,
@@ -25,6 +25,7 @@ class AttributeDTO {
       name: this.attribute_name,
       slug: this.attribute_slug,
       type: this.attribute_type,
+      isCustom: this.is_custom,
       status: this.status,
       createdAt: this.createdAt,
       updatedAt: this.createdAt,

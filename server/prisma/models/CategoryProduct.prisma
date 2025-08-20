@@ -9,7 +9,9 @@ model CategoryProduct {
   updatedAt         DateTime  @updatedAt  
 
   category_id    Int
-  category   Category @relation(fields: [category_id], references: [category_id])                               
+  category   Category @relation(fields: [category_id], references: [category_id])  
+
+  @@index([category_id])                             
   
   product Product[]
 }

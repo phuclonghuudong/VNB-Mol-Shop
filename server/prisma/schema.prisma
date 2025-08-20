@@ -68,15 +68,9 @@ model Attribute {
     createdAt           DateTime    @default(now())                            
     updatedAt           DateTime    @updatedAt  
 
-
-    category_id Int
-    category   Category @relation(fields: [category_id], references: [category_id])
-  
-
-    @@index([category_id])
-
     attributeValue  AttributeValue[]
     variantAttributeValue  VariantAttributeValue[]
+    categoryAttribute   CategoryAttribute[]
 }
 
 model AttributeValue {
@@ -157,7 +151,23 @@ model Category {
   updatedAt         DateTime  @updatedAt                                 
   
   categoryProduct CategoryProduct[]
-  attribute Attribute[]
+  categoryAttribute   CategoryAttribute[]
+}
+
+model CategoryAttribute {
+  id       Int       @id @default(autoincrement())                        
+  description       String?   @db.Text                                  
+  status            Int       @db.TinyInt                                
+  createdAt         DateTime  @default(now())                            
+  updatedAt         DateTime  @updatedAt                                 
+  
+  category_id    Int
+    category   Category @relation(fields: [category_id], references: [category_id])
+  attribute_id    Int
+    attribute   Attribute @relation(fields: [attribute_id], references: [attribute_id])
+
+    @@index([category_id]) 
+    @@index([attribute_id]) 
 }
 
 model CategoryProduct {
@@ -171,7 +181,9 @@ model CategoryProduct {
   updatedAt         DateTime  @updatedAt  
 
   category_id    Int
-  category   Category @relation(fields: [category_id], references: [category_id])                               
+  category   Category @relation(fields: [category_id], references: [category_id])  
+
+  @@index([category_id])                             
   
   product Product[]
 }

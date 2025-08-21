@@ -44,6 +44,17 @@ const comparePassword = async (txtPassword, password) => {
   return pass;
 };
 
+const isValidNormalizeValue = (value) => {
+  if (value === undefined) return null;
+  if (value === "") return null;
+  return value;
+};
+
+const isValidNormalizeDate = (value) => {
+  if (!value) return null;
+  return new Date(value).toISOString().split("T")[0];
+};
+
 module.exports = {
   validUsernameInput,
   validEmailInput,
@@ -53,4 +64,6 @@ module.exports = {
   isValidCCCDInput,
   hashPassword,
   comparePassword,
+  isValidNormalizeValue,
+  isValidNormalizeDate,
 };

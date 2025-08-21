@@ -17,8 +17,8 @@ class AddressDTO {
     this.address = address;
     this.is_main = is_main;
     this.status = status;
-    thí.createdAt = createdAt;
-    thí.updatedAt = updatedAt;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
   toJSON() {

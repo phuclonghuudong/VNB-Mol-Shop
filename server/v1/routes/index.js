@@ -11,6 +11,11 @@ const AuthCustomer = require("./authCustomer.route");
 const Upload = require("./upload.route");
 const Address = require("./address.route");
 const Attribute = require("./attribute.route");
+const CategoryAttribute = require("./categoryAttribute.route");
+const CategorySize = require("./categorySize.route");
+const Color = require("./color.route");
+const Size = require("./size.route");
+const Product = require("./product.route");
 
 const BASE_PATH = "/api/v1";
 
@@ -25,5 +30,10 @@ router.use(`${BASE_PATH}/auth`, AuthCustomer);
 router.use(`${BASE_PATH}/upload`, Upload);
 router.use(`${BASE_PATH}/address`, Address);
 router.use(`${BASE_PATH}/attribute`, Attribute);
+router.use(`${BASE_PATH}/category-attribute`, CategoryAttribute);
+router.use(`${BASE_PATH}/category-size`, CategorySize);
+router.use(`${BASE_PATH}/color`, Color);
+router.use(`${BASE_PATH}/size`, Size);
+router.use(`${BASE_PATH}/product`, Product);
 
 module.exports = router;

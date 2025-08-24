@@ -1,47 +1,57 @@
 import { swiperBreakpoints } from "@/v1/utils/swiperBreakpoints";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import CategoryAPI from "../../../apis/shop/category.api";
+import AxiosToastError from "../../../utils/AxiosToastError";
 import ProductCarousel from "./ProductCarousel";
 
 const ListProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const listMenu = useMemo(
-    () => [
-      "Tất",
-      "Áo cầu lông",
-      "Giày cầu lông",
-      "Vợt cầu lông",
-      "Phụ kiện 1",
-      "Phụ kiện 2",
-      "Phụ kiện 3",
-      "Phụ kiện 4",
-      "Phụ kiện 5",
-      "Phụ kiện 6",
-      "Phụ kiện 7",
-    ],
-    []
-  );
+  const [listCategoryProduct, setListCategoryProduct] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
 
-  const [activeTab, setActiveTab] = useState(listMenu[0]);
   const fakeData = [...Array(10)].map((_, i) => ({ id: i, name: `SP ${i}` }));
+
+  const fetchDataAllCategoryProduct = async () => {
+    setIsLoading(true);
+    try {
+      const res = await CategoryAPI.get_All_Category_Product();
+      if (res?.SUCCESS) {
+        const categories = res?.DATA || [];
+        const withAll = [
+          { id: "all", name: "Tất cả", slug: "all" },
+          ...categories,
+        ];
+        setListCategoryProduct(withAll);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataAllCategoryProduct();
+  }, []);
 
   return (
     <section className="md:p-5 p-2 w-full">
       <div className="border border-gray-200 rounded-lg shadow-sm overflow-hidden w-full">
         <div className="py-3 bg-white">
           <Swiper slidesPerView={5} breakpoints={swiperBreakpoints}>
-            {listMenu.map((category, index) => (
-              <SwiperSlide key={index}>
+            {listCategoryProduct.map((x, index) => (
+              <SwiperSlide key={index + x?.id}>
                 <div
-                  onClick={() => setActiveTab(category)}
+                  onClick={() => setActiveTab(x?.slug)}
                   className={`h-12 flex justify-center items-center  cursor-pointer transition-all duration-200 border-gray-200 border-r-1
                     ${
-                      activeTab === category
+                      activeTab === x?.slug
                         ? "bg-orange-600 text-white"
                         : "bg-white text-gray-700 hover:bg-gray-200"
                     }`}
                 >
-                  <p className="font-bold text-xl text-center">{category}</p>
+                  <p className="font-bold text-xl text-center">{x?.name}</p>
                 </div>
               </SwiperSlide>
             ))}

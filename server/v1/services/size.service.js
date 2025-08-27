@@ -25,7 +25,7 @@ class SizeBUS {
 
   async getSizeById(id) {
     const result = await SizeDAO.findById(Number(id));
-    if (!result) throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result) throw new NotFoundError("KÍCH THƯỚC KHÔNG TỒN TẠI");
 
     return result.toJSON?.() ?? result;
   }

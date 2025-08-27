@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   signUpCustomer,
   verifyEmailForgotPasswordCustomer,
-  signInCustomer,
+  signIn,
   verifyOtpByEmail,
   resetPassword,
   refreshToken,
@@ -15,8 +15,9 @@ const authorizeRole = require("../middlewares/authorizeRole");
 
 // const PATH = "/auth";
 
+router.post(`/sign-in`, signIn);
+
 router.post(`/customer/sign-up`, signUpCustomer);
-router.post(`/customer/sign-in`, signInCustomer);
 router.post(
   `/customer/verify-email-forgot-password`,
   verifyEmailForgotPasswordCustomer

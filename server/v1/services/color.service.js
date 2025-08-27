@@ -20,7 +20,7 @@ class ColorBUS {
 
   async getColorById(id) {
     const result = await ColorDAO.findById(Number(id));
-    if (!result) throw new NotFoundError("ID KHÔNG TỒN TẠI DỮ LIỆU");
+    if (!result) throw new NotFoundError("MÀU SẮC KHÔNG TỒN TẠI");
 
     return result.toJSON?.() ?? result;
   }

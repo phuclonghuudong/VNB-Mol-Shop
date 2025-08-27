@@ -1,6 +1,7 @@
 const sendEmail = require("../configs/sendMail");
 const AccountBUS = require("./account.service");
 const CustomerBUS = require("./customer.service");
+const PersonnelBUS = require("./personnel.service");
 const RoleBUS = require("./role.service");
 const {
   BadRequestError,
@@ -15,22 +16,21 @@ const {
 const { validateAccountStatus } = require("../utils/validateStatus");
 const verifyEmailTemplate = require("../utils/verifyEmailTemplate");
 
-class AuthCustomerBUS {
-  async customerAccountInformation(account, customer, role) {
+class AuthBUS {
+  async userAccountInformation(account, user, role) {
     return {
       role: role?.slug,
-      customerId: customer?.id,
+      userId: user?.id,
       accountId: account?.id,
       roleId: account?.roleId,
       username: account?.username,
       phone: account?.phone,
       email: account?.email,
-      fullname: customer?.fullname,
-      gender: customer?.gender,
-      birthday: customer?.birthday,
-      points: customer?.points,
-      address: customer?.address,
-      avatar: customer?.avatar,
+      fullname: user?.fullname,
+      gender: user?.gender,
+      birthday: user?.birthday,
+      address: user?.address,
+      avatar: user?.avatar,
       status: account?.status,
     };
   }
@@ -42,7 +42,7 @@ class AuthCustomerBUS {
 
     const checkRole = await RoleBUS.getRoleById(checkAccount?.roleId);
 
-    const result = await this.customerAccountInformation(
+    const result = await this.userAccountInformation(
       checkAccount,
       checkCustomer,
       checkRole
@@ -71,7 +71,7 @@ class AuthCustomerBUS {
     const roleId = createAccount?.roleId;
     const findRole = await RoleBUS.getRoleById(roleId);
 
-    const result = await this.customerAccountInformation(
+    const result = await this.userAccountInformation(
       createAccount,
       createCustomer,
       findRole
@@ -83,7 +83,7 @@ class AuthCustomerBUS {
     return result;
   }
 
-  async signInCustomer(data) {
+  async signIn(data) {
     const { username, password } = data;
     const checkAccount = await AccountBUS.getAccountByIdentifier(username);
 
@@ -98,11 +98,17 @@ class AuthCustomerBUS {
     const roleId = checkAccount?.roleId;
 
     const findRole = await RoleBUS.getRoleById(roleId);
-    const findCustomer = await CustomerBUS.getCustomerByAccountId(accountId);
 
-    const result = await this.customerAccountInformation(
+    const [customer, personnel] = await Promise.all([
+      CustomerBUS.getCustomerByAccountIdLogin(accountId),
+      PersonnelBUS.getPersonnelByAccountIdLogin(accountId),
+    ]);
+
+    const entity = customer ?? personnel;
+
+    const result = await this.userAccountInformation(
       checkAccount,
-      findCustomer,
+      entity,
       findRole
     );
 
@@ -185,7 +191,7 @@ class AuthCustomerBUS {
     const updateCustomer = await CustomerBUS.updateInfoCustomer(userId, data);
     const updateAccount = await AccountBUS.updateAccountInfo(accountId, data);
 
-    const result = await this.customerAccountInformation(
+    const result = await this.userAccountInformation(
       updateAccount,
       updateCustomer,
       findRole
@@ -195,4 +201,4 @@ class AuthCustomerBUS {
   }
 }
 
-module.exports = new AuthCustomerBUS();
+module.exports = new AuthBUS();

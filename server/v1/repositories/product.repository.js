@@ -3,15 +3,38 @@ const ProductDTO = require("../models/product.model");
 
 const prisma = new PrismaClient();
 
+function buildIncludeOptions(options = {}) {
+  const include = {};
+
+  options.includeBrand ? (include.brand = true) : false;
+  if (options.includeCategory) include.categoryProduct = true;
+  if (options.includeImage) include.imgProduct = true;
+  options.includeProductVariant ? (include.productVariant = true) : false;
+  if (options.includeProductComment) include.productComment = true;
+  if (options.includeProductReview) include.productReview = true;
+  if (options.includeFavorite) include.favorite = true;
+
+  return include;
+}
+
 class ProductDAO {
   async findAll() {
-    return (await prisma.product.findMany()).map((c) => new ProductDTO(c));
+    const result = await prisma.product.findMany({
+      include: {
+        imgProduct: true,
+      },
+    });
+    return result.map((c) => new ProductDTO(c));
   }
 
   async findAllStatus1(status = 1) {
-    return (await prisma.product.findMany({ where: { status } })).map(
-      (c) => new ProductDTO(c)
-    );
+    const result = await prisma.product.findMany({
+      where: { status },
+      include: {
+        imgProduct: true,
+      },
+    });
+    return result.map((c) => new ProductDTO(c));
   }
 
   async findAllNotMinus1() {
@@ -23,11 +46,7 @@ class ProductDAO {
   async findById(id, options = {}) {
     const res = await prisma.product.findUnique({
       where: { product_id: id },
-      include: {
-        brand: options.includeBrand ?? false,
-        categoryProduct: options.includeCategory ?? false,
-        imgProductFK: options.includeImages ?? false,
-      },
+      include: buildIncludeOptions(options),
     });
     return res ? new ProductDTO(res) : res;
   }

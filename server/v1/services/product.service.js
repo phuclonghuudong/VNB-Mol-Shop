@@ -29,9 +29,13 @@ class ProductBUS {
   }
 
   async getProductById(id) {
-    const result = await ProductDAO.findById(Number(id));
+    const result = await ProductDAO.findById(Number(id), {
+      includeImage: true,
+      includeProductVariant: true,
+      includeBrand: true,
+    });
     if (!result || result.length === 0)
-      throw new NotFoundError("KHÔNG TÌM THẤY DỮ LIỆU");
+      throw new NotFoundError("SẢN PHẨM KHÔNG TỒN TẠI");
 
     return result.toJSON?.() ?? result;
   }

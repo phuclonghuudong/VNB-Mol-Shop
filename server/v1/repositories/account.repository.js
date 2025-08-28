@@ -58,7 +58,7 @@ class AccountDAO {
         verify_otp: data?.verifyOtp || null,
         expired_otp: data?.expiredOtp || null,
         refresh_token: data?.refreshToken || null,
-        status: Number(data?.status) ?? 1,
+        status: Number(data?.status) || 1,
       },
     });
     return new AccountDTO(result);

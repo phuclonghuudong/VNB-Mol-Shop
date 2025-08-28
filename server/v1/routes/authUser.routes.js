@@ -5,13 +5,25 @@ const authenticate = require("../middlewares/authenticate");
 const authorizeRole = require("../middlewares/authorizeRole");
 
 const {
-  RegisterCustomer,
-  LogInUser,
+  sendForgotPasswordEmail,
+  verifyOtpByEmail,
+  logInUser,
+  registerCustomer,
+  resetPassword,
+  refreshToken,
+  profileAccountUser,
 } = require("../controllers/authUser.controller");
 
 // const PATH = "/auth";
 
-router.post(`/sign-in`, LogInUser);
-router.post(`/sign-up`, RegisterCustomer);
+router.post(`/sign-in`, logInUser);
+router.post(`/sign-up`, registerCustomer);
+
+router.put(`/send-forgot-password-email`, sendForgotPasswordEmail);
+router.put(`/verify-otp-by-email`, verifyOtpByEmail);
+router.put(`/reset-password`, resetPassword);
+
+router.put(`/user/refresh-token`, authenticate, refreshToken);
+router.get(`/user/profile`, authenticate, profileAccountUser);
 
 module.exports = router;

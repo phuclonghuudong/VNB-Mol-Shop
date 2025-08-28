@@ -1,4 +1,5 @@
 const AccountDAO = require("../repositories/account.repository");
+const RoleBUS = require("./role.service");
 const {
   NotFoundError,
   ConflictError,
@@ -9,7 +10,9 @@ const {
   validPhoneInput,
   validPasswordInput,
   validUsernameInput,
+  hashPassword,
 } = require("../utils/isValidateInput");
+const generateOtp = require("../utils/generateOtp");
 
 class AccountBUS {
   async getAllAccounts() {
@@ -78,9 +81,9 @@ class AccountBUS {
       );
 
     const [existingUsername, existingPhone, existingEmail] = await Promise.all([
-      AccountDAO.findByUsername(username),
-      AccountDAO.findByPhone(phone),
-      AccountDAO.findByEmail(email),
+      AccountDAO.findAccountByUsername(username),
+      AccountDAO.findAccountByPhone(phone),
+      AccountDAO.findAccountByEmail(email),
     ]);
     if (existingUsername) throw new ConflictError("TÀI KHOẢN ĐÃ ĐƯỢC SỬ DỤNG");
     if (existingPhone) throw new ConflictError("SỐ ĐIỆN THOẠI ĐÃ ĐƯỢC SỬ DỤNG");
@@ -103,9 +106,9 @@ class AccountBUS {
       );
 
     const [existingUsername, existingPhone, existingEmail] = await Promise.all([
-      AccountDAO.findByUsername(username),
-      AccountDAO.findByPhone(phone),
-      AccountDAO.findByEmail(email),
+      AccountDAO.findAccountByUsername(username),
+      AccountDAO.findAccountByPhone(phone),
+      AccountDAO.findAccountByEmail(email),
     ]);
 
     if (existingUsername && Number(existingUsername.account_id) !== Number(id))
@@ -127,9 +130,9 @@ class AccountBUS {
       throw new BadRequestError("SỐ ĐIỆN THOẠI KHÔNG ĐÚNG ĐỊNH DẠNG");
 
     const [existingUsername, existingPhone, existingEmail] = await Promise.all([
-      AccountDAO.findByUsername(username),
-      AccountDAO.findByPhone(phone),
-      AccountDAO.findByEmail(email),
+      AccountDAO.findAccountByUsername(username),
+      AccountDAO.findAccountByPhone(phone),
+      AccountDAO.findAccountByEmail(email),
     ]);
 
     if (existingUsername && Number(existingUsername.account_id) !== Number(id))
@@ -153,6 +156,80 @@ class AccountBUS {
       roleId: checkRole.id,
       password: isValidPassword,
     });
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateSendForgotPasswordEmail(email) {
+    const newOtp = await generateOtp();
+    const expireTime = new Date(Date.now() + 3 * 60 * 1000);
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount.id;
+    const result = await AccountDAO.updateVerificationOtp(accountId, {
+      verifyOtp: newOtp,
+      expiredOtp: expireTime,
+    });
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateVerifyOtpByEmail(data) {
+    const { email, otp } = data;
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount?.id;
+    const currentTime = new Date();
+    const otpVerify = checkAccount?.verifyOtp;
+    const otpExpiry = checkAccount?.expiredOtp;
+
+    if (!otpVerify || Number(otpVerify) !== Number(otp))
+      throw new BadRequestError("MÃ XÁC THỰC KHÔNG ĐÚNG HOẶC ĐÃ HẾT HẠN");
+
+    if (!otpExpiry || currentTime > otpExpiry)
+      throw new BadRequestError("MÃ XÁC THỰC ĐÃ HẾT HẠN");
+
+    const result = await AccountDAO.clearVerificationOtp(accountId);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateResetPassword(data) {
+    const { email, password } = data;
+    const checkValidPassword = await validPasswordInput(password);
+    if (!checkValidPassword)
+      throw new BadRequestError(
+        "MẬT KHẨU ÍT NHẤT 8 KÍ TỰ, BAO GỒM CHỮ HOA_THƯỜNG & SỐ & KÍ TỰ ĐẶC BIỆT"
+      );
+
+    const checkAccount = await this.getAccountByEmail(email);
+
+    const accountId = checkAccount?.id;
+
+    const isValidPassword = await hashPassword(password);
+
+    const result = await AccountDAO.updatePassword(accountId, isValidPassword);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
+  async updateRefreshToken(data) {
+    const { id, token } = data;
+    await this.getAccountById(id);
+
+    const result = await AccountDAO.updateRefreshToken(id, token);
 
     if (!result || result.length === 0)
       throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");

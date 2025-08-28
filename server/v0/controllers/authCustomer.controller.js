@@ -18,8 +18,8 @@ const payloadToken = async (data) => {
 };
 
 const signIn = async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username.trim() || !password.trim())
+  const { username, password } = req.body || {};
+  if (!username?.trim() || !password?.trim())
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
 
   try {
@@ -51,14 +51,14 @@ const signIn = async (req, res, next) => {
 
 const signUpCustomer = async (req, res, next) => {
   const { fullname, username, phone, email, password, confirmPassword } =
-    req.body;
+    req.body || {};
   if (
-    !fullname.trim() ||
-    !username.trim() ||
-    !phone.trim() ||
-    !email.trim() ||
-    !password.trim() ||
-    !confirmPassword.trim()
+    !fullname?.trim() ||
+    !username?.trim() ||
+    !phone?.trim() ||
+    !email?.trim() ||
+    !password?.trim() ||
+    !confirmPassword?.trim()
   )
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
 
@@ -93,7 +93,7 @@ const signUpCustomer = async (req, res, next) => {
 };
 
 const verifyEmailForgotPasswordCustomer = async (req, res, next) => {
-  const { email } = req.body;
+  const { email } = req.body || {};
   if (!email) throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
 
   try {

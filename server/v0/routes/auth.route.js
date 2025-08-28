@@ -17,7 +17,7 @@ const authorizeRole = require("../middlewares/authorizeRole");
 
 router.post(`/sign-in`, signIn);
 
-router.post(`/customer/sign-up`, signUpCustomer);
+router.post(`/sign-up`, signUpCustomer);
 router.post(
   `/customer/verify-email-forgot-password`,
   verifyEmailForgotPasswordCustomer

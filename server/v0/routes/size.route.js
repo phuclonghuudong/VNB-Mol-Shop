@@ -11,10 +11,10 @@ const {
 
 // const PATH = "/size";
 
-router.get(`/all`, getAllSize);
-router.get(`/active`, getAllSizeActive);
-router.get(`/:id`, getSizeById);
+router.get(`/all`, getAllSize); // Lấy tất cả size
+router.get(`/active`, getAllSizeActive); // Lấy tất cả size đang hoạt động
 router.get(`/detail/:code`, getSizeByCode);
+router.get(`/:id`, getSizeById);
 router.post(`/`, createSize);
 router.put(`/:id`, updateSize);
 

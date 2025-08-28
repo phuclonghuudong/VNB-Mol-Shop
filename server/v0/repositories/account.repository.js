@@ -3,40 +3,40 @@ const AccountDTO = require("../models/account.model");
 const prisma = new PrismaClient();
 
 class AccountDAO {
-  async findAllAccounts() {
+  async findAll() {
     const result = await prisma.account.findMany();
     return result.map((x) => new AccountDTO(x));
   }
 
-  async findAccountById(id) {
+  async findById(id) {
     const result = await prisma.account.findUnique({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
     });
     return result ? new AccountDTO(result) : result;
   }
 
-  async findAccountByUsername(value) {
+  async findByUsername(value) {
     const result = await prisma.account.findUnique({
       where: { username: value },
     });
     return result ? new AccountDTO(result) : result;
   }
 
-  async findAccountByEmail(value) {
+  async findByEmail(value) {
     const result = await prisma.account.findUnique({
       where: { email: value },
     });
     return result ? new AccountDTO(result) : result;
   }
 
-  async findAccountByPhone(value) {
+  async findByPhone(value) {
     const result = await prisma.account.findUnique({
       where: { phone: value },
     });
     return result ? new AccountDTO(result) : result;
   }
 
-  async findAccountByIdentifier(value) {
+  async findByIdentifier(value) {
     const result = await prisma.account.findFirst({
       where: {
         OR: [{ username: value }, { email: value }, { phone: value }],
@@ -58,15 +58,15 @@ class AccountDAO {
         verify_otp: data?.verifyOtp || null,
         expired_otp: data?.expiredOtp || null,
         refresh_token: data?.refreshToken || null,
-        status: Number(data?.status) ?? 1,
+        status: Number(data?.status) || 1,
       },
     });
     return new AccountDTO(result);
   }
 
-  async updateVerificationOtp(id, value) {
+  async updateVerifyEmailForgotPassword(id, value) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: {
         verify_otp: value?.verifyOtp,
         expired_otp: value?.expiredOtp,
@@ -75,9 +75,9 @@ class AccountDAO {
     return new AccountDTO(result);
   }
 
-  async clearVerificationOtp(id) {
+  async updateVerifyOtpByEmail(id) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: {
         verify_otp: null,
         expired_otp: null,
@@ -86,9 +86,9 @@ class AccountDAO {
     return new AccountDTO(result);
   }
 
-  async updatePassword(id, value) {
+  async updateResetPassword(id, value) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: {
         password: value,
       },
@@ -98,15 +98,15 @@ class AccountDAO {
 
   async updateRefreshToken(id, value) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: { refresh_token: value },
     });
     return new AccountDTO(result);
   }
 
-  async updateAccount(id, data) {
+  async update(id, data) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: {
         role_id: Number(data.roleId),
         username: data?.username,
@@ -117,15 +117,15 @@ class AccountDAO {
         verify_otp: data?.verifyOtp || null,
         expired_otp: data?.expiredOtp || null,
         refresh_token: data?.refreshToken || null,
-        status: Number(data?.status) ?? 1,
+        status: Number(data?.status) || 1,
       },
     });
     return new AccountDTO(result);
   }
 
-  async updateAccountInfo(id, data) {
+  async updateEditInfo(id, data) {
     const result = await prisma.account.update({
-      where: { account_id: Number(id) },
+      where: { account_id: id },
       data: {
         username: data?.username,
         phone: data?.phone,
@@ -133,6 +133,11 @@ class AccountDAO {
       },
     });
     return new AccountDTO(result);
+  }
+  async delete(id) {
+    await prisma.account.delete({
+      where: { account_id: id },
+    });
   }
 }
 

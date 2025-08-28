@@ -27,7 +27,7 @@ const getAllSizeActive = async (req, res, next) => {
 };
 
 const getSizeById = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params || {};
   if (!id) throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
 
   try {
@@ -42,7 +42,7 @@ const getSizeById = async (req, res, next) => {
 };
 
 const getSizeByCode = async (req, res, next) => {
-  const { code } = req.params;
+  const { code } = req.params || {};
   if (!code) throw new BadRequestError("VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN");
 
   try {

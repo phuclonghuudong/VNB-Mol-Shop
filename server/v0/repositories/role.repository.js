@@ -1,47 +1,38 @@
 const { PrismaClient } = require("@prisma/client");
-const RoleDTO = require("../models/role.model");
 const prisma = new PrismaClient();
+const RoleDTO = require("../models/role.model");
 
 class RoleDAO {
-  async findAllRoles() {
+  async findAll() {
     const result = await prisma.role.findMany();
-    return result.map((x) => new RoleDTO(x));
+    return result.map((c) => new RoleDTO(c));
   }
-
-  async findActiveRoles(status) {
+  async findByStatus1() {
     const result = await prisma.role.findMany({
       where: { status: 1 },
     });
     return result.map((c) => new RoleDTO(c));
   }
-
-  async findAvailableRoles() {
+  async findByStatusNotMinus1() {
     const result = await prisma.role.findMany({
       where: { status: { not: -1 } },
     });
     return result.map((c) => new RoleDTO(c));
   }
 
-  async findRoleByStatus(status = 1) {
-    const result = await prisma.role.findMany({
-      where: { status },
-    });
-    return result.map((c) => new RoleDTO(c));
-  }
-
-  async findRoleById(id) {
+  async findById(id) {
     const result = await prisma.role.findUnique({
-      where: { role_id: Number(id) },
+      where: { role_id: id },
     });
     return result ? new RoleDTO(result) : result;
   }
 
-  async findRoleByName(name) {
+  async findByName(name) {
     const result = await prisma.role.findUnique({ where: { role_name: name } });
     return result ? new RoleDTO(result) : result;
   }
 
-  async findRoleBySlug(slug) {
+  async findBySlug(slug) {
     const result = await prisma.role.findUnique({
       where: { role_slug: slug },
     });
@@ -54,8 +45,8 @@ class RoleDAO {
         role_name: data.name,
         role_slug: data.slug,
         description: data.description,
-        is_system: data.isSystem ?? false,
-        status: data.status ?? 1,
+        is_system: data.isSystem || false,
+        status: data.status || 1,
       },
     });
     return new RoleDTO(result);
@@ -63,32 +54,22 @@ class RoleDAO {
 
   async update(id, data) {
     const result = await prisma.role.update({
-      where: { role_id: Number(id) },
+      where: { role_id: id },
       data: {
         role_name: data.name,
         role_slug: data.slug,
         description: data.description,
-        is_system: data.isSystem,
-        status: Number(data.status),
+        is_system: Boolean(data.isSystem),
+        status: data.status,
       },
     });
     return new RoleDTO(result);
   }
 
-  async softDeleteRole(id) {
-    const result = await prisma.role.update({
-      where: { role_id: Number(id) },
-      data: { status: -1 },
-    });
-    return new RoleDTO(result);
-  }
-
-  async hardDeleteRole(id) {
+  async delete(id) {
     await prisma.role.delete({
-      where: { role_id: Number(id) },
+      where: { role_id: id },
     });
-    return new RoleDTO(result);
   }
 }
-
 module.exports = new RoleDAO();

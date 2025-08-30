@@ -1,26 +1,26 @@
-const RoleBUS = require("../services/role.service");
+const CategoryBUS = require("../services/category.service");
 const { BadRequestError } = require("../utils/errors");
 const responseHandler = require("../utils/responseHandler");
 
-const getAllRoles = async (req, res, next) => {
+const getAllCategories = async (req, res, next) => {
   try {
-    const result = await RoleBUS.getAllRoles();
+    const result = await CategoryBUS.getAllCategories();
     responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
 };
 
-const getAllRoleActive = async (req, res, next) => {
+const getAllCategoryActive = async (req, res, next) => {
   try {
-    const result = await RoleBUS.getAllRoleActive();
+    const result = await CategoryBUS.getAllCategoryActive();
     responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
 };
 
-const getRoleById = async (req, res, next) => {
+const getCategoryById = async (req, res, next) => {
   const id = Number(req.params.id);
 
   if (!id || isNaN(id)) {
@@ -30,37 +30,37 @@ const getRoleById = async (req, res, next) => {
   }
 
   try {
-    const result = await RoleBUS.getRoleById(id);
+    const result = await CategoryBUS.getCategoryById(id);
     responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
 };
 
-const getRoleBySlug = async (req, res, next) => {
-  const slug = req.params.slug || {};
+const getCategoryBySlug = async (req, res, next) => {
+  const slug = req.params.slug;
 
-  if (!slug?.trim()) {
+  if (!slug) {
     throw new BadRequestError(
       "ĐỊNH DANH KHÔNG HỢP LỆ, VUI LÒNG CUNG CẤP ĐẦY ĐỦ THÔNG TIN"
     );
   }
 
   try {
-    const result = await RoleBUS.getRoleBySlug(slug);
+    const result = await CategoryBUS.getCategoryBySlug(slug);
     responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);
   }
 };
 
-const createRole = async (req, res, next) => {
-  const { slug, name, description, isSystem, status } = req.body || {};
+const createCategory = async (req, res, next) => {
+  const { slug, name, description, imageUrl, status } = req.body || {};
   if (!slug?.trim() || !name?.trim())
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
   try {
     const validInput = req.body;
-    const result = await RoleBUS.createRole(validInput);
+    const result = await CategoryBUS.createCategory(validInput);
 
     responseHandler(res, 201, "THÊM THÀNH CÔNG", result);
   } catch (error) {
@@ -68,9 +68,9 @@ const createRole = async (req, res, next) => {
   }
 };
 
-const updateRole = async (req, res, next) => {
-  const { slug, name, description, isSystem, status } = req.body || {};
-  const { id } = req.params;
+const updateCategory = async (req, res, next) => {
+  const { slug, name, description, imageUrl, status } = req.body || {};
+  const id = Number(req.params.id);
 
   if (id <= 0 || isNaN(id)) {
     throw new BadRequestError(
@@ -82,7 +82,7 @@ const updateRole = async (req, res, next) => {
 
   try {
     const validInput = req.body;
-    const result = await RoleBUS.updateRole(id, validInput);
+    const result = await CategoryBUS.updateCategory(id, validInput);
 
     responseHandler(res, 200, "CẬP NHẬT THÀNH CÔNG", result);
   } catch (error) {
@@ -90,8 +90,8 @@ const updateRole = async (req, res, next) => {
   }
 };
 
-const softDeleteRole = async (req, res, next) => {
-  const { id } = req.params;
+const softDeleteCategory = async (req, res, next) => {
+  const id = Number(req.params.id);
 
   if (id <= 0 || isNaN(id)) {
     throw new BadRequestError(
@@ -100,7 +100,7 @@ const softDeleteRole = async (req, res, next) => {
   }
 
   try {
-    const result = await RoleBUS.softDeleteRole(id);
+    const result = await CategoryBUS.softDeleteCategory(id);
 
     responseHandler(res, 200, "XÓA DỮ LIỆU THÀNH CÔNG");
   } catch (error) {
@@ -109,11 +109,11 @@ const softDeleteRole = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllRoles,
-  getAllRoleActive,
-  getRoleById,
-  getRoleBySlug,
-  createRole,
-  updateRole,
-  softDeleteRole,
+  getAllCategories,
+  getAllCategoryActive,
+  getCategoryById,
+  getCategoryBySlug,
+  createCategory,
+  updateCategory,
+  softDeleteCategory,
 };

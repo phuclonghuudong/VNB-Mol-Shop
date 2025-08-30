@@ -8,9 +8,9 @@ class RoleDAO {
     return result.map((x) => new RoleDTO(x));
   }
 
-  async findActiveRoles(status) {
+  async findActiveRoles(status = 1) {
     const result = await prisma.role.findMany({
-      where: { status: 1 },
+      where: { status },
     });
     return result.map((c) => new RoleDTO(c));
   }
@@ -55,7 +55,7 @@ class RoleDAO {
         role_slug: data.slug,
         description: data.description,
         is_system: data.isSystem ?? false,
-        status: data.status ?? 1,
+        status: Number(data.status) ?? 1,
       },
     });
     return new RoleDTO(result);

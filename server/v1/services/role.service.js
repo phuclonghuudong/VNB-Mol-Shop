@@ -14,6 +14,14 @@ class RoleBUS {
     return result.map((x) => x.toJSON?.() ?? x);
   }
 
+  async getAllRoleActive() {
+    const result = await RoleDAO.findActiveRoles();
+    if (!result || result.length === 0)
+      throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
+
+    return result.map((x) => x.toJSON?.() ?? x);
+  }
+
   async getRoleById(id) {
     if (!id || isNaN(id)) {
       throw new BadRequestError("ID KHÔNG HỢP LỆ");

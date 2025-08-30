@@ -65,7 +65,7 @@ app.listen(port, () => {
 });
 
 app.use((req, res) => {
-  responseHandler(res, 400, "FAIL");
+  responseHandler(res, 404404, "FAIL: NOT FOUND.");
 });
 
 module.exports.handler = serverless(app);

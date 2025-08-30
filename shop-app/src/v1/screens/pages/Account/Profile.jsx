@@ -15,8 +15,9 @@ const Profile = () => {
   const authAccount = useSelector(authSelector);
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(false);
-  console.log("TOKEN: ", authAccount?.token);
   const navigate = useNavigate();
+
+  console.log(authAccount);
 
   const handleClickUpdate = () => {
     navigate(ROUTES?.INFORMATION);

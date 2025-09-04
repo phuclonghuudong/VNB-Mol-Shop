@@ -28,7 +28,6 @@ const getAddressByCustomer = async (req, res, next) => {
 
 const createAddress = async (req, res, next) => {
   const { fullname, phone, address, isMain, status } = req.body;
-  console.log(isMain);
 
   if (!fullname?.trim() || !phone?.trim() || !address?.trim())
     throw new BadRequestError("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");

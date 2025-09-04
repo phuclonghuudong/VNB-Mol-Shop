@@ -86,7 +86,7 @@ class SizeDAO {
   }
 
   async hardDeleteSize(id) {
-    await prisma.size.delete({
+    const result = await prisma.size.delete({
       where: { size_id: Number(id) },
     });
     return new SizeDTO(result);

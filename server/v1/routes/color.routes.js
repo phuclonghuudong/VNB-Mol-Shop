@@ -22,13 +22,11 @@ router.get(`/`, getAllColor);
 router.get(`/active`, getAllColorActive);
 router.get(`/code/:code`, getColorByCode);
 router.get(`/:id`, getColorById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createColor);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateColor);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteColor
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createColor);
+router.put(`/:id`, updateColor);
+router.patch(`/delete/:id`, softDeleteColor);
 
 module.exports = router;

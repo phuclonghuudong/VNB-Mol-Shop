@@ -71,7 +71,7 @@ class CustomerDAO {
     return new CustomerDTO(result);
   }
 
-  async updateStatusCustomer(id, status) {
+  async updateCustomerByStatus(id, status) {
     const result = await prisma.customer.update({
       where: { customer_id: Number(id) },
       data: { status: Number(status) },
@@ -88,7 +88,7 @@ class CustomerDAO {
   }
 
   async hardDeleteCustomer(id) {
-    await prisma.customer.delete({
+    const result = await prisma.customer.delete({
       where: { customer_id: Number(id) },
     });
     return new CustomerDTO(result);

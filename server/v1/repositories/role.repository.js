@@ -84,7 +84,7 @@ class RoleDAO {
   }
 
   async hardDeleteRole(id) {
-    await prisma.role.delete({
+    const result = await prisma.role.delete({
       where: { role_id: Number(id) },
     });
     return new RoleDTO(result);

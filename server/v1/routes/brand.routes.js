@@ -22,13 +22,11 @@ router.get(`/`, getAllBrand);
 router.get(`/active`, getAllBrandActive);
 router.get(`/slug/:slug`, getBrandBySlug);
 router.get(`/:id`, getBrandById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createBrand);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateBrand);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteBrand
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createBrand);
+router.put(`/:id`, updateBrand);
+router.patch(`/delete/:id`, softDeleteBrand);
 
 module.exports = router;

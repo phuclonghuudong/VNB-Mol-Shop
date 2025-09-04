@@ -85,6 +85,20 @@ class CustomerBUS {
     return result.toJSON?.() ?? result;
   }
 
+  async updateCustomerByStatus(id, status) {
+    const oldData = await this.getCustomerById(id);
+
+    const isChanged = Number(oldData.status) === Number(status);
+    if (!isChanged) throw new ConflictError("DỮ LIỆU KHÔNG CÓ GÌ THAY ĐỔI");
+
+    const result = await CustomerDAO.updateCustomerByStatus(id, status);
+
+    if (!result || result.length === 0)
+      throw new BadRequestError("THAO TÁC KHÔNG THÀNH CÔNG, VUI LÒNG THỬ LẠI");
+
+    return result.toJSON?.() ?? result;
+  }
+
   async updateInfoCustomer(id, data) {
     await this.getCustomerById(id);
 

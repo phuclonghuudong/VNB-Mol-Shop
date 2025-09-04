@@ -20,23 +20,11 @@ const roleManagement = ["ADMIN", "PERSONNEL"];
 router.get(`/`, getAllCategorySize);
 router.get(`/active`, getAllCategorySizeActive);
 router.get(`/:id`, getCategorySizeById);
-router.post(
-  `/`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  createCategorySize
-);
-router.put(
-  `/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  updateCategorySize
-);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteCategorySize
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createCategorySize);
+router.put(`/:id`, updateCategorySize);
+router.patch(`/delete/:id`, softDeleteCategorySize);
 
 module.exports = router;

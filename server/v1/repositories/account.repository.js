@@ -134,6 +134,21 @@ class AccountDAO {
     });
     return new AccountDTO(result);
   }
+
+  async softDelete(id) {
+    const result = await prisma.account.update({
+      where: { account_id: Number(id) },
+      data: { status: -1 },
+    });
+    return new AccountDTO(result);
+  }
+
+  async hardDelete(id) {
+    const result = await prisma.account.delete({
+      where: { account_id: Number(id) },
+    });
+    return new AccountDTO(result);
+  }
 }
 
 module.exports = new AccountDAO();

@@ -88,7 +88,7 @@ class CategoryProductDAO {
   }
 
   async hardDeleteCategoryProduct(id) {
-    await prisma.categoryProduct.delete({
+    const result = await prisma.categoryProduct.delete({
       where: { category_product_id: Number(id) },
     });
     return new CategoryProductDTO(result);

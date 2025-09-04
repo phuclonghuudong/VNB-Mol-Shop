@@ -61,7 +61,7 @@ class CategorySizeDAO {
   }
 
   async hardDeleteCategorySize(id) {
-    await prisma.categorySize.delete({
+    const result = await prisma.categorySize.delete({
       where: { id: Number(id) },
     });
     return new CategorySizeDTO(result);

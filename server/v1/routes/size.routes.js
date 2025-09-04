@@ -22,13 +22,11 @@ router.get(`/`, getAllSize);
 router.get(`/active`, getAllSizeActive);
 router.get(`/code/:code`, getSizeByCode);
 router.get(`/:id`, getSizeById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createSize);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateSize);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteSize
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createSize);
+router.put(`/:id`, updateSize);
+router.patch(`/delete/:id`, softDeleteSize);
 
 module.exports = router;

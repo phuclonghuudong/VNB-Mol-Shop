@@ -5,29 +5,20 @@ const authenticate = require("../middlewares/authenticate");
 const authorizeRole = require("../middlewares/authorizeRole");
 
 const {
-  getAllAddress,
-  getAllAddressActive,
-  getAddressById,
-  createAddress,
-  updateAddress,
-  softDeleteAddress,
-} = require("../controllers/address.controller");
+  getAllCustomer,
+  getCustomerById,
+  updateCustomerByStatus,
+  softDeleteCustomer,
+} = require("../controllers/customer.controller");
 
 // const PATH = "/customer";
 
 const roleManagement = ["CUSTOMER"];
 
-router.get(`/`, getAllBrand);
-router.get(`/active`, getAllBrandActive);
-router.get(`/slug/:slug`, getBrandBySlug);
-router.get(`/:id`, getBrandById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createBrand);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateBrand);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteBrand
-);
+router.use(authenticate, authorizeRole(...roleManagement));
+router.get(`/`, getAllCustomer);
+router.get(`/:id`, getCustomerById);
+router.put(`/:id`, updateCustomerByStatus);
+router.patch(`/delete/:id`, softDeleteCustomer);
 
 module.exports = router;

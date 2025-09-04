@@ -66,7 +66,7 @@ class AddressDAO {
   }
 
   async hardDelete(id) {
-    await prisma.address.delete({
+    const result = await prisma.address.delete({
       where: { address_id: Number(id) },
     });
     return new AddressDTO(result);

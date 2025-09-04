@@ -86,7 +86,7 @@ class BrandDAO {
   }
 
   async hardDeleteBrand(id) {
-    await prisma.brand.delete({
+    const result = await prisma.brand.delete({
       where: { brand_id: Number(id) },
     });
     return new BrandDTO(result);

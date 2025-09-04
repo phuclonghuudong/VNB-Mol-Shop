@@ -17,13 +17,15 @@ router.post(
   uploadImageAvatar
 );
 
-const role = ["ADMIN", "PERSONNEL"];
+const roleManagement = ["ADMIN", "PERSONNEL"];
+
+router.use(authenticate, authorizeRole(...roleManagement));
 router.post(
   `/product/upload-image`,
-  authenticate,
-  authorizeRole(...role),
   upload.single("image"),
   uploadImageProduct
 );
+
+router.post(`/news/upload-image`, upload.single("image"), uploadImageProduct);
 
 module.exports = router;

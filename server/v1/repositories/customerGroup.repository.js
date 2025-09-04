@@ -75,7 +75,7 @@ class CustomerGroupDAO {
   }
 
   async hardDeleteCustomerGroup(id) {
-    await prisma.customerGroup.delete({
+    const result = await prisma.customerGroup.delete({
       where: { group_id: Number(id) },
     });
     return new CustomerGroupDTO(result);

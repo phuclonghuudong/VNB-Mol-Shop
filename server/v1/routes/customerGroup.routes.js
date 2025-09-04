@@ -17,17 +17,13 @@ const {
 
 const roleManagement = ["ADMIN", "PERSONNEL"];
 
-// CustomerGroup - Nhóm khách hàng
 router.get(`/`, getAllGroups);
 router.get(`/active`, getAllGroupActive);
 router.get(`/:id`, getGroupById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createGroup);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateGroup);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteGroup
-);
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createGroup);
+router.put(`/:id`, updateGroup);
+router.patch(`/delete/:id`, softDeleteGroup);
 
 module.exports = router;

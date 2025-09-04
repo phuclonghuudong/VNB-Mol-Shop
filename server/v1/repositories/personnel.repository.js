@@ -70,7 +70,7 @@ class PersonnelDAO {
   }
 
   async hardDeletePersonnel(id) {
-    await prisma.personnel.delete({
+    const result = await prisma.personnel.delete({
       where: { personnel_id: Number(id) },
     });
     return new PersonnelDTO(result);

@@ -22,23 +22,11 @@ router.get(`/`, getAllCategoryProduct);
 router.get(`/active`, getAllCategoryProductActive);
 router.get(`/slug/:slug`, getCategoryProductBySlug);
 router.get(`/:id`, getCategoryProductById);
-router.post(
-  `/`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  createCategoryProduct
-);
-router.put(
-  `/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  updateCategoryProduct
-);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteCategoryProduct
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createCategoryProduct);
+router.put(`/:id`, updateCategoryProduct);
+router.patch(`/delete/:id`, softDeleteCategoryProduct);
 
 module.exports = router;

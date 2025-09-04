@@ -23,13 +23,11 @@ router.get(`/`, getAllRoles);
 router.get(`/active`, getAllRoleActive);
 router.get(`/slug/:slug`, getRoleBySlug);
 router.get(`/:id`, getRoleById);
-router.post(`/`, authenticate, authorizeRole(...roleManagement), createRole);
-router.put(`/:id`, authenticate, authorizeRole(...roleManagement), updateRole);
-router.patch(
-  `/delete/:id`,
-  authenticate,
-  authorizeRole(...roleManagement),
-  softDeleteRole
-);
+
+router.use(authenticate, authorizeRole(...roleManagement));
+
+router.post(`/`, createRole);
+router.put(`/:id`, updateRole);
+router.patch(`/delete/:id`, softDeleteRole);
 
 module.exports = router;

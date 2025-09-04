@@ -1,9 +1,16 @@
+import LOGO from "@/v1/assets/no-image-available.png";
+import { Link } from "react-router-dom";
+import ROUTES from "../../../configs/configRoutes";
+
 const CardNews = ({ data, index }) => {
+  const { content, imageUrl, newsSlug, newsTitle, publishDate, summary, id } =
+    data;
+
   return (
-    <div key={index} className="grid w-full h-full">
+    <Link key={index + id} className="grid w-full h-full" to={ROUTES.NEWS}>
       <div className="h-52 w-full overflow-hidden bg-orange-100  flex justify-center items-center ">
         <img
-          src={data?.image}
+          src={imageUrl ? imageUrl : LOGO}
           alt={`news-${index}`}
           className="h-full w-full object-cover transition-transform duration-300 hover:scale-120"
         />
@@ -14,23 +21,23 @@ const CardNews = ({ data, index }) => {
           <div className="p-3 flex flex-col justify-center items-center text-center">
             <div className="w-full h-14 cursor-pointer">
               <p className=" capitalize font-semibold line-clamp-2 hover:text-orange-600 duration-300 text-lg">
-                {data?.title}
+                {newsTitle}
               </p>
             </div>
             <div className="w-full h-8 my-2 flex justify-center items-center">
               <div className="flex-grow h-px bg-orange-700"></div>
               <p className="bg-orange-600 p-1 rounded-2xl  text-white text-sm">
-                {data?.timeCreate}
+                {publishDate}
               </p>
               <div className="flex-grow h-px bg-orange-700"></div>
             </div>
             <div className="w-full h-full ">
-              <p className=" line-clamp-3">{data?.content}</p>
+              <p className=" line-clamp-3">{content}</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

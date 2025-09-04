@@ -9,7 +9,7 @@ const {
 const payloadToken = async (data) => {
   const payload = {
     account: data?.accountId,
-    user: data?.customerId,
+    user: data.userId,
     role: data?.role,
     username: data?.username,
     fullname: data?.fullname,

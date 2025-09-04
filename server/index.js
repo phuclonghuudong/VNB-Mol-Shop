@@ -18,6 +18,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 const errorHandler = require("./v1/middlewares/errorHandler");
+const timeZoneMiddleware = require("./v1/utils/timeZone");
 
 const { PORT, SERVER_URL, FRONTEND_URL } = require("./v1/configs/configENV");
 
@@ -47,6 +48,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(timeZoneMiddleware);
+
 // ===== ROUTES =====
 app.get("/", (req, res) => {
   res.send("Server Shop MOLXIPI.");
@@ -65,7 +68,7 @@ app.listen(port, () => {
 });
 
 app.use((req, res) => {
-  responseHandler(res, 404404, "FAIL: NOT FOUND.");
+  responseHandler(res, 404, "FAIL: NOT FOUND.");
 });
 
 module.exports.handler = serverless(app);

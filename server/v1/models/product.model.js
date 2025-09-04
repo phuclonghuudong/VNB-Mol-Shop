@@ -1,5 +1,5 @@
 const BrandDTO = require("./brand.model");
-const CategoryDTO = require("./category.model");
+const ProductVariantDTO = require("./productVariant.model");
 const CategoryProductDTO = require("./categoryProduct.model");
 
 class ProductDTO {
@@ -17,8 +17,8 @@ class ProductDTO {
     updatedAt,
     imgProduct = null,
     productVariant = null,
-    // brand = null,
-    // categoryProduct = null,
+    brand = null,
+    categoryProduct = null,
     // productComment = null,
     // productReview = null,
     // favorite = null,
@@ -35,16 +35,20 @@ class ProductDTO {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
 
-    this.images = imgProduct;
-    // .map((img) => img.status === 1 && img.image_url)
-    // .filter((url) => url && url.trim() !== "");
+    this.images = imgProduct
+      ? imgProduct
+          .map((img) => img.status === 1 && img.image_url)
+          .filter((url) => url && url.trim() !== "")
+      : null;
 
-    // this.brand = brand ? new BrandDTO(brand) : brand;
-    // this.category = categoryProduct
-    //   ? new CategoryProductDTO(categoryProduct)
-    //   : categoryProduct;
+    this.brand = brand ? new BrandDTO(brand) : null;
+    this.categoryProduct = categoryProduct
+      ? new CategoryProductDTO(categoryProduct)
+      : null;
 
-    this.productVariant = productVariant;
+    this.productVariant = productVariant
+      ? productVariant.map((x) => new ProductVariantDTO(x))
+      : [];
     // this.productComment = productComment;
     // this.productReview = productReview;
     // this.favorite = favorite;
@@ -54,7 +58,7 @@ class ProductDTO {
     return {
       id: this.product_id,
       brandId: this.brand_id,
-      categoryId: this.category_product_id,
+      categoryProductId: this.category_product_id,
       name: this.product_name,
       slug: this.product_slug,
       sku: this.product_sku,
@@ -66,10 +70,12 @@ class ProductDTO {
       image: this.images,
       // imageProduct: this.imgProduct,
 
-      // brand: this.brand,
-      // category: this.category,
+      brand: this.brand ? this.brand.toJSON() : null,
+      categoryProduct: this.categoryProduct
+        ? this.categoryProduct.toJSON()
+        : null,
 
-      productVariant: this.productVariant,
+      variant: this.productVariant.map((pv) => pv.toJSON()),
       // productComment: this.productComment,
       // productReview: this.productReview,
       // favorite: this.favorite,

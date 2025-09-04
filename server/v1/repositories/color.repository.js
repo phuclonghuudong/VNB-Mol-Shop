@@ -84,7 +84,7 @@ class ColorDAO {
   }
 
   async hardDeleteColor(id) {
-    await prisma.color.delete({
+    const result = await prisma.color.delete({
       where: { color_id: Number(id) },
     });
     return new ColorDTO(result);

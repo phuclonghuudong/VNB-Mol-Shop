@@ -8,6 +8,7 @@
     "start": "nodemon index.js",
     "dev": "nodemon index.js",
     "build": "npx prisma generate",
+    "postinstall": "prisma generate",
     "prisma:merge": "node prisma/scripts/merge-prisma.js",
     "prisma:dev": "npm run prisma:merge && prisma generate",
     "prisma:migrate": "npm run prisma:merge && prisma migrate dev",

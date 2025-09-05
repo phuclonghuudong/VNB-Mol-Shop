@@ -60,15 +60,6 @@ app.use("/", mainRouter);
 // ===== Middleware xử lý lỗi cuối cùng =====
 app.use(errorHandler);
 
-// ===== START SERVER =====
-app.listen(port, () => {
-  console.log(`Server is running at ${url}${port}`);
-});
-
-app.use((req, res) => {
-  responseHandler(res, 404, "FAIL: NOT FOUND.");
-});
-
 // ===== EXPORT VERCEL =====
 module.exports = app;
 module.exports.handler = serverless(app);

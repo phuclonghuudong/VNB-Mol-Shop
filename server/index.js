@@ -24,8 +24,6 @@ const { PORT, SERVER_URL, FRONTEND_URL } = require("./v1/configs/configENV");
 
 // ===== KHỞI TẠO APP =====
 const app = express();
-const port = PORT;
-const url = SERVER_URL;
 
 // ===== MIDDLEWARE =====
 app.use(
@@ -71,4 +69,15 @@ app.use((req, res) => {
   responseHandler(res, 404, "FAIL: NOT FOUND.");
 });
 
+// ===== EXPORT VERCEL =====
+module.exports = app;
 module.exports.handler = serverless(app);
+
+// ===== START LOCAL =====
+if (require.main === module) {
+  const port = PORT || 3000;
+  const url = SERVER_URL || "http://localhost:";
+  app.listen(port, () => {
+    console.log(`Server is running at ${url}${port}`);
+  });
+}

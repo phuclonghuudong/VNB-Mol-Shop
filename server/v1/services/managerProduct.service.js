@@ -32,7 +32,7 @@ class ManagerProductBUS {
 
     const result = await this.productInformation(productData);
 
-    return productData;
+    return result;
   }
 }
 

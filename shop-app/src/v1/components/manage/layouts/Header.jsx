@@ -22,8 +22,8 @@ const Header = ({ handleShowSideBar }) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <IconComponent icon={HiMiniBellAlert} />
-        <IconComponent icon={FaUserCircle} />
+        <IconComponent icon={HiMiniBellAlert} title={"Thông báo"} />
+        <IconComponent icon={FaUserCircle} title={"Tài khoản"} />
       </div>
     </div>
   );

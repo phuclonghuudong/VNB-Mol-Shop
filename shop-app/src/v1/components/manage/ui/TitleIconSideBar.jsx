@@ -37,6 +37,16 @@ const TitleIconSideBar = ({ onShow }) => {
     }
   };
 
+  const getActiveUrl = () => {
+    const matches = menuListSideBarDashBoard.filter((item) =>
+      location.pathname.startsWith(item.url)
+    );
+    if (matches.length === 0) return null;
+    return matches.reduce((a, b) => (a.url.length > b.url.length ? a : b)).url;
+  };
+
+  const activeUrl = getActiveUrl();
+
   return (
     <div
       className={`flex flex-col h-full gap-2 ${
@@ -50,7 +60,7 @@ const TitleIconSideBar = ({ onShow }) => {
               to={item?.url}
               key={index + "menu"}
               className={`flex items-center group gap-3 duration-300 hover:text-orange-600  w-full p-2 rounded-md ${
-                location?.pathname === item?.url
+                activeUrl === item?.url
                   ? "bg-orange-200 text-gray-800"
                   : "text-gray-400"
               } ${onShow ? " justify-start " : " justify-center"}`}

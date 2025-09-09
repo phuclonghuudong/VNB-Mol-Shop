@@ -29,10 +29,10 @@ const ListNews = () => {
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {isLoading
           ? Array.from({ length: 4 }).map((_, index) => (
-              <RenderNewsCardNone index={index} />
+              <RenderNewsCardNone index={index} key={index} />
             ))
           : data.map((item, index) => (
-              <CardNews key={item.title + index} data={item} index={index} />
+              <CardNews key={index} data={item} index={index} />
             ))}
       </div>
     </section>

@@ -4,11 +4,7 @@ import { swiperBreakpoints } from "@/v1/utils/swiperBreakpoints";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ProductCarousel = ({
-  isLoading = false,
-  data = [],
-  loadingLength = 10,
-}) => {
+const ProductCarousel = ({ isLoading, data = [], loadingLength = 10 }) => {
   const displayData = isLoading ? [...Array(loadingLength)] : data;
 
   return (

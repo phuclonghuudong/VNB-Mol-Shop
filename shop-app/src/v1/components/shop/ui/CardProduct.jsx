@@ -16,7 +16,7 @@ const CardProduct = ({ index, data }) => {
           Áo cầu lông Victor Nam Xanh Biển - Mã 7367 {index + 1}
         </div>
 
-        <div className="text-red-500 font-medium ">Giá: 100.000₫</div>
+        <div className="text-red-500 font-medium text-xl">100.000 ₫</div>
       </div>
     </div>
   );

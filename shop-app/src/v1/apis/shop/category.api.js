@@ -8,7 +8,7 @@ const CategoryAPI = {
 
   // Danh sách danh mục sản phẩm
   get_All_Category_Product: () =>
-    axiosClient.get(`${pathApi}/category-product/active`),
+    axiosClient.get(`${pathApi}/catalog-control/category-product/active`),
 };
 
 export default CategoryAPI;

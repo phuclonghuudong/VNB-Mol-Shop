@@ -17,8 +17,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  console.log(authAccount);
-
   const handleClickUpdate = () => {
     navigate(ROUTES?.INFORMATION);
   };
@@ -30,11 +28,10 @@ const Profile = () => {
   const fetchInfoAccount = async () => {
     setLoading(true);
     try {
-      const token = authAccount?.token;
-      const res = await accountAPI.profile_Customer(token);
+      const res = await accountAPI.profile_Customer();
 
       if (res?.SUCCESS) {
-        console.log("INFO: ", res);
+        setInfo(res?.DATA?.USER);
       }
     } catch (error) {
       AxiosToastError(error);
@@ -64,17 +61,17 @@ const Profile = () => {
         <TitleInfo
           icon={FaUser}
           title="Họ và tên:"
-          text={authAccount?.fullname ?? ""}
+          text={info?.fullname ?? ""}
         />
         <TitleInfo
           icon={FaPhoneVolume}
           title="Số ĐT:"
-          text={authAccount?.phone ?? ""}
+          text={info?.phone ?? ""}
         />
         <TitleInfo
           icon={FaLocationDot}
           title="Địa chỉ:"
-          text={authAccount?.address ?? ""}
+          text={info?.address ?? ""}
         />
 
         <ButtonComponent

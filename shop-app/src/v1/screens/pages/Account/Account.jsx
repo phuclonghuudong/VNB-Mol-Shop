@@ -13,9 +13,9 @@ const Account = () => {
 
         <div className="flex justify-start items-center gap-2 pb-3">
           <Text title={"Xin chào,"} isItalic isPadding={""} />
-          {authAccount?.USER?.fullname && (
+          {authAccount?.user?.fullname && (
             <Text
-              title={authAccount?.USER?.fullname || ""}
+              title={authAccount?.user?.fullname || ""}
               isColor={"text-orange-600"}
               isPadding={""}
               isBold

@@ -22,7 +22,7 @@ const accountAPI = {
     axiosClient.put(`${pathApi}/reset-password`, data),
 
   //   Cập nhật Token
-  refreshToken_Customer: () => axiosClient.put(`${pathApi}/user/refresh-token`),
+  refreshToken_User: () => axiosClient.put(`${pathApi}/user/refresh-token`),
 
   //   Thông tin người dùng
   profile_Customer: () => axiosClient.get(`${pathApi}/user/profile`),

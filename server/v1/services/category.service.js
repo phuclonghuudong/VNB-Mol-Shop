@@ -4,6 +4,7 @@ const {
   BadRequestError,
   ConflictError,
 } = require("../utils/errors");
+const { isValidSlugInput } = require("../utils/isValidateInput");
 
 class CategoryBUS {
   async getAllCategories() {
@@ -58,6 +59,12 @@ class CategoryBUS {
 
   async validateForCreate(data) {
     const { slug, name } = data;
+    const isValidSlug = await isValidSlugInput(slug);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingBySlug, existingByName] = await Promise.all([
       CategoryDAO.findCategoryBySlug(slug),
       CategoryDAO.findCategoryByName(name),
@@ -69,6 +76,13 @@ class CategoryBUS {
 
   async validateForUpdate(excludeId, data) {
     const { slug, name } = data;
+
+    const isValidSlug = await isValidSlugInput(slug);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingBySlug, existingByName] = await Promise.all([
       CategoryDAO.findCategoryBySlug(slug),
       CategoryDAO.findCategoryByName(name),

@@ -2,14 +2,11 @@ import ROUTES from "../configs/configRoutes";
 
 export const roleRedirectLogin = (role, navigate) => {
   const roleRoutes = {
-    KHACHHANG: ROUTES?.HOME,
+    CUSTOMER: ROUTES?.HOME,
     ADMIN: ROUTES?.ADMIN_DASHBOARD,
-    NHANVIEN: ROUTES?.ADMIN_DASHBOARD,
+    PERSONNEL: ROUTES?.ADMIN_DASHBOARD,
   };
+  const path = roleRoutes[role] || ROUTES?.HOME;
 
-  if (roleRoutes[role]) {
-    navigate(roleRoutes[role]);
-  } else {
-    navigate(ROUTES?.HOME);
-  }
+  navigate(path);
 };

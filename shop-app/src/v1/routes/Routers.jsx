@@ -7,7 +7,6 @@ import MainRouter from "./MainRouter";
 
 const Routers = () => {
   const auth = useSelector(authSelector);
-  console.log("CHECK ADMIN: ", auth);
   // const dispatch = useDispatch();
 
   // useEffect(() => {

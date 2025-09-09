@@ -1,55 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { localDataNames } from "../../configs/appInfo";
 
-const savedData = localStorage.getItem(localDataNames.authData);
+const userFromStorage = localStorage.getItem(localDataNames.authData);
+const tokenFromStorage = localStorage.getItem(localDataNames.tokenData);
 
-const initialData = {
-  token: "",
-  account: "",
-  user: "",
-  role: "",
-  fullname: "",
-};
-
-const initialState = {
-  data: savedData ? JSON.parse(savedData) : initialData,
+const initialValue = {
+  user: userFromStorage ? JSON.parse(userFromStorage) : null,
+  token: tokenFromStorage || "",
 };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: initialValue,
 
   reducers: {
     addAuth: (state, action) => {
       const { USER, TOKEN } = action.payload;
-      console.log(action.payload);
 
-      state.data = {
-        account: USER.accountId,
-        user: USER.userId,
-        role: USER.role,
-        fullname: USER.fullname,
-        token: TOKEN,
-      };
-      syncLocal(state.data);
+      state.user = USER;
+      state.token = TOKEN;
+      syncLocal(action.payload);
     },
     clearAuth: (state, action) => {
-      state.data = initialState;
-      syncLocal({});
-    },
-    refreshToken: (state, action) => {
-      state.data.token = action.payload.TOKEN;
-      syncLocal(state.data);
+      state.user = null;
+      state.token = "";
+      localStorage.removeItem(localDataNames.authData);
+      localStorage.removeItem(localDataNames.tokenData);
     },
   },
 });
 
 export const authReducer = authSlice.reducer;
 
-export const { addAuth, clearAuth, refreshToken } = authSlice.actions;
+export const { addAuth, clearAuth } = authSlice.actions;
 
-export const authSelector = (state) => state.authReducer.data;
+export const authSelector = (state) => state.authReducer;
 
 const syncLocal = (data) => {
-  localStorage.setItem(localDataNames.authData, JSON.stringify(data));
+  const { USER, TOKEN } = data;
+  localStorage.setItem(localDataNames.authData, JSON.stringify(USER));
+  localStorage.setItem(localDataNames.tokenData, TOKEN);
 };

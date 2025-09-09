@@ -5,7 +5,7 @@ import { authSelector } from "../redux/reducers/authReducer";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
   const authAccount = useSelector(authSelector);
-  const role = authAccount?.role;
+  const role = authAccount?.user?.role;
 
   if (!role || !allowedRoles.includes(role)) {
     return <Navigate to={ROUTES.HOME} replace />;

@@ -13,6 +13,7 @@ const Size = require("./size.routes");
 const Upload = require("./upload.routes");
 const News = require("./news.routes");
 const ManagerProduct = require("./managerProduct.routes");
+const Attribute = require("./attribute.routes");
 
 const BASE_PATH = "/api/v1";
 
@@ -30,6 +31,7 @@ router.use(`${BASE_PATH}/catalog-control/category-product`, CategoryProduct);
 router.use(`${BASE_PATH}/catalog-control/category-size`, CategorySize);
 router.use(`${BASE_PATH}/catalog-control/color`, Color);
 router.use(`${BASE_PATH}/catalog-control/size`, Size);
+router.use(`${BASE_PATH}/catalog-control/attribute`, Attribute);
 
 router.use(`${BASE_PATH}/product`, ManagerProduct);
 

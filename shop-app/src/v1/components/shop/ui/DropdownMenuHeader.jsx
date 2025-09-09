@@ -1,7 +1,6 @@
 import IMG_NONE_CART from "@/v1/assets/empty-cart.webp";
 import { localDataNames } from "@/v1/configs/appInfo";
 import ROUTES from "@/v1/configs/configRoutes";
-import { authSelector, clearAuth } from "@/v1/redux/reducers/authReducer";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +8,7 @@ import { BiSolidBinoculars } from "react-icons/bi";
 import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { authSelector, clearAuth } from "../../../redux/reducers/authReducer";
 import DropdownChildren from "./DropdownChildren";
 import TitleIconMenuNavbar from "./TitleIconMenuNavbar";
 
@@ -24,7 +24,7 @@ const DropdownMenuHeader = () => {
     try {
       dispatch(clearAuth());
 
-      localStorage.removeItem(localDataNames.authData);
+      localStorage.removeItem(localDataNames.tokenData);
 
       toast.success("ĐĂNG XUẤT THÀNH CÔNG");
 
@@ -62,7 +62,7 @@ const DropdownMenuHeader = () => {
         title="TÀI KHOẢN"
         dropdownOption={
           <>
-            {auth?.account && auth?.account?.length !== 0 ? (
+            {auth?.user && auth?.user?.length !== 0 ? (
               <>
                 <DropdownChildren
                   title={"Trang cá nhân"}

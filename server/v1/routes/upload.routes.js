@@ -20,6 +20,8 @@ router.post(
 const roleManagement = ["ADMIN", "PERSONNEL"];
 
 router.use(authenticate, authorizeRole(...roleManagement));
+router.post(`/upload-image`, upload.single("image"), uploadImageProduct);
+
 router.post(
   `/product/upload-image`,
   upload.single("image"),

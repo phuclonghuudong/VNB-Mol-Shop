@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadImageAPI from "../../../apis/administration/uploadImage";
 import AxiosToastError from "../../../utils/AxiosToastError";
 
-const FormUploadImage = ({ title, value: imageUrl, onChange }) => {
+const FormUploadImage = ({
+  title,
+  value: imageUrl,
+  onChange,
+  onLoadingChange,
+  isDisabled,
+}) => {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    onLoadingChange?.(loading);
+  }, [loading, onLoadingChange]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,18 +25,12 @@ const FormUploadImage = ({ title, value: imageUrl, onChange }) => {
     if (!file) {
       return;
     }
-
     const formData = new FormData();
     formData.append("image", file);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     setLoading(true);
     try {
-      const result = await UploadImageAPI.upload_Image({ data: formData });
-      console.log("RES UPLOAD", result);
+      const result = await UploadImageAPI.upload_Image(formData);
       if (result?.SUCCESS) {
         onChange?.(result?.DATA?.url);
       }
@@ -54,13 +58,19 @@ const FormUploadImage = ({ title, value: imageUrl, onChange }) => {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="uploadImage">
+          <label
+            htmlFor="uploadImage"
+            className="text-center items-center justify-center  w-30 h-10"
+          >
             <div
               className={`
-                       bg-gray-100 hover:bg-blue-500 
-                   p-2 rounded cursor-pointer font-medium text-xs `}
+                       bg-gray-100 hover:bg-blue-500 p-2 rounded  font-medium text-xs ${
+                         loading || isDisabled
+                           ? "cursor-not-allowed opacity-50 pointer-events-none"
+                           : "cursor-pointer"
+                       } `}
             >
-              {loading ? "Thêm ...." : "Thêm hình ảnh"}
+              {loading ? "Đang tải ảnh lên ...." : "Thêm hình ảnh"}
             </div>
             <input
               onChange={handleUploadImage}
@@ -68,6 +78,7 @@ const FormUploadImage = ({ title, value: imageUrl, onChange }) => {
               id="uploadImage"
               name="uploadImage"
               className="hidden"
+              disabled={loading || isDisabled}
             />
           </label>
         </form>

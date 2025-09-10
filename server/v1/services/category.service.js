@@ -7,12 +7,16 @@ const {
 const { isValidSlugInput } = require("../utils/isValidateInput");
 
 class CategoryBUS {
-  async getAllCategories() {
-    const result = await CategoryDAO.findAllCategories();
+  async getAllCategories(data) {
+    const result = await CategoryDAO.findAllCategories(data);
+
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result.map((x) => x.toJSON?.() ?? x);
+    return {
+      data: result.data.map((x) => x.toJSON?.() ?? x),
+      pagination: result.pagination,
+    };
   }
 
   async getAllCategoryActive() {

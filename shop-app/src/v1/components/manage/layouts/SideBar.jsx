@@ -3,7 +3,7 @@ import TitleIconSideBar from "../ui/TitleIconSideBar";
 
 const SideBar = ({ onShow, onClose }) => {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col shadow-lg">
       {/* Mobile Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full overflow-y-auto bg-white transition-all duration-300 z-40 lg:hidden

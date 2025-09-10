@@ -3,9 +3,31 @@ const prisma = new PrismaClient();
 const CategoryDTO = require("../models/category.model");
 
 class CategoryDAO {
-  async findAllCategories() {
-    const result = await prisma.category.findMany();
-    return result.map((x) => new CategoryDTO(x));
+  async findAllCategories(data) {
+    const { page = 1, limit = 10, status } = data;
+
+    const skip = (page - 1) * limit;
+
+    const where = status !== undefined ? { status } : {};
+
+    const total = await prisma.category.count({ where });
+
+    const result = await prisma.category.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: { status: "desc" },
+    });
+
+    return {
+      data: result.map((x) => new CategoryDTO(x)),
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findActiveCategories(status = 1) {

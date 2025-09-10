@@ -10,6 +10,7 @@ const FormInput = ({
   isAutoFocus,
   onChange,
   isPassword,
+  isDisabled,
   isValidNull = true,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,9 +30,10 @@ const FormInput = ({
           placeholder={placeholder || ""}
           value={value}
           onChange={onChange}
-          className={`p-3 border-1  rounded-xs w-full outline-none ${
-            !isValidNull ? "border-red-500" : "border-gray-300 "
-          }`}
+          disabled={isDisabled ? isDisabled : false}
+          className={`p-3 border-1  rounded-xs w-full outline-none 
+            ${isDisabled ? "bg-gray-100" : ""}
+            ${!isValidNull ? "border-red-500" : "border-gray-300 "}`}
         />
       ) : (
         <div

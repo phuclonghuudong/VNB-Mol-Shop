@@ -1,7 +1,7 @@
 // components/FormStatus.jsx
 import { statuses } from "../../../utils/enumStatus";
 
-const FormStatus = ({ id, name = id, value, title, onChange }) => {
+const FormStatus = ({ id, name = id, value, title, onChange, isDisabled }) => {
   const baseClass =
     "flex-1 text-xs p-3 rounded-xs duration-300 select-none font-bold";
   const activeClass = "bg-blue-700 text-white";
@@ -19,6 +19,7 @@ const FormStatus = ({ id, name = id, value, title, onChange }) => {
         {statuses.map((status) => (
           <button
             key={status.value ?? "none"}
+            disabled={isDisabled ? isDisabled : false}
             type="button"
             value={status.value}
             className={`${baseClass} ${

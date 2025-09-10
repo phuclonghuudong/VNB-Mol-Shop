@@ -28,7 +28,7 @@ const AdministrationLayout = () => {
     }
   };
   return (
-    <div className="h-screen flex flex-col bg-gray-200">
+    <div className="h-screen flex flex-col bg-gray-200 ">
       <Header handleShowSideBar={handleShowSideBar} onShow={showSideBar} />
 
       <div className="flex fle-col flex-1 overflow-hidden">

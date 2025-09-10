@@ -9,7 +9,7 @@ import IconComponent from "../ui/IconComponent";
 const Header = ({ handleShowSideBar }) => {
   return (
     <div
-      className={` h-16 w-full bg-white  px-4 flex justify-between items-center  duration-300`}
+      className={` h-16 w-full bg-white  px-4 flex justify-between items-center  duration-300 border-b border-gray-400 shadow-lg`}
     >
       <div className="duration-300 flex justify-start items-center gap-4">
         <Link

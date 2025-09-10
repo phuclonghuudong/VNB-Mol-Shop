@@ -144,7 +144,6 @@ const resetPassword = async (req, res, next) => {
 const refreshToken = async (req, res, next) => {
   try {
     const token = req.cookies?.refreshToken;
-    console.log("CHECK REFRESH TOKEN: ", token);
     if (!token) throw new BadRequestError("VUI LÒNG ĐĂNG NHẬP");
 
     const verifyToken = await verifyRefreshToken(token);

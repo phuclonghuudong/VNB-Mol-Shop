@@ -4,8 +4,8 @@ const pathApi = "/api/v1/catalog-control/category";
 
 const ManagementCategoryAPI = {
   // Danh sách danh mục
-  get_All_Category: ({ page, limit }) =>
-    axiosClient.get(`${pathApi}?page=${page}&limit=${limit}`),
+  get_All_Category: (queryParams) =>
+    axiosClient.get(`${pathApi}`, { params: queryParams }),
   // Tạo mới
   create_Category: (data) => axiosClient.post(`${pathApi}`, data),
   // Cập nhật

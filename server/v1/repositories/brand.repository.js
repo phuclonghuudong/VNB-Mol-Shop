@@ -3,9 +3,40 @@ const prisma = new PrismaClient();
 const BrandDTO = require("../models/brand.model");
 
 class BrandDAO {
-  async findAllBrands() {
-    const result = await prisma.brand.findMany();
-    return result.map((x) => new BrandDTO(x));
+  async findAllBrands(data) {
+    const { page = 1, limit = 10, status, keyword } = data;
+
+    const skip = (page - 1) * limit;
+
+    const where = {
+      ...(status !== undefined && { status }),
+      ...(keyword && {
+        OR: [
+          { brand_name: { contains: keyword } },
+          { brand_slug: { contains: keyword } },
+        ],
+      }),
+    };
+
+    const [total, result] = await Promise.all([
+      prisma.brand.count({ where }),
+      prisma.brand.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { status: "desc" },
+      }),
+    ]);
+
+    return {
+      data: result.map((x) => new BrandDTO(x)),
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findActiveBrands(status = 1) {

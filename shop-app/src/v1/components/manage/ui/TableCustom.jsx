@@ -1,4 +1,5 @@
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import IconComponent from "./IconComponent";
 
 const TableCustom = ({
@@ -66,17 +67,17 @@ const TableCustom = ({
                   ))}
 
                   <td className=" border border-gray-300">
-                    <div className="flex justify-center">
+                    <div className="flex justify-center items-center">
                       {onUpdate && (
-                        <div className="text-blue-900">
+                        <div className="text-green-900">
                           <IconComponent
-                            icon={MdEdit}
+                            icon={FaEye}
                             onClick={(e) => {
                               e.stopPropagation();
                               onUpdate?.(rowIndex, raw);
                             }}
                             title={"Cập nhật"}
-                            isSize={20}
+                            isSize={18}
                           />
                         </div>
                       )}
@@ -90,7 +91,7 @@ const TableCustom = ({
                               onDelete?.(rowIndex, raw);
                             }}
                             title={"Xóa"}
-                            isSize={20}
+                            isSize={22}
                           />
                         </div>
                       )}

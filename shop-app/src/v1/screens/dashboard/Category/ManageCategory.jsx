@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ManagementCategoryAPI from "../../../apis/administration/managementCatalog/ManagementCategory";
 import ModalCategory from "../../../components/manage/modal/ModalCategory";
 import Pagination from "../../../components/manage/ui/Pagination";
 import ShowInfoImage from "../../../components/manage/ui/ShowInfoImage";
 import TableCustom from "../../../components/manage/ui/TableCustom";
 import TitleHeaderPage from "../../../components/manage/ui/TitleHeaderPage";
-import AxiosToastError from "../../../utils/AxiosToastError";
+import usePaginatedList from "../../../hooks/usePaginatedList";
 import { enumColorStatus } from "../../../utils/enumStatus";
 
 const ManageCategory = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [listData, setListData] = useState([]);
   const [itemDetail, setItemDetail] = useState(null);
-
-  const [page, setPage] = useState(1);
-  const [pageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
-
   const [activeModal, setActiveModal] = useState(null);
 
   const headers = [
@@ -27,40 +20,33 @@ const ManageCategory = () => {
     "Trạng thái",
   ];
 
-  useEffect(() => {
-    fetchDataCategory(page);
-  }, [page]);
+  const {
+    listData,
+    isLoading,
+    page,
+    totalPages,
+    pageSize,
+    setPage,
+    handleSearch,
+    fetchData,
+  } = usePaginatedList(ManagementCategoryAPI.get_All_Category, {
+    initialPage: 1,
+    pageSize: 10,
+    debounceMs: 1000,
+  });
 
-  const fetchDataCategory = async (currentPage = 1) => {
-    setIsLoading(true);
-    try {
-      const result = await ManagementCategoryAPI.get_All_Category({
-        page: currentPage,
-        limit: pageSize,
-      });
-
-      const resDATA = result?.DATA;
-      if (result?.SUCCESS) {
-        setListData(resDATA.data);
-        setPage(resDATA?.pagination?.page);
-        setTotalPages(resDATA?.pagination?.totalPages);
-      }
-    } catch (error) {
-      AxiosToastError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <div className=" flex flex-col md:flex-row  gap-2">
       <div className="bg-white md:flex-[8] w-full h-full rounded-md shadow-lg p-4">
         <TitleHeaderPage
           title="Danh mục phân loại"
-          isIcon
+          isIconCreate
           onClick={() => {
             setActiveModal("create");
             setItemDetail([]);
           }}
+          onSearch={handleSearch}
+          onLoading={isLoading}
         />
 
         <TableCustom
@@ -95,7 +81,7 @@ const ManageCategory = () => {
           page={page}
           onPageChange={(newPage) => {
             setPage(newPage);
-            fetchDataCategory(newPage);
+            fetchData(newPage);
           }}
         />
       </div>
@@ -106,7 +92,7 @@ const ManageCategory = () => {
           type={activeModal}
           data={itemDetail}
           onClose={() => setActiveModal(null)}
-          onLoad={fetchDataCategory}
+          onLoad={fetchData}
         />
       )}
     </div>

@@ -4,14 +4,18 @@ const {
   BadRequestError,
   ConflictError,
 } = require("../utils/errors");
+const { isValidSlugInput } = require("../utils/isValidateInput");
 
 class BrandBUS {
-  async getAllBrand() {
-    const result = await BrandDAO.findAllBrands();
+  async getAllBrand(data) {
+    const result = await BrandDAO.findAllBrands(data);
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result.map((x) => x.toJSON?.() ?? x);
+    return {
+      data: result.data.map((x) => x.toJSON?.() ?? x),
+      pagination: result.pagination,
+    };
   }
 
   async getAllBrandActive() {
@@ -58,6 +62,13 @@ class BrandBUS {
 
   async validateForCreate(data) {
     const { slug, name } = data;
+
+    const isValidSlug = await isValidSlugInput(slug);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingBySlug, existingByName] = await Promise.all([
       BrandDAO.findBrandBySlug(slug),
       BrandDAO.findBrandByName(name),
@@ -69,19 +80,19 @@ class BrandBUS {
 
   async validateForUpdate(excludeId, data) {
     const { slug, name } = data;
+    const isValidSlug = await isValidSlugInput(slug);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingBySlug, existingByName] = await Promise.all([
       BrandDAO.findBrandBySlug(slug),
       BrandDAO.findBrandByName(name),
     ]);
-    if (
-      existingBySlug &&
-      Number(existingBySlug.category_id) !== Number(excludeId)
-    )
+    if (existingBySlug && Number(existingBySlug.brand_id) !== Number(excludeId))
       throw new ConflictError("TÊN ĐỊNH DANH ĐÃ TỒN TẠI ");
-    if (
-      existingByName &&
-      Number(existingByName.category_id) !== Number(excludeId)
-    )
+    if (existingByName && Number(existingBySlug.brand_id) !== Number(excludeId))
       throw new ConflictError(" TÊN THƯƠNG HIỆU ĐÃ TỒN TẠI ");
   }
 

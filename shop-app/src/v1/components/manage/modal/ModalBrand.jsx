@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
-import ManagementCategoryAPI from "../../../apis/administration/managementCatalog/ManagementCategory";
+import ManagementBrandAPI from "../../../apis/administration/managementCatalog/ManagementBrand";
 import {
   MODAL_TYPES,
   titleButton,
@@ -15,7 +15,7 @@ import FormUploadImage from "../ui/FormUploadImage";
 import IconComponent from "../ui/IconComponent";
 import Loading from "../ui/Loading";
 
-const ModalCategory = ({ type, data, onClose, onLoad }) => {
+const ModalBrand = ({ type, data, onClose, onLoad }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabledInput, setIsDisabledInput] = useState(false);
 
@@ -46,7 +46,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     });
   };
 
-  const handleCategory = async () => {
+  const handleBrand = async () => {
     if (
       !checkId &&
       (type === MODAL_TYPES.UPDATE || type === MODAL_TYPES.DELETE)
@@ -59,15 +59,15 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     try {
       let res = [];
       if (type === MODAL_TYPES.CREATE) {
-        res = await ManagementCategoryAPI.create_Category(validInput);
+        res = await ManagementBrandAPI.create_Brand(validInput);
       }
 
       if (type === MODAL_TYPES.UPDATE) {
-        res = await ManagementCategoryAPI.update_Category(checkId, validInput);
+        res = await ManagementBrandAPI.update_Brand(checkId, validInput);
       }
 
       if (type === MODAL_TYPES.DELETE) {
-        res = await ManagementCategoryAPI.delete_Category(checkId);
+        res = await ManagementBrandAPI.delete_Brand(checkId);
       }
 
       if (res?.SUCCESS) {
@@ -109,7 +109,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               />
             ) : null}
             <FormInput
-              title={"Tên danh mục: "}
+              title={"Tên thương hiệu: "}
               id={"name"}
               isAutoFocus
               onChange={handleOnchange}
@@ -160,7 +160,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
         <div className=" flex justify-end gap-2 border-t border-gray-200 px-4 py-8">
           <ButtonComponent
             title={getButtonTitle()}
-            onClick={handleCategory}
+            onClick={handleBrand}
             color="blue"
             isDisabled={isLoading}
           />
@@ -176,4 +176,4 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
   );
 };
 
-export default ModalCategory;
+export default ModalBrand;

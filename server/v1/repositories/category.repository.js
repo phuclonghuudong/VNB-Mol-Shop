@@ -4,20 +4,29 @@ const CategoryDTO = require("../models/category.model");
 
 class CategoryDAO {
   async findAllCategories(data) {
-    const { page = 1, limit = 10, status } = data;
+    const { page = 1, limit = 10, status, keyword } = data;
 
     const skip = (page - 1) * limit;
 
-    const where = status !== undefined ? { status } : {};
+    const where = {
+      ...(status !== undefined && { status }),
+      ...(keyword && {
+        OR: [
+          { category_name: { contains: keyword } },
+          { category_slug: { contains: keyword } },
+        ],
+      }),
+    };
 
-    const total = await prisma.category.count({ where });
-
-    const result = await prisma.category.findMany({
-      where,
-      skip,
-      take: limit,
-      orderBy: { status: "desc" },
-    });
+    const [total, result] = await Promise.all([
+      prisma.category.count({ where }),
+      prisma.category.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { status: "desc" },
+      }),
+    ]);
 
     return {
       data: result.map((x) => new CategoryDTO(x)),

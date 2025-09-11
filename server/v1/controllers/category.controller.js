@@ -3,12 +3,19 @@ const { BadRequestError } = require("../utils/errors");
 const responseHandler = require("../utils/responseHandler");
 
 const getAllCategories = async (req, res, next) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const status = req.query.status ? parseInt(req.query.status) : undefined;
+  const { page = 1, limit = 10, keyword = "", status } = req.query || {};
+
+  const pageNumber = parseInt(page) || 1;
+  const limitNumber = parseInt(limit) || 10;
+  const statusNumber = req.query.status ? parseInt(status) : undefined;
 
   try {
-    const payload = { page, limit, status };
+    const payload = {
+      page: pageNumber,
+      limit: limitNumber,
+      status: statusNumber,
+      keyword,
+    };
     const result = await CategoryBUS.getAllCategories(payload);
 
     responseHandler(res, 200, "DANH SÁCH", result);

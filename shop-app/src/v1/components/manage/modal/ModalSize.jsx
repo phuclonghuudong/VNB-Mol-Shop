@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
-import ManagementCategoryAPI from "../../../apis/administration/managementCatalog/ManagementCategory";
+import ManagementSizeAPI from "../../../apis/administration/managementCatalog/ManagementSize";
 import {
   MODAL_TYPES,
   titleButton,
@@ -11,11 +11,10 @@ import AxiosToastError from "../../../utils/AxiosToastError";
 import ButtonComponent from "../ui/ButtonComponent";
 import FormInput from "../ui/FormInput";
 import FormStatus from "../ui/FormStatus";
-import FormUploadImage from "../ui/FormUploadImage";
 import IconComponent from "../ui/IconComponent";
 import Loading from "../ui/Loading";
 
-const ModalCategory = ({ type, data, onClose, onLoad }) => {
+const ModalSize = ({ type, data, onClose, onLoad }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabledInput, setIsDisabledInput] = useState(false);
 
@@ -23,9 +22,9 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
 
   const [validInput, setValidInput] = useState({
     name: data?.name ?? "",
-    slug: data?.slug ?? "",
-    description: data?.description ?? "",
-    imageUrl: data?.imageUrl ?? "",
+    code: data?.code ?? "",
+    type: data?.type ?? "",
+    displayOrder: data?.displayOrder ?? "",
     status: data?.status ?? "",
   });
 
@@ -46,7 +45,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     });
   };
 
-  const handleCategory = async () => {
+  const handleBrand = async () => {
     if (
       !checkId &&
       (type === MODAL_TYPES.UPDATE || type === MODAL_TYPES.DELETE)
@@ -59,15 +58,15 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     try {
       let res = [];
       if (type === MODAL_TYPES.CREATE) {
-        res = await ManagementCategoryAPI.create_Category(validInput);
+        res = await ManagementSizeAPI.create_Size(validInput);
       }
 
       if (type === MODAL_TYPES.UPDATE) {
-        res = await ManagementCategoryAPI.update_Category(checkId, validInput);
+        res = await ManagementSizeAPI.update_Size(checkId, validInput);
       }
 
       if (type === MODAL_TYPES.DELETE) {
-        res = await ManagementCategoryAPI.delete_Category(checkId);
+        res = await ManagementSizeAPI.delete_Size(checkId);
       }
 
       if (res?.SUCCESS) {
@@ -110,7 +109,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               />
             ) : null}
             <FormInput
-              title={"Tên danh mục: "}
+              title={"Kích thước: "}
               id={"name"}
               isAutoFocus
               onChange={handleOnchange}
@@ -119,18 +118,18 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               isBold
             />
             <FormInput
-              title={"Định danh: "}
-              id={"slug"}
+              title={"Code: "}
+              id={"code"}
               onChange={handleOnchange}
-              value={validInput.slug}
+              value={validInput.code}
               isDisabled={isDisabledInput}
               isBold
             />
             <FormInput
-              title={"Mô tả: "}
-              id={"description"}
+              title={"Kiểu: "}
+              id={"type"}
               onChange={handleOnchange}
-              value={validInput.description}
+              value={validInput.type}
               isDisabled={isDisabledInput}
               isBold
             />
@@ -147,26 +146,13 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               isDisabled={isDisabledInput}
               isBold
             />
-            <FormUploadImage
-              title={"Hình ảnh: "}
-              value={validInput.imageUrl}
-              onChange={(newImage) =>
-                setValidInput((pre) => ({
-                  ...pre,
-                  imageUrl: newImage,
-                }))
-              }
-              onLoadingChange={(status) => setIsLoading(status)}
-              isDisabled={isDisabledInput}
-              isBold
-            />
           </div>
         </div>
 
         <div className=" flex justify-end gap-2 border-t border-gray-200 px-4 py-8">
           <ButtonComponent
             title={getButtonTitle()}
-            onClick={handleCategory}
+            onClick={handleBrand}
             color="blue"
             isDisabled={isLoading}
           />
@@ -182,4 +168,4 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
   );
 };
 
-export default ModalCategory;
+export default ModalSize;

@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
+import ROUTES_SHOP from "../configs/configRoutesShop";
 import Account from "../screens/pages/Account/Account";
 import CheckOrderScreen from "../screens/pages/CheckOrder/CheckOrderScreen";
 import CheckWarrantyScreen from "../screens/pages/CheckWarranty/CheckWarrantyScreen";
@@ -17,15 +18,42 @@ const MainRouter = () => {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomeScreen />} />
-        <Route path="/san-pham" element={<ProductScreen />} />
-        <Route path="/thanh-ly" element={<SaleOffScreen />} />
-        <Route path="/lien-he" element={<ContactScreen />} />
-        <Route path="/tin-tuc" element={<NewsScreen />} />
-        <Route path="/kiem-tra-don-hang" element={<CheckOrderScreen />} />
-        <Route path="/kiem-tra-bao-hanh" element={<CheckWarrantyScreen />} />
-        <Route path="/gio-hang" element={<ShoppingCartScreen />} />
-        <Route path="/tai-khoan" element={<Account />} />
-        <Route path="/tai-khoan/thong-tin" element={<Information />} />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.PRODUCT || "/"}`}
+          element={<ProductScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.SALE_OFF || "/"}`}
+          element={<SaleOffScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.CONTACT || "/"}`}
+          element={<ContactScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.NEWS || "/"}`}
+          element={<NewsScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.CHECK_ORDER || "/"}`}
+          element={<CheckOrderScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.CHECK_WARRANTY || "/"}`}
+          element={<CheckWarrantyScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.SHOPPING_CART || "/"}`}
+          element={<ShoppingCartScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.ACCOUNT || "/"}`}
+          element={<Account />}
+        />
+        <Route
+          path={`${ROUTES_SHOP?.SHOP?.INFORMATION || "/"}`}
+          element={<Information />}
+        />
       </Route>
     </Routes>
   );

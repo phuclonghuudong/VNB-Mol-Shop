@@ -3,7 +3,6 @@ import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
 import FormInput from "@/v1/components/shop/ui/FormInput";
 import Text from "@/v1/components/shop/ui/Text";
 import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
-import ROUTES from "@/v1/configs/configRoutes";
 import { addAuth } from "@/v1/redux/reducers/authReducer";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { isAllFieldsFilledAuth } from "@/v1/utils/isAllFieldsFilledAuth";
@@ -12,6 +11,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import ROUTES_SHOP from "../../configs/configRoutesShop";
 
 const RegisterScreen = () => {
   const [validInput, setValidInput] = useState({
@@ -72,7 +72,7 @@ const RegisterScreen = () => {
       <TitleCategoryList title={"Đăng ký "} isUppercase />
       <div className=" flex justify-center items-center gap-1">
         <Text title="Đã đó tài khoản, đăng nhập " isSize={"text-md"} />
-        <Link to={ROUTES?.LOGIN}>
+        <Link to={ROUTES_SHOP?.AUTH?.LOGIN}>
           <Text
             title="tại đây"
             isSize={"text-md"}

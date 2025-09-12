@@ -106,6 +106,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
                 isAutoFocus
                 value={checkId}
                 isDisabled
+                isBold
               />
             ) : null}
             <FormInput
@@ -115,6 +116,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
               onChange={handleOnchange}
               value={validInput.name}
               isDisabled={isDisabledInput}
+              isBold
             />
             <FormInput
               title={"Định danh: "}
@@ -122,6 +124,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
               onChange={handleOnchange}
               value={validInput.slug}
               isDisabled={isDisabledInput}
+              isBold
             />
             <FormInput
               title={"Mô tả: "}
@@ -129,6 +132,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
               onChange={handleOnchange}
               value={validInput.description}
               isDisabled={isDisabledInput}
+              isBold
             />
             <FormStatus
               title={"Trạng thái: "}
@@ -141,6 +145,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
                 }))
               }
               isDisabled={isDisabledInput}
+              isBold
             />
             <FormUploadImage
               title={"Hình ảnh: "}
@@ -153,6 +158,7 @@ const ModalBrand = ({ type, data, onClose, onLoad }) => {
               }
               onLoadingChange={(status) => setIsLoading(status)}
               isDisabled={isDisabledInput}
+              isBold
             />
           </div>
         </div>

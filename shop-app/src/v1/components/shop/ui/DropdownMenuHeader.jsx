@@ -1,6 +1,5 @@
 import IMG_NONE_CART from "@/v1/assets/empty-cart.webp";
 import { localDataNames } from "@/v1/configs/appInfo";
-import ROUTES from "@/v1/configs/configRoutes";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -8,6 +7,7 @@ import { BiSolidBinoculars } from "react-icons/bi";
 import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import ROUTES from "../../../configs/configRoutesShop";
 import { authSelector, clearAuth } from "../../../redux/reducers/authReducer";
 import DropdownChildren from "./DropdownChildren";
 import TitleIconMenuNavbar from "./TitleIconMenuNavbar";
@@ -28,7 +28,7 @@ const DropdownMenuHeader = () => {
 
       toast.success("ĐĂNG XUẤT THÀNH CÔNG");
 
-      navigate(ROUTES?.LOGIN);
+      navigate(ROUTES?.AUTH?.LOGIN);
     } catch (error) {
       AxiosToastError(error);
     } finally {
@@ -46,11 +46,11 @@ const DropdownMenuHeader = () => {
           <>
             <DropdownChildren
               title={"Kiểm tra đơn hàng"}
-              path={ROUTES?.CHECK_ORDER}
+              path={ROUTES?.SHOP?.CHECK_ORDER}
             />
             <DropdownChildren
               title={"Kiểm tra bảo hành"}
-              path={ROUTES?.CHECK_WARRANTY}
+              path={ROUTES?.SHOP?.CHECK_WARRANTY}
             />
           </>
         }
@@ -66,14 +66,20 @@ const DropdownMenuHeader = () => {
               <>
                 <DropdownChildren
                   title={"Trang cá nhân"}
-                  path={ROUTES?.ACCOUNT}
+                  path={ROUTES?.SHOP?.ACCOUNT}
                 />
                 <DropdownChildren title={"Đăng xuất"} onClick={handleLogOut} />
               </>
             ) : (
               <>
-                <DropdownChildren title={"Đăng nhập"} path={ROUTES?.LOGIN} />
-                <DropdownChildren title={"Đăng ký"} path={ROUTES?.REGISTER} />
+                <DropdownChildren
+                  title={"Đăng nhập"}
+                  path={ROUTES?.AUTH?.LOGIN}
+                />
+                <DropdownChildren
+                  title={"Đăng ký"}
+                  path={ROUTES?.AUTH?.REGISTER}
+                />
               </>
             )}
           </>

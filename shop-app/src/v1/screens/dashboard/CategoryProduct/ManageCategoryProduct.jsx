@@ -1,25 +1,18 @@
 import { useState } from "react";
-import ManagementCategoryAPI from "../../../apis/administration/managementCatalog/ManagementCategory";
-import ModalCategory from "../../../components/manage/modal/ModalCategory";
+import ManagementCategoryProductAPI from "../../../apis/administration/managementCatalog/ManagementCategoryproduct";
+import ModalCategoryProduct from "../../../components/manage/modal/ModalCategoryproduct";
 import Pagination from "../../../components/manage/ui/Pagination";
 import ShowInfoImage from "../../../components/manage/ui/ShowInfoImage";
 import TableCustom from "../../../components/manage/ui/TableCustom";
 import TitleHeaderPage from "../../../components/manage/ui/TitleHeaderPage";
 import usePaginatedList from "../../../hooks/usePaginatedList";
 import { enumColorStatus } from "../../../utils/enumStatus";
-import InfoCategory from "./InfoCategory";
 
-const ManageCategory = () => {
+const ManageCategoryProduct = () => {
   const [itemDetail, setItemDetail] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
 
-  const headers = [
-    "Tên danh mục",
-    "Định danh",
-    "Mô tả",
-    "Hình ảnh",
-    "Trạng thái",
-  ];
+  const headers = ["Tên loại", "Định danh", "Mô tả", "Hình ảnh", "Trạng thái"];
 
   const {
     listData,
@@ -30,7 +23,7 @@ const ManageCategory = () => {
     setPage,
     handleSearch,
     fetchData,
-  } = usePaginatedList(ManagementCategoryAPI.get_All_Category, {
+  } = usePaginatedList(ManagementCategoryProductAPI.get_All_Category_Product, {
     initialPage: 1,
     pageSize: 10,
     debounceMs: 1000,
@@ -40,7 +33,7 @@ const ManageCategory = () => {
     <div className=" flex flex-col md:flex-row  gap-2">
       <div className="bg-white md:flex-[8] w-full h-full rounded-md shadow-lg p-4">
         <TitleHeaderPage
-          title="Danh mục phân loại"
+          title="Danh mục loại sản phẩm"
           isIconCreate
           onClick={() => {
             setActiveModal("create");
@@ -65,7 +58,7 @@ const ManageCategory = () => {
           page={page}
           limit={pageSize}
           onRowClick={(index) => {
-            setItemDetail(listData[index]);
+            const rowData = listData[index];
           }}
           onUpdate={(index, row) => {
             setActiveModal("update");
@@ -86,11 +79,10 @@ const ManageCategory = () => {
           }}
         />
       </div>
-
-      <InfoCategory data={activeModal ? null : itemDetail} />
+      <div className="bg-white md:flex-[3] w-full rounded-md shadow-lg p-2"></div>
 
       {activeModal && (
-        <ModalCategory
+        <ModalCategoryProduct
           type={activeModal}
           data={itemDetail}
           onClose={() => setActiveModal(null)}
@@ -101,4 +93,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageCategoryProduct;

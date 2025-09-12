@@ -4,14 +4,18 @@ const {
   BadRequestError,
   ConflictError,
 } = require("../utils/errors");
+const { isValidSlugInput } = require("../utils/isValidateInput");
 
 class ColorBUS {
-  async getAllColor() {
-    const result = await ColorDAO.findAllColors();
+  async getAllColor(data) {
+    const result = await ColorDAO.findAllColors(data);
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result.map((x) => x.toJSON?.() ?? x);
+    return {
+      data: result.data.map((x) => x.toJSON?.() ?? x),
+      pagination: result.pagination,
+    };
   }
 
   async getAllColorActive() {
@@ -57,9 +61,16 @@ class ColorBUS {
   }
 
   async validateForCreate(data) {
-    const { slug, name } = data;
+    const { code, name } = data;
+
+    const isValidSlug = await isValidSlugInput(code);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingByCode, existingByName] = await Promise.all([
-      ColorDAO.findColorByCode(slug),
+      ColorDAO.findColorByCode(code),
       ColorDAO.findColorByName(name),
     ]);
 
@@ -68,9 +79,16 @@ class ColorBUS {
   }
 
   async validateForUpdate(excludeId, data) {
-    const { slug, name } = data;
+    const { code, name } = data;
+
+    const isValidSlug = await isValidSlugInput(code);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingByCode, existingByName] = await Promise.all([
-      ColorDAO.findColorByCode(slug),
+      ColorDAO.findColorByCode(code),
       ColorDAO.findColorByName(name),
     ]);
     if (existingByCode && Number(existingByCode.color_id) !== Number(excludeId))

@@ -1,17 +1,18 @@
-import { IoBagCheck } from "react-icons/io5";
+// import { IoBagCheck } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
-import ROUTES from "../configs/configRoutes";
+import { PiListDashesFill } from "react-icons/pi";
+import ROUTES from "../configs/configRoutesManagement";
 
 const menuListSideBarDashBoard = [
   {
     title: "Thống kê",
-    url: ROUTES?.ADMIN_DASHBOARD,
+    url: ROUTES?.ABSOLUTE?.DASHBOARD,
     icon: MdDashboard,
   },
   {
     title: "Quản lý danh mục",
-    url: ROUTES?.ADMIN_MANAGEMENT_CATALOG,
-    icon: IoBagCheck,
+    url: ROUTES?.ABSOLUTE?.MANAGEMENT_CATALOG,
+    icon: PiListDashesFill,
   },
   // {
   //   title: "thương hiệu",

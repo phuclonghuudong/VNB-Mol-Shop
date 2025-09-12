@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import ManagementCategoryAPI from "../../../apis/administration/managementCatalog/ManagementCategory";
+import ManagementCategoryProductAPI from "../../../apis/administration/managementCatalog/ManagementCategoryproduct";
 import {
   MODAL_TYPES,
   titleButton,
@@ -10,18 +11,22 @@ import {
 import AxiosToastError from "../../../utils/AxiosToastError";
 import ButtonComponent from "../ui/ButtonComponent";
 import FormInput from "../ui/FormInput";
+import FormSelect from "../ui/FormSelect";
 import FormStatus from "../ui/FormStatus";
 import FormUploadImage from "../ui/FormUploadImage";
 import IconComponent from "../ui/IconComponent";
 import Loading from "../ui/Loading";
 
-const ModalCategory = ({ type, data, onClose, onLoad }) => {
+const ModalCategoryProduct = ({ type, data, onClose, onLoad }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabledInput, setIsDisabledInput] = useState(false);
+
+  const [listCategory, setListCategory] = useState([]);
 
   const checkId = data?.id;
 
   const [validInput, setValidInput] = useState({
+    categoryId: data?.categoryId ?? "",
     name: data?.name ?? "",
     slug: data?.slug ?? "",
     description: data?.description ?? "",
@@ -33,6 +38,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     type === MODAL_TYPES.DELETE
       ? setIsDisabledInput(true)
       : setIsDisabledInput(false);
+    fetchDataCategory();
   }, [type]);
 
   const handleOnchange = (event) => {
@@ -59,15 +65,22 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
     try {
       let res = [];
       if (type === MODAL_TYPES.CREATE) {
-        res = await ManagementCategoryAPI.create_Category(validInput);
+        res = await ManagementCategoryProductAPI.create_Category_Product(
+          validInput
+        );
       }
 
       if (type === MODAL_TYPES.UPDATE) {
-        res = await ManagementCategoryAPI.update_Category(checkId, validInput);
+        res = await ManagementCategoryProductAPI.update_Category_Product(
+          checkId,
+          validInput
+        );
       }
 
       if (type === MODAL_TYPES.DELETE) {
-        res = await ManagementCategoryAPI.delete_Category(checkId);
+        res = await ManagementCategoryProductAPI.delete_Category_Product(
+          checkId
+        );
       }
 
       if (res?.SUCCESS) {
@@ -85,6 +98,20 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
   const getButtonTitle = () => {
     if (isLoading) return <Loading />;
     return titleButton[type] || "Không xác định";
+  };
+
+  const fetchDataCategory = async () => {
+    setIsLoading(true);
+    try {
+      const result = await ManagementCategoryAPI.get_All_Category_Active();
+      if (result?.SUCCESS) {
+        setListCategory(result?.DATA);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,7 +137,7 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               />
             ) : null}
             <FormInput
-              title={"Tên danh mục: "}
+              title={"Tên loại sản phẩm: "}
               id={"name"}
               isAutoFocus
               onChange={handleOnchange}
@@ -118,6 +145,19 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
               isDisabled={isDisabledInput}
               isBold
             />
+
+            <FormSelect
+              title="Loại danh mục"
+              options={listCategory ? listCategory : "Dữ liệu rỗng"}
+              onChange={(value) =>
+                setValidInput((pre) => ({
+                  ...pre,
+                  categoryId: value,
+                }))
+              }
+              isBold
+            />
+
             <FormInput
               title={"Định danh: "}
               id={"slug"}
@@ -182,4 +222,4 @@ const ModalCategory = ({ type, data, onClose, onLoad }) => {
   );
 };
 
-export default ModalCategory;
+export default ModalCategoryProduct;

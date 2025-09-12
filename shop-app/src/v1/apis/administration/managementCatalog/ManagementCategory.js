@@ -6,6 +6,9 @@ const ManagementCategoryAPI = {
   // Danh sách danh mục
   get_All_Category: (queryParams) =>
     axiosClient.get(`${pathApi}`, { params: queryParams }),
+  // Danh sách danh mục hoạt động
+  get_All_Category_Active: () => axiosClient.get(`${pathApi}/active`),
+
   // Tạo mới
   create_Category: (data) => axiosClient.post(`${pathApi}`, data),
   // Cập nhật

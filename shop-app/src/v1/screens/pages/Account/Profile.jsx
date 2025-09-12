@@ -1,7 +1,6 @@
 import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
 import Icon from "@/v1/components/shop/ui/Icon";
 import Text from "@/v1/components/shop/ui/Text";
-import ROUTES from "@/v1/configs/configRoutes";
 import { authSelector } from "@/v1/redux/reducers/authReducer";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
@@ -9,6 +8,7 @@ import { FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import accountAPI from "../../../apis/accountApi";
+import ROUTES_SHOP from "../../../configs/configRoutesShop";
 import AxiosToastError from "../../../utils/AxiosToastError";
 
 const Profile = () => {
@@ -18,7 +18,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const handleClickUpdate = () => {
-    navigate(ROUTES?.INFORMATION);
+    navigate(ROUTES_SHOP?.AUTH?.INFORMATION);
   };
 
   useEffect(() => {

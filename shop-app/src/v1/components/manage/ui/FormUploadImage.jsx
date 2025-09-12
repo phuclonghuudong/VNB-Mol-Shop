@@ -8,6 +8,7 @@ const FormUploadImage = ({
   onChange,
   onLoadingChange,
   isDisabled,
+  isBold,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +44,7 @@ const FormUploadImage = ({
 
   return (
     <div className="grid gap-1">
-      <p>{title}:</p>
+      <p className={`${isBold ? "font-bold" : ""}`}>{title}:</p>
       <div className="flex gap-4 flex-col lg:flex-row items-center">
         <div className="border bg-gray-100 h-36 w-full lg:w-36 rounded border-gray-200 items-center justify-center flex">
           {imageUrl ? (

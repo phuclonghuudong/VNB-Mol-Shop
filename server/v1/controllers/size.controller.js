@@ -3,8 +3,21 @@ const { BadRequestError } = require("../utils/errors");
 const responseHandler = require("../utils/responseHandler");
 
 const getAllSize = async (req, res, next) => {
+  const { page = 1, limit = 10, keyword = "", status } = req.query || {};
+
+  const pageNumber = parseInt(page) || 1;
+  const limitNumber = parseInt(limit) || 10;
+  const statusNumber = req.query.status ? parseInt(status) : undefined;
+
   try {
-    const result = await SizeBUS.getAllSize();
+    const payload = {
+      page: pageNumber,
+      limit: limitNumber,
+      status: statusNumber,
+      keyword,
+    };
+
+    const result = await SizeBUS.getAllSize(payload);
     responseHandler(res, 200, "DANH SÁCH", result);
   } catch (error) {
     next(error);

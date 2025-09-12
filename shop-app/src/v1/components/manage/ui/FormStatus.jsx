@@ -1,7 +1,15 @@
 // components/FormStatus.jsx
 import { statuses } from "../../../utils/enumStatus";
 
-const FormStatus = ({ id, name = id, value, title, onChange, isDisabled }) => {
+const FormStatus = ({
+  id,
+  name = id,
+  value,
+  title,
+  onChange,
+  isDisabled,
+  isBold,
+}) => {
   const baseClass =
     "flex-1 text-xs p-3 rounded-xs duration-300 select-none font-bold";
   const activeClass = "bg-blue-700 text-white";
@@ -10,7 +18,7 @@ const FormStatus = ({ id, name = id, value, title, onChange, isDisabled }) => {
   return (
     <div className={`${title ? "flex flex-col gap-3" : "w-full"}`}>
       {title && (
-        <label htmlFor={id} className="text-md">
+        <label htmlFor={id} className={`text-md ${isBold ? "font-bold" : ""}`}>
           {title}
         </label>
       )}

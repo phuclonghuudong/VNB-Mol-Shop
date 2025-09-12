@@ -3,11 +3,11 @@ import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
 import OTPInput from "@/v1/components/shop/ui/OTPInput";
 import Text from "@/v1/components/shop/ui/Text";
 import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
-import ROUTES from "@/v1/configs/configRoutes";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ROUTES_SHOP from "../../configs/configRoutesShop";
 
 const ConFirmOTP = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const ConFirmOTP = () => {
     if (!isEmail) {
       t;
       toast.error("KHÔNG THỂ THỰC HIỆN THAO TÁC");
-      navigate(ROUTES?.FORGOT_PASSWORD);
+      navigate(ROUTES_SHOP?.AUTH?.FORGOT_PASSWORD);
     }
   }, []);
 
@@ -38,7 +38,9 @@ const ConFirmOTP = () => {
 
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        return navigate(ROUTES?.RESET_PASSWORD, { state: { email: isEmail } });
+        return navigate(ROUTES_SHOP?.AUTH?.RESET_PASSWORD, {
+          state: { email: isEmail },
+        });
       }
     } catch (error) {
       AxiosToastError(error);
@@ -69,10 +71,10 @@ const ConFirmOTP = () => {
       </form>
 
       <div className="text-right flex justify-between items-center">
-        <Link to={ROUTES?.FORGOT_PASSWORD}>
+        <Link to={ROUTES_SHOP?.AUTH?.FORGOT_PASSWORD}>
           <Text title="Quay lại" isSize={"text-md"} isHover />
         </Link>
-        <Link to={ROUTES?.LOGIN}>
+        <Link to={ROUTES_SHOP?.AUTH?.LOGIN}>
           <Text title="Đăng nhập tại đây" isSize={"text-md"} isHover />
         </Link>
       </div>

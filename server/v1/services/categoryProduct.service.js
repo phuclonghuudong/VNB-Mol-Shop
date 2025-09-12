@@ -7,12 +7,15 @@ const {
 } = require("../utils/errors");
 
 class CategoryProductBUS {
-  async getAllCategoryProduct() {
-    const result = await CategoryProductDAO.findAllCategoryProduct();
+  async getAllCategoryProduct(data) {
+    const result = await CategoryProductDAO.findAllCategoryProduct(data);
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result.map((x) => x.toJSON?.() ?? x);
+    return {
+      data: result.data.map((x) => x.toJSON?.() ?? x),
+      pagination: result.pagination,
+    };
   }
 
   async getAllCategoryProductActive() {

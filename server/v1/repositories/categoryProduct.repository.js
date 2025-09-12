@@ -3,9 +3,40 @@ const prisma = new PrismaClient();
 const CategoryProductDTO = require("../models/categoryProduct.model");
 
 class CategoryProductDAO {
-  async findAllCategoryProduct() {
-    const result = await prisma.categoryProduct.findMany();
-    return result.map((x) => new CategoryProductDTO(x));
+  async findAllCategoryProduct(data) {
+    const { page = 1, limit = 10, status, keyword } = data;
+
+    const skip = (page - 1) * limit;
+
+    const where = {
+      ...(status !== undefined && { status }),
+      ...(keyword && {
+        OR: [
+          { category_product_name: { contains: keyword } },
+          { category_product_slug: { contains: keyword } },
+        ],
+      }),
+    };
+
+    const [total, result] = await Promise.all([
+      prisma.categoryProduct.count({ where }),
+      prisma.categoryProduct.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { status: "desc" },
+      }),
+    ]);
+
+    return {
+      data: result.map((x) => new CategoryProductDTO(x)),
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findActiveCategoryProduct(status = 1) {

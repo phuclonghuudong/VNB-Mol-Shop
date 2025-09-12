@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import ROUTES_SHOP from "../configs/configRoutesShop";
 import AuthLayout from "../screens/auth/AuthLayout";
 import ChangePassword from "../screens/auth/ChangePassword";
 import ConFirmOTP from "../screens/auth/ConFirmOTP";
@@ -10,11 +11,26 @@ const AuthRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<AuthLayout />}>
-        <Route path="dang-ky" element={<RegisterScreen />} />
-        <Route path="dang-nhap" element={<LoginScreen />} />
-        <Route path="quen-mat-khau" element={<ForgotPassword />} />
-        <Route path="xac-nhan-otp" element={<ConFirmOTP />} />
-        <Route path="doi-mat-khau" element={<ChangePassword />} />
+        <Route
+          path={`${ROUTES_SHOP.RELATIVE_AUTH.REGISTER}`}
+          element={<RegisterScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP.RELATIVE_AUTH.LOGIN}`}
+          element={<LoginScreen />}
+        />
+        <Route
+          path={`${ROUTES_SHOP.RELATIVE_AUTH.FORGOT_PASSWORD}`}
+          element={<ForgotPassword />}
+        />
+        <Route
+          path={`${ROUTES_SHOP.RELATIVE_AUTH.VERIFY_OTP}`}
+          element={<ConFirmOTP />}
+        />
+        <Route
+          path={`${ROUTES_SHOP.RELATIVE_AUTH.RESET_PASSWORD}`}
+          element={<ChangePassword />}
+        />
       </Route>
     </Routes>
   );

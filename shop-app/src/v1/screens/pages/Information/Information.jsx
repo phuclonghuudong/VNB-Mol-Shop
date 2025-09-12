@@ -1,7 +1,7 @@
 import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
 import Text from "@/v1/components/shop/ui/Text";
-import ROUTES from "@/v1/configs/configRoutes";
 import { useNavigate } from "react-router-dom";
+import ROUTES_SHOP from "../../../configs/configRoutesShop";
 import Profile from "./Profile";
 import ResetPassword from "./ResetPassword";
 
@@ -20,7 +20,7 @@ const Information = () => {
           <ButtonComponent
             title={"Quay lại"}
             color="orange"
-            onClick={() => navigate(ROUTES?.ACCOUNT)}
+            onClick={() => navigate(ROUTES_SHOP?.SHOP?.ACCOUNT)}
             isUppercase
           />
         </div>

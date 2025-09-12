@@ -1,33 +1,33 @@
-import ROUTES from "../configs/configRoutes";
+import ROUTES_SHOP from "../configs/configRoutesShop";
 
 const menuList = [
   {
     title: "Trang chủ",
-    url: ROUTES?.HOME,
+    url: ROUTES_SHOP?.SHOP?.HOME,
   },
   {
     title: "Sản phẩm",
-    url: ROUTES?.PRODUCT,
+    url: ROUTES_SHOP?.SHOP?.PRODUCT,
   },
   {
     title: "Sale off",
-    url: ROUTES?.SALE_OFF,
+    url: ROUTES_SHOP?.SHOP?.SALE_OFF,
   },
   {
     title: "Tin tức",
-    url: ROUTES?.NEWS,
+    url: ROUTES_SHOP?.SHOP?.NEWS,
   },
   {
     title: "Hướng dẫn",
-    url: ROUTES?.HOME,
+    url: ROUTES_SHOP?.SHOP?.HOME,
   },
   {
     title: "Giới thiệu",
-    url: ROUTES?.HOME,
+    url: ROUTES_SHOP?.SHOP?.HOME,
   },
   {
     title: "LIÊN HỆ",
-    url: ROUTES?.CONTACT,
+    url: ROUTES_SHOP?.SHOP?.CONTACT,
   },
 ];
 export default menuList;

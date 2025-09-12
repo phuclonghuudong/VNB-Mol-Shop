@@ -1,13 +1,17 @@
 import LOGO from "@/v1/assets/no-image-available.png";
 import { Link } from "react-router-dom";
-import ROUTES from "../../../configs/configRoutes";
+import ROUTES_SHOP from "../../../configs/configRoutesShop";
 
 const CardNews = ({ data, index }) => {
   const { content, imageUrl, newsSlug, newsTitle, publishDate, summary, id } =
     data;
 
   return (
-    <Link key={index + id} className="grid w-full h-full" to={ROUTES.NEWS}>
+    <Link
+      key={index + id}
+      className="grid w-full h-full"
+      to={ROUTES_SHOP?.SHOP?.NEWS}
+    >
       <div className="h-52 w-full overflow-hidden bg-orange-100  flex justify-center items-center ">
         <img
           src={imageUrl ? imageUrl : LOGO}

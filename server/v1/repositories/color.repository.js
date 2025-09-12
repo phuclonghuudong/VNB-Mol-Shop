@@ -3,9 +3,40 @@ const prisma = new PrismaClient();
 const ColorDTO = require("../models/color.model");
 
 class ColorDAO {
-  async findAllColors() {
-    const result = await prisma.color.findMany();
-    return result.map((x) => new ColorDTO(x));
+  async findAllColors(data) {
+    const { page = 1, limit = 10, status, keyword } = data;
+
+    const skip = (page - 1) * limit;
+
+    const where = {
+      ...(status !== undefined && { status }),
+      ...(keyword && {
+        OR: [
+          { color_name: { contains: keyword } },
+          { color_code: { contains: keyword } },
+        ],
+      }),
+    };
+
+    const [total, result] = await Promise.all([
+      prisma.color.count({ where }),
+      prisma.color.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { status: "desc" },
+      }),
+    ]);
+
+    return {
+      data: result.map((x) => new ColorDTO(x)),
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findActiveColors(status = 1) {

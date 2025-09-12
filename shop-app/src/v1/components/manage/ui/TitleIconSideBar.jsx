@@ -1,5 +1,4 @@
 import menuListSideBarDashBoard from "@/v1/common/menuListSideBarDashBoard";
-import ROUTES from "@/v1/configs/configRoutes";
 import { authSelector, clearAuth } from "@/v1/redux/reducers/authReducer";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import { IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { localDataNames } from "../../../configs/appInfo";
+import ROUTES from "../../../configs/configRoutesShop";
 import IconComponent from "./IconComponent";
 import Text from "./Text";
 
@@ -29,7 +29,7 @@ const TitleIconSideBar = ({ onShow }) => {
 
       toast.success("ĐĂNG XUẤT THÀNH CÔNG");
 
-      navigate(ROUTES?.LOGIN);
+      navigate(ROUTES?.AUTH?.LOGIN);
     } catch (error) {
       AxiosToastError(error);
     } finally {

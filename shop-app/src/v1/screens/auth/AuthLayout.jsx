@@ -1,5 +1,5 @@
 import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
-import ROUTES from "@/v1/configs/configRoutes";
+import ROUTES_SHOP from "@/v1/configs/configRoutesShop";
 import { Link, Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
@@ -9,7 +9,7 @@ const AuthLayout = () => {
         <Outlet />
       </div>
       <div className="w-full max-w-lg p-6 bg-white rounded shadow ">
-        <Link to={ROUTES?.HOME}>
+        <Link to={ROUTES_SHOP?.SHOP?.HOME}>
           <TitleCategoryList title={"Molxipi shop  "} isUppercase />
         </Link>
       </div>

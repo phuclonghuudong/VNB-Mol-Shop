@@ -3,9 +3,41 @@ const prisma = new PrismaClient();
 const SizeDTO = require("../models/size.model");
 
 class SizeDAO {
-  async findAllSize() {
-    const result = await prisma.size.findMany();
-    return result.map((x) => new SizeDTO(x));
+  async findAllSize(data) {
+    const { page = 1, limit = 10, status, keyword } = data;
+
+    const skip = (page - 1) * limit;
+
+    const where = {
+      ...(status !== undefined && { status }),
+      ...(keyword && {
+        OR: [
+          { size_name: { contains: keyword } },
+          { size_code: { contains: keyword } },
+          { size_type: { contains: keyword } },
+        ],
+      }),
+    };
+
+    const [total, result] = await Promise.all([
+      prisma.size.count({ where }),
+      prisma.size.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { status: "desc" },
+      }),
+    ]);
+
+    return {
+      data: result.map((x) => new SizeDTO(x)),
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findActiveSize(status = 1) {

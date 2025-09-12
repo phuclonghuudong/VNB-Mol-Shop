@@ -4,14 +4,18 @@ const {
   BadRequestError,
   ConflictError,
 } = require("../utils/errors");
+const { isValidSlugInput } = require("../utils/isValidateInput");
 
 class SizeBUS {
-  async getAllSize() {
-    const result = await SizeDAO.findAllSize();
+  async getAllSize(data) {
+    const result = await SizeDAO.findAllSize(data);
     if (!result || result.length === 0)
       throw new NotFoundError("CHƯA CÓ DỮ LIỆU");
 
-    return result.map((x) => x.toJSON?.() ?? x);
+    return {
+      data: result.data.map((x) => x.toJSON?.() ?? x),
+      pagination: result.pagination,
+    };
   }
 
   async getAllSizeActive() {
@@ -57,9 +61,16 @@ class SizeBUS {
   }
 
   async validateForCreate(data) {
-    const { slug, name } = data;
+    const { code, name } = data;
+
+    const isValidSlug = await isValidSlugInput(code);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingByCode, existingByName] = await Promise.all([
-      SizeDAO.findSizeByCode(slug),
+      SizeDAO.findSizeByCode(code),
       SizeDAO.findSizeByName(name),
     ]);
 
@@ -68,9 +79,16 @@ class SizeBUS {
   }
 
   async validateForUpdate(excludeId, data) {
-    const { slug, name } = data;
+    const { code, name } = data;
+
+    const isValidSlug = await isValidSlugInput(code);
+    if (!isValidSlug)
+      throw new BadRequestError(
+        "ĐỊNH DANH KHÔNG ĐÚNG ĐỊNH DẠNG (VD: thuc-the)"
+      );
+
     const [existingByCode, existingByName] = await Promise.all([
-      SizeDAO.findSizeByCode(slug),
+      SizeDAO.findSizeByCode(code),
       SizeDAO.findSizeByName(name),
     ]);
     if (existingByCode && Number(existingByCode.size_id) !== Number(excludeId))

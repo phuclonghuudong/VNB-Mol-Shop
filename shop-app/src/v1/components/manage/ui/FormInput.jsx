@@ -12,12 +12,13 @@ const FormInput = ({
   isPassword,
   isDisabled,
   isValidNull = true,
+  isBold,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div className={`${title ? "flex flex-col gap-3" : "w-full"}`}>
       {title && (
-        <label htmlFor={id} className="text-md">
+        <label htmlFor={id} className={`text-md ${isBold ? "font-bold" : ""}`}>
           {title}
         </label>
       )}

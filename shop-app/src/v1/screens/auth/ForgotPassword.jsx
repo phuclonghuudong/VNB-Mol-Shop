@@ -3,12 +3,12 @@ import ButtonComponent from "@/v1/components/shop/ui/ButtonComponent";
 import FormInput from "@/v1/components/shop/ui/FormInput";
 import Text from "@/v1/components/shop/ui/Text";
 import TitleCategoryList from "@/v1/components/shop/ui/TitleCategoryList";
-import ROUTES from "@/v1/configs/configRoutes";
 import AxiosToastError from "@/v1/utils/AxiosToastError";
 import { isAllFieldsFilledAuth } from "@/v1/utils/isAllFieldsFilledAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import ROUTES_SHOP from "../../configs/configRoutesShop";
 
 const ForgotPassword = () => {
   const [validInput, setValidInput] = useState({
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
       );
       if (result?.SUCCESS) {
         toast.success(result?.MESSAGE);
-        navigate(ROUTES?.VERIFY_OTP, { state: validInput });
+        navigate(ROUTES_SHOP?.AUTH?.VERIFY_OTP, { state: validInput });
       }
     } catch (error) {
       AxiosToastError(error);
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
       </form>
 
       <div className="text-right ">
-        <Link to={ROUTES?.LOGIN}>
+        <Link to={ROUTES_SHOP?.AUTH?.LOGIN}>
           <Text title="Đăng nhập tại đây" isSize={"text-md"} isHover />
         </Link>
       </div>
